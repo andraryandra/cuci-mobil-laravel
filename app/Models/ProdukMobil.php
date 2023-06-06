@@ -11,7 +11,7 @@ class ProdukMobil extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function kategori_mobil()
+    public function kategoriMobil()
     {
         return $this->belongsTo(KategoriMobil::class, 'kategori_mobil_id', 'id');
     }

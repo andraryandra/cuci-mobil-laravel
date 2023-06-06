@@ -1,142 +1,116 @@
-   <!-- Navbar -->
-   <nav class="navbar-custom">
-       <!-- Search input -->
-       <div class="search-wrap" id="search-wrap">
-           <div class="search-bar">
-               <input class="search-input" type="search" placeholder="Search here.." /> <a href="javascript:void(0);"
-                   class="close-search search-btn" data-target="#search-wrap"><i class="mdi mdi-close-circle"></i></a>
-           </div>
-       </div>
-       <ul class="list-unstyled topbar-nav float-right mb-0">
-           <li>
-               <a class="nav-link waves-effect waves-light search-btn" href="javascript:void(0);"
-                   data-target="#search-wrap"><i class="mdi mdi-magnify nav-icon"></i></a>
-           </li>
-           <li class="hidden-sm">
-               <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
-                   href="javascript: void(0);" role="button" aria-haspopup="false" aria-expanded="false">
-                   English <img src="{{ asset('assets/images/flags/us_flag.jpg') }}" class="ml-2" height="16"
-                       alt="" /> <i class="mdi mdi-chevron-down"></i>
-               </a>
-               <div class="dropdown-menu dropdown-menu-right">
-                   <a class="dropdown-item" href="javascript: void(0);"><span>German </span><img
-                           src="{{ asset('assets/images/flags/germany_flag.jpg') }}" alt=""
-                           class="ml-2 float-right" height="14" /></a>
-                   <a class="dropdown-item" href="javascript: void(0);"><span>Italian </span><img
-                           src="{{ asset('assets/images/flags/italy_flag.jpg') }}" alt=""
-                           class="ml-2 float-right" height="14" /></a>
-                   <a class="dropdown-item" href="javascript: void(0);"><span>French </span><img
-                           src="{{ asset('assets/images/flags/french_flag.jpg') }}" alt=""
-                           class="ml-2 float-right" height="14" /></a>
-                   <a class="dropdown-item" href="javascript: void(0);"><span>Spanish </span><img
-                           src="{{ asset('assets/images/flags/spain_flag.jpg') }}" alt=""
-                           class="ml-2 float-right" height="14" /></a>
-                   <a class="dropdown-item" href="javascript: void(0);"><span>Russian </span><img
-                           src="{{ asset('assets/images/flags/russia_flag.jpg') }}" alt=""
-                           class="ml-2 float-right" height="14" /></a>
-               </div>
-           </li>
-           <li class="dropdown">
-               <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown"
-                   href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                   <i class="mdi mdi-bell-outline nav-icon"></i> <span
-                       class="badge badge-danger badge-pill noti-icon-badge">2</span>
-               </a>
-               <div class="dropdown-menu dropdown-menu-right dropdown-lg">
-                   <!-- item-->
-                   <h6 class="dropdown-item-text">Notifications (258)</h6>
-                   <div class="slimscroll notification-list">
-                       <!-- item-->
-                       <a href="javascript:void(0);" class="dropdown-item notify-item active">
-                           <div class="notify-icon bg-success"><i class="mdi mdi-cart-outline"></i></div>
-                           <p class="notify-details">Your order is placed<small class="text-muted">Dummy text of
-                                   the printing and typesetting industry.</small></p>
-                       </a>
-                       <!-- item-->
-                       <a href="javascript:void(0);" class="dropdown-item notify-item">
-                           <div class="notify-icon bg-warning"><i class="mdi mdi-message"></i></div>
-                           <p class="notify-details">New Message received<small class="text-muted">You have 87
-                                   unread messages</small></p>
-                       </a>
-                       <!-- item-->
-                       <a href="javascript:void(0);" class="dropdown-item notify-item">
-                           <div class="notify-icon bg-info"><i class="mdi mdi-glass-cocktail"></i></div>
-                           <p class="notify-details">Your item is shipped<small class="text-muted">It is a long
-                                   established fact that a reader will</small></p>
-                       </a>
-                       <!-- item-->
-                       <a href="javascript:void(0);" class="dropdown-item notify-item">
-                           <div class="notify-icon bg-primary"><i class="mdi mdi-cart-outline"></i></div>
-                           <p class="notify-details">Your order is placed<small class="text-muted">Dummy text of
-                                   the printing and typesetting industry.</small></p>
-                       </a>
-                       <!-- item-->
-                       <a href="javascript:void(0);" class="dropdown-item notify-item">
-                           <div class="notify-icon bg-danger"><i class="mdi mdi-message"></i></div>
-                           <p class="notify-details">New Message received<small class="text-muted">You have 87
-                                   unread messages</small></p>
-                       </a>
-                   </div>
-                   <!-- All-->
-                   <a href="javascript:void(0);" class="dropdown-item text-center text-primary">View all <i
-                           class="fi-arrow-right"></i></a>
-               </div>
-           </li>
-           <li class="hidden-sm">
-               <a class="nav-link waves-effect waves-light" href="javascript:void(0);" id="btn-fullscreen"><i
-                       class="mdi mdi-fullscreen nav-icon"></i></a>
-           </li>
-           <li class="dropdown">
-               <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
-                   href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                   <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="profile-user"
-                       class="rounded-circle" /> <span class="ml-1 nav-user-name hidden-sm">{{ Auth::user()->name }}
-                       <i class="mdi mdi-chevron-down"></i></span>
-               </a>
-               <div class="dropdown-menu dropdown-menu-right">
-                   <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i>
-                       Profile</a> <a class="dropdown-item" href="#"><i
-                           class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
-                   <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i>
-                       Settings</a> <a class="dropdown-item" href="#"><i
-                           class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
-                   <div class="dropdown-divider"></div>
-                   <form action="{{ route('logout') }}" method="POST">
-                       @csrf
-                       <button type="submit" class="dropdown-item">
-                           <i class="dripicons-exit text-muted mr-2"></i>
-                           Logout
-                       </button>
-                   </form>
+<nav class="navbar navbar-header navbar-expand-lg">
+    <div class="container-fluid">
 
-               </div>
-           </li>
-       </ul>
-       <ul class="list-unstyled topbar-nav mb-0">
-           <li>
-               <button class="button-menu-mobile nav-link waves-effect waves-light"><i
-                       class="mdi mdi-menu nav-icon"></i></button>
-           </li>
-           <li class="hidden-sm">
-               <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
-                   href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                   <i class="mdi mdi-library-plus mr-2"></i>Tools <i class="mdi mdi-chevron-down"></i>
-               </a>
-               <div class="dropdown-menu">
-                   <!-- item-->
-                   <a href="javascript:void(0);" class="dropdown-item">Photoshop </a>
-                   <!-- item-->
-                   <a href="javascript:void(0);" class="dropdown-item">Visual Studio </a>
-                   <!-- item-->
-                   <a href="javascript:void(0);" class="dropdown-item">Sublime Text 3 </a>
-                   <!-- item-->
-                   <a href="javascript:void(0);" class="dropdown-item">Phpstorm</a>
-               </div>
-           </li>
-           <li class="hidden-sm">
-               <a class="nav-link waves-effect waves-light" href="http://themesbrand.com/amezia/landing/index.html"
-                   target="_blank"><i class="mdi mdi-airplane mr-2"></i>Landing</a>
-           </li>
-       </ul>
-   </nav>
-   <!-- end navbar-->
+        <form class="navbar-left navbar-form nav-search mr-md-3" action="">
+            <div class="input-group">
+                <input type="text" placeholder="Search ..." class="form-control">
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <i class="la la-search search-icon"></i>
+                    </span>
+                </div>
+            </div>
+        </form>
+        <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+            <li class="nav-item dropdown hidden-caret">
+                <a class="nav-link dropdown-toggle" href="{{ url('#') }}" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="la la-envelope"></i>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url('#') }}">Action</a>
+                    <a class="dropdown-item" href="{{ url('#') }}">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ url('#') }}">Something else here</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown hidden-caret">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="la la-bell"></i>
+                    <span class="notification">3</span>
+                </a>
+                <ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
+                    <li>
+                        <div class="dropdown-title">You have 4 new notification</div>
+                    </li>
+                    <li>
+                        <div class="notif-center">
+                            <a href="#">
+                                <div class="notif-icon notif-primary"> <i class="la la-user-plus"></i> </div>
+                                <div class="notif-content">
+                                    <span class="block">
+                                        New user registered
+                                    </span>
+                                    <span class="time">5 minutes ago</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="notif-icon notif-success"> <i class="la la-comment"></i> </div>
+                                <div class="notif-content">
+                                    <span class="block">
+                                        Rahmad commented on Admin
+                                    </span>
+                                    <span class="time">12 minutes ago</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="notif-img">
+                                    <img src="{{ asset('assets/img/profile2.jpg') }}" alt="Img Profile">
+                                </div>
+                                <div class="notif-content">
+                                    <span class="block">
+                                        Reza send messages to you
+                                    </span>
+                                    <span class="time">12 minutes ago</span>
+                                </div>
+                            </a>
+                            <a href="#">
+                                <div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
+                                <div class="notif-content">
+                                    <span class="block">
+                                        Farrah liked Admin
+                                    </span>
+                                    <span class="time">17 minutes ago</span>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <a class="see-all" href="javascript:void(0);"> <strong>See all notifications</strong> <i
+                                class="la la-angle-right"></i> </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img
+                        src="{{ asset('assets/img/profile.jpg') }}" alt="user-img" width="36"
+                        class="img-circle"><span>{{ Auth::user()->name }}</span></span> </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <div class="user-box">
+                            <div class="u-img"><img src="{{ asset('assets/img/profile.jpg') }}" alt="user"></div>
+                            <div class="u-text">
+                                <h4>{{ Auth::user()->name }}</h4>
+                                <p class="text-muted">hello@themekita.com</p><a href="profile.html"
+                                    class="btn btn-rounded btn-danger btn-sm">View Profile</a>
+                            </div>
+                        </div>
+                    </li>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
+                    <a class="dropdown-item" href="#"></i> My Balance</a>
+                    <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
+                    <div class="dropdown-divider"></div>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</button>
+                    </form>
+                </ul>
+                <!-- /.dropdown-user -->
+            </li>
+        </ul>
+    </div>
+</nav>

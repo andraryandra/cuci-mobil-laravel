@@ -15,7 +15,8 @@
 
                         <div class="mb-3">
                             <label for="kategori_mobil_id" class="form-label">Kategori Mobil ID</label>
-                            <select class="custom-select" id="kategori_mobil_id" name="kategori_mobil_id">
+                            <select class="custom-select kategori-mobil" id="kategori_mobil_id"
+                                name="kategori_mobil_id">
                                 @foreach ($kategori_mobils as $kategori_mobil)
                                     <option value="{{ $kategori_mobil->id }}"
                                         {{ $item->kategori_mobil_id == $kategori_mobil->id ? 'selected' : '' }}>
@@ -26,11 +27,11 @@
 
                         <div class="mb-3">
                             <label for="produk_id" class="form-label">Produk ID</label>
-                            <select class="custom-select" id="produk_id" name="produk_id">
+                            <select class="custom-select produk-id" id="produk_id" name="produk_id">
                                 @foreach ($produks as $produk)
                                     <option value="{{ $produk->id }}"
                                         {{ $item->produk_id == $produk->id ? 'selected' : '' }}>
-                                        {{ $produk->kategori_mobil->kategori_mobil }} || {{ $produk->nama_produk }} ||
+                                        {{ $produk->kategoriMobil->kategori_mobil }} || {{ $produk->nama_produk }} ||
                                         Rp.
                                         {{ number_format($produk->harga_produk) }}
                                 @endforeach
@@ -81,10 +82,18 @@
                                 <option value="" selected>-- Pilih Karyawan --</option>
                                 @foreach ($users as $user)
                                     @if ($user->role == '2' || $user->role == 'karyawan')
-                                        <option value="{{ $user->id }}"
-                                            @if ($item->karyawan_id == $user->id) selected @endif>
-                                            {{ $user->name }}
-                                        </option>
+                                        @foreach ($user->statusKaryawan as $item2)
+                                            @if ($item2->status == 'INACTIVE')
+                                                <option value="{{ $user->id }}"
+                                                    @if ($item->karyawan_id == $user->id) selected @endif>
+                                                    {{ $user->name }}</option>
+                                            @elseif ($item2->status == 'ACTIVE')
+                                                @if ($item->karyawan_id == $user->id)
+                                                    <option value="{{ $user->id }}" selected>
+                                                        {{ $user->name }}</option>
+                                                @endif
+                                            @endif
+                                        @endforeach
                                     @endif
                                 @endforeach
                             </select>

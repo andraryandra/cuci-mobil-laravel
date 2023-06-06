@@ -44,6 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function statusKaryawan()
+    {
+        return $this->hasMany(StatusKaryawan::class, 'karyawan_id', 'id');
+    }
+
     protected function role(): Attribute
     {
         return new Attribute(

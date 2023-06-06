@@ -55,7 +55,7 @@
                                     @foreach ($bookings as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td class="text-center">{{ $item->kategori_mobil->kategori_mobil }}</td>
+                                            <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
                                             <td class="text-center text-capitalize">{{ $item->user->name }}</td>
                                             <td class="text-center">{{ $item->no_telp_pemesan }}</td>
                                             <td class="text-center">{{ $item->nama_mobil }}</td>
@@ -120,83 +120,6 @@
 
     </div>
 
-
-
-    {{-- <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="mt-0">Default Datatable</h5>
-                    <p class="text-muted font-13 mb-4">DataTables has most features enabled by default, so all you need to
-                        do to use it with your own tables is to call the construction function:
-                        <code>$().DataTable();</code>.
-                    </p>
-                    <div class="table-responsive">
-                        <table id="datatable" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">No</th>
-                                    <th class="text-center">Kategori Mobil</th>
-                                    <th class="text-center">Nama Pemesan</th>
-                                    <th class="text-center">No Telp</th>
-                                    <th class="text-center">Nama Mobil</th>
-                                    <th class="text-center">No Plat Mobil</th>
-                                    <th class="text-center">Tanggal Pesanan</th>
-                                    <th class="text-center">Jam Pesanan</th>
-                                    <th class="text-center">Status Booking</th>
-                                    <th class="text-center">Status Bayar</th>
-                                    <th class="text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($bookings as $item)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td class="text-center">{{ $item->kategori_mobil->kategori_mobil }}</td>
-                                        <td class="text-center text-capitalize">{{ $item->user->name }}</td>
-                                        <td class="text-center">{{ $item->no_telp_pemesan }}</td>
-                                        <td class="text-center">{{ $item->nama_mobil }}</td>
-                                        <td class="text-center">{{ $item->no_plat_mobil }}</td>
-                                        <td class="text-center">{{ $item->tanggal_pesan }}</td>
-                                        <td class="text-center">{{ $item->jam_pesan }}</td>
-                                        <td class="text-center">
-                                            @if ($item->status_pesan == 'PENDING')
-                                                <span class="badge bg-warning text-light">Menunggu Cucian</span>
-                                            @elseif ($item->status_pesan == 'PROCCESS')
-                                                <span class="badge bg-primary text-light">Sedang Dicuci</span>
-                                            @elseif ($item->status_pesan == 'SUCCESS')
-                                                <span class="badge bg-success text-light">Pencucian Selesai</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            @if ($item->status_bayar == 'UNPAID')
-                                                <span class="badge bg-warning text-light">Belum Bayar</span>
-                                            @elseif ($item->status_bayar == 'PAID')
-                                                <span class="badge bg-success text-light">Sudah Bayar</span>
-                                            @endif
-                                        </td>
-                                        <td class="d-flex align-items-center mx-2">
-                                            <button type="button" class="btn btn-warning text-light me-2"
-                                                data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->id }}">
-                                                Edit
-                                            </button>
-                                            <form action="{{ route('booking-cuci.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger mx-2">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end col -->
-    </div> --}}
-
     {{-- Modal Edit --}}
     @include('admin.booking_cuci.edit')
 
@@ -217,8 +140,9 @@
                         @csrf
 
                         <div class="mb-3">
-                            <label for="kategori_mobil_id" class="form-label">Kategori Mobil ID</label>
-                            <select class="custom-select" name="kategori_mobil_id" id="kategori_mobil_id" required>
+                            <label for="kategori-mobil" class="form-label">Kategori Mobil ID</label>
+                            <select class="custom-select kategori-mobil" name="kategori_mobil_id" id="kategori-mobil"
+                                required>
                                 <option value="" selected>Select Kategori Mobil</option>
                                 @foreach ($kategori_mobils as $kategori_mobil)
                                     <option value="{{ $kategori_mobil->id }}">{{ $kategori_mobil->kategori_mobil }}
@@ -227,13 +151,12 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="produk_id" class="form-label">Kategori Mobil ID</label>
-                            <select class="custom-select" name="produk_id" id="produk_id" required>
+                            <label for="produk-id" class="form-label">Kategori Mobil ID</label>
+                            <select class="custom-select produk-id" name="produk_id" id="produk-id" required>
                                 <option value="" selected>Select Produk</option>
                                 @foreach ($produks as $produk)
-                                    <option value="{{ $produk->id }}">
-                                        {{ $produk->kategori_mobil->kategori_mobil }} || {{ $produk->nama_produk }} || Rp.
-                                        {{ number_format($produk->harga_produk) }}
+                                    <option value="{{ $produk->id }}">{{ $produk->kategoriMobil->kategori_mobil }} ||
+                                        {{ $produk->nama_produk }} || Rp. {{ number_format($produk->harga_produk) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -351,6 +274,83 @@
     <script>
         $(document).ready(function() {
             $('option[value=""]').css('display', 'none');
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var kategoriMobilSelect = document.querySelector('.kategori-mobil');
+            var produkSelect = document.querySelector('.produk-id');
+
+            kategoriMobilSelect.addEventListener('change', function() {
+                var selectedKategoriMobilId = this.value;
+
+                // Menghapus semua opsi produk sebelumnya
+                produkSelect.innerHTML = '';
+
+                if (selectedKategoriMobilId) {
+                    // Mendapatkan daftar produk berdasarkan kategori mobil yang dipilih
+                    var produkList = {!! $produks->toJson() !!};
+
+                    // Membuat opsi produk yang sesuai dengan kategori mobil terpilih
+                    produkList.forEach(function(produk) {
+                        if (produk.kategori_mobil_id == selectedKategoriMobilId) {
+                            var option = document.createElement('option');
+                            option.value = produk.id;
+                            option.textContent = produk.nama_produk + ' || Rp. ' + parseFloat(produk
+                                .harga_produk).toLocaleString();
+                            produkSelect.appendChild(option);
+                        }
+                    });
+                }
+            });
+
+            // Memastikan produk terpilih saat halaman dimuat
+            var initialKategoriMobilId = kategoriMobilSelect.value;
+            if (initialKategoriMobilId) {
+                // Memicu perubahan pada kategori mobil untuk mengisi produk
+                kategoriMobilSelect.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var kategoriMobilSelect = document.getElementById('kategori-mobil');
+            var produkSelect = document.getElementById('produk-id');
+
+            kategoriMobilSelect.addEventListener('change', function() {
+                var selectedKategoriMobilId = this.value;
+
+                // Menghapus semua opsi produk sebelumnya
+                produkSelect.innerHTML = '';
+
+                if (selectedKategoriMobilId) {
+                    // Mendapatkan daftar produk berdasarkan kategori mobil yang dipilih
+                    var produkList = {!! $produks->toJson() !!};
+
+                    // Membuat opsi produk yang sesuai dengan kategori mobil terpilih
+                    produkList.forEach(function(produk) {
+                        if (produk.kategori_mobil_id == selectedKategoriMobilId) {
+                            var option = document.createElement('option');
+                            option.value = produk.id;
+                            option.textContent = produk.nama_produk + ' || Rp. ' + parseFloat(produk
+                                    .harga_produk)
+                                .toLocaleString();
+                            produkSelect.appendChild(option);
+                        }
+                    });
+                }
+            });
+
+            // Memastikan produk terpilih saat halaman dimuat
+            var initialKategoriMobilId = kategoriMobilSelect.value;
+            if (initialKategoriMobilId) {
+                // Memicu perubahan pada kategori mobil untuk mengisi produk
+                kategoriMobilSelect.dispatchEvent(new Event('change'));
+            }
         });
     </script>
 @endpush

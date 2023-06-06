@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\StatusKaryawan;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class UserKaryawanController extends Controller
@@ -36,20 +38,21 @@ class UserKaryawanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $this->validate(request(),
-        [
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'role' => 'required'
-        ],
-        [
-            'name.required' => 'Nama tidak boleh kosong',
-            'email.required' => 'Email tidak boleh kosong',
-            'password.required' => 'Password tidak boleh kosong',
-            'role.required' => 'Role tidak boleh kosong'
-        ]);
+{
+    $this->validate(request(), [
+        'name' => 'required',
+        'email' => 'required',
+        'password' => 'required',
+        'role' => 'required'
+    ], [
+        'name.required' => 'Nama tidak boleh kosong',
+        'email.required' => 'Email tidak boleh kosong',
+        'password.required' => 'Password tidak boleh kosong',
+        'role.required' => 'Role tidak boleh kosong'
+    ]);
+
+    try {
+        DB::beginTransaction();
 
         $usersAdmin = User::create([
             'name' => $request->name,
@@ -58,12 +61,19 @@ class UserKaryawanController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        if($usersAdmin){
-            return back()->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
-            return back()->with(['error' => 'Data Gagal Disimpan!']);
-        }
+        $statusKaryawan = StatusKaryawan::create([
+            'karyawan_id' => $usersAdmin->id,
+            'status' => 'INACTIVE',
+        ]);
+
+        DB::commit();
+
+        return back()->with(['success' => 'Data Berhasil Disimpan!']);
+    } catch (\Exception $e) {
+        DB::rollback();
+        return back()->with(['error' => 'Data Gagal Disimpan!']);
     }
+}
 
     /**
      * Display the specified resource.

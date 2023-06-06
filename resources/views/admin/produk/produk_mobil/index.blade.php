@@ -50,7 +50,7 @@
                                     @foreach ($produk_mobil as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->kategori_mobil->kategori_mobil }}</td>
+                                            <td>{{ $item->kategoriMobil->kategori_mobil }}</td>
                                             <td>{{ $item->nama_produk }}</td>
                                             <td>Rp. {{ number_format($item->harga_produk, 0, ',', '.') }}</td>
                                             <td>{{ $item->deskripsi_produk }}</td>
@@ -112,8 +112,8 @@
                                 placeholder="Nama Produk" required>
                         </div>
                         <div class="mb-3">
-                            <label for="harga_produk" class="form-label">Harga Produk</label>
-                            <input type="number" class="form-control" id="harga_produk" name="harga_produk"
+                            <label for="input-harga" class="form-label">Harga Produk</label>
+                            <input type="text" class="form-control" id="input-harga" name="harga_produk"
                                 placeholder="Harga Produk" required>
                         </div>
                         <div class="mb-3">
@@ -122,7 +122,8 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
+                            <button type="submit" class="btn btn-primary" onclick="disableButton(this);"
+                                id="buttonText">Simpan</button>
                         </div>
                     </form>
                 </div>
@@ -169,6 +170,48 @@
     <script>
         $(document).ready(function() {
             $('option[value=""]').css('display', 'none');
+        });
+    </script>
+
+    <script>
+        function disableButton(button) {
+            button.disabled = true;
+            var buttonText = document.getElementById("buttonText");
+            buttonText.innerText = "Tunggu...";
+
+            // Mengganti format angka sebelum submit
+            var inputHarga = document.getElementById('input-harga');
+            var nilaiInput = inputHarga.value.replace(/\D/g, '');
+            inputHarga.value = nilaiInput;
+
+            // Menjalankan submit form setelah 500ms
+            setTimeout(function() {
+                button.form.submit();
+            }, 500);
+        }
+    </script>
+
+    <script>
+        function formatRupiah(angka) {
+            var rupiah = '';
+            var angkarev = angka.toString().split('').reverse().join('');
+            for (var i = 0; i < angkarev.length; i++)
+                if (i % 3 == 0) rupiah += angkarev.substr(i, 3) + '.';
+            return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
+        }
+
+        var inputHarga = document.getElementById('input-harga');
+        inputHarga.addEventListener('input', function(e) {
+            var nilaiInput = e.target.value.replace(/\D/g, '');
+            var nilaiFormat = formatRupiah(nilaiInput);
+            e.target.value = nilaiFormat;
+        });
+
+        var form = document.querySelector('form');
+        form.addEventListener('submit', function(e) {
+            var inputHarga = document.getElementById('input-harga');
+            var nilaiInput = inputHarga.value.replace(/\D/g, '');
+            inputHarga.value = nilaiInput;
         });
     </script>
 @endpush

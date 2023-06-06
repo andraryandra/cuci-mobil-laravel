@@ -15,6 +15,7 @@ class CreateBookingCucisTable extends Migration
     {
         Schema::create('booking_cucis', function (Blueprint $table) {
             $table->id();
+
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('kategori_mobil_id')->constrained('kategori_mobils')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('produk_id')->constrained('produk_mobils')->onDelete('cascade')->onUpdate('cascade');

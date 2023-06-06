@@ -18,7 +18,7 @@ class TransactionBookingController extends Controller
      */
     public function index()
     {
-        $bookings = BookingCuci::with(['kategori_mobil','karyawan','user'])
+        $bookings = BookingCuci::with(['kategoriMobil','karyawan','user'])
         ->where('status_pesan', 'SUCCESS')
         ->where('status_bayar', 'PAID')
         ->get();

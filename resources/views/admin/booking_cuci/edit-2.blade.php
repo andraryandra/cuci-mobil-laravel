@@ -18,14 +18,12 @@
                                 <option value="" selected>-- Pilih Karyawan --</option>
                                 @foreach ($users as $user)
                                     @if ($user->role == '2' || $user->role == 'karyawan')
-                                        @php
-                                            $selesaiCuci = \App\Models\BookingCuci::where('karyawan_id', $user->id)
-                                                ->where('status_pesan', 'SUCCESS')
-                                                ->count();
-                                        @endphp
-                                        @if ($selesaiCuci > 0)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                        @endif
+                                        @foreach ($user->statusKaryawan as $item2)
+                                            @if ($item2->status == 'INACTIVE')
+                                                <option value="{{ $user->id }}">
+                                                    {{ $user->name }}</option>
+                                            @endif
+                                        @endforeach
                                     @endif
                                 @endforeach
                             </select>

@@ -22,8 +22,14 @@ class BookingCuci extends Model
         return $this->belongsTo(User::class, 'karyawan_id', 'id');
     }
 
-    public function kategori_mobil()
+    public function statusKaryawan()
     {
-        return $this->belongsTo(KategoriMobil::class, 'kategori_mobil_id', 'id');
+        return $this->hasMany(StatusKaryawan::class, 'karyawan_id', 'id');
     }
+
+    public function kategoriMobil()
+{
+    return $this->belongsTo(KategoriMobil::class, 'kategori_mobil_id', 'id');
+}
+
 }

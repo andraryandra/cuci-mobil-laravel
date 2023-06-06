@@ -49,7 +49,7 @@
                                     @foreach ($bookings as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td class="text-center">{{ $item->kategori_mobil->kategori_mobil }}</td>
+                                            <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
                                             <td class="text-center text-capitalize">{{ $item->user->name }}</td>
                                             <td class="text-center">{{ $item->no_telp_pemesan }}</td>
                                             <td class="text-center">{{ $item->nama_mobil }}</td>
@@ -87,7 +87,8 @@
                                             </td>
                                             <td class="align-middle">
                                                 <div class="d-flex justify-content-between">
-                                                    <button type="button" class="btn btn-sm btn-warning text-light me-2"
+                                                    <button type="button"
+                                                        class="btn btn-sm btn-warning text-light me-2 mr-2"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalEdit{{ $item->id }}">
                                                         Edit
@@ -97,12 +98,14 @@
                                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                        <button type="submit"
+                                                            class="btn btn-sm btn-danger me-2">Delete</button>
                                                     </form>
                                                     <a href="https://api.whatsapp.com/send?phone=85314005779"
                                                         target="_blank" class="btn btn-sm btn-success">WhatsApp</a>
                                                 </div>
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>

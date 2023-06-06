@@ -55,7 +55,7 @@
                                     @foreach ($bookings as $item)
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td class="text-center">{{ $item->kategori_mobil->kategori_mobil }}</td>
+                                            <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
                                             <td class="text-center text-capitalize">{{ $item->user->name }}</td>
                                             <td class="text-center">{{ $item->no_telp_pemesan }}</td>
                                             <td class="text-center">{{ $item->nama_mobil }}</td>
@@ -217,8 +217,8 @@
                         @csrf
 
                         <div class="mb-3">
-                            <label for="kategori_mobil_id" class="form-label">Kategori Mobil ID</label>
-                            <select class="custom-select" name="kategori_mobil_id" id="kategori_mobil_id" required>
+                            <label for="kategori-mobil" class="form-label">Kategori Mobil ID</label>
+                            <select class="custom-select" name="kategori_mobil_id" id="kategori-mobil" required>
                                 <option value="" selected>Select Kategori Mobil</option>
                                 @foreach ($kategori_mobils as $kategori_mobil)
                                     <option value="{{ $kategori_mobil->id }}">{{ $kategori_mobil->kategori_mobil }}
@@ -227,17 +227,17 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="produk_id" class="form-label">Kategori Mobil ID</label>
-                            <select class="custom-select" name="produk_id" id="produk_id" required>
+                            <label for="produk-id" class="form-label">Kategori Mobil ID</label>
+                            <select class="custom-select" name="produk_id" id="produk-id" required>
                                 <option value="" selected>Select Produk</option>
                                 @foreach ($produks as $produk)
-                                    <option value="{{ $produk->id }}">
-                                        {{ $produk->kategori_mobil->kategori_mobil }} || {{ $produk->nama_produk }} || Rp.
-                                        {{ number_format($produk->harga_produk) }}
+                                    <option value="{{ $produk->id }}">{{ $produk->kategoriMobil->kategori_mobil }} ||
+                                        {{ $produk->nama_produk }} || Rp. {{ number_format($produk->harga_produk) }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Nama Pemesan</label>
                             <select class="custom-select" name="user_id" id="user_id" required>
@@ -351,6 +351,82 @@
     <script>
         $(document).ready(function() {
             $('option[value=""]').css('display', 'none');
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var kategoriMobilSelect = document.querySelector('.kategori-mobil');
+            var produkSelect = document.querySelector('.produk-id');
+
+            kategoriMobilSelect.addEventListener('change', function() {
+                var selectedKategoriMobilId = this.value;
+
+                // Menghapus semua opsi produk sebelumnya
+                produkSelect.innerHTML = '';
+
+                if (selectedKategoriMobilId) {
+                    // Mendapatkan daftar produk berdasarkan kategori mobil yang dipilih
+                    var produkList = {!! $produks->toJson() !!};
+
+                    // Membuat opsi produk yang sesuai dengan kategori mobil terpilih
+                    produkList.forEach(function(produk) {
+                        if (produk.kategori_mobil_id == selectedKategoriMobilId) {
+                            var option = document.createElement('option');
+                            option.value = produk.id;
+                            option.textContent = produk.nama_produk + ' || Rp. ' + parseFloat(produk
+                                .harga_produk).toLocaleString();
+                            produkSelect.appendChild(option);
+                        }
+                    });
+                }
+            });
+
+            // Memastikan produk terpilih saat halaman dimuat
+            var initialKategoriMobilId = kategoriMobilSelect.value;
+            if (initialKategoriMobilId) {
+                // Memicu perubahan pada kategori mobil untuk mengisi produk
+                kategoriMobilSelect.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var kategoriMobilSelect = document.getElementById('kategori-mobil');
+            var produkSelect = document.getElementById('produk-id');
+
+            kategoriMobilSelect.addEventListener('change', function() {
+                var selectedKategoriMobilId = this.value;
+
+                // Menghapus semua opsi produk sebelumnya
+                produkSelect.innerHTML = '';
+
+                if (selectedKategoriMobilId) {
+                    // Mendapatkan daftar produk berdasarkan kategori mobil yang dipilih
+                    var produkList = {!! $produks->toJson() !!};
+
+                    // Membuat opsi produk yang sesuai dengan kategori mobil terpilih
+                    produkList.forEach(function(produk) {
+                        if (produk.kategori_mobil_id == selectedKategoriMobilId) {
+                            var option = document.createElement('option');
+                            option.value = produk.id;
+                            option.textContent = produk.nama_produk + ' || Rp. ' + parseFloat(produk
+                                    .harga_produk)
+                                .toLocaleString();
+                            produkSelect.appendChild(option);
+                        }
+                    });
+                }
+            });
+
+            // Memastikan produk terpilih saat halaman dimuat
+            var initialKategoriMobilId = kategoriMobilSelect.value;
+            if (initialKategoriMobilId) {
+                // Memicu perubahan pada kategori mobil untuk mengisi produk
+                kategoriMobilSelect.dispatchEvent(new Event('change'));
+            }
         });
     </script>
 @endpush

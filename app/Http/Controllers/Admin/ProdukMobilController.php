@@ -17,7 +17,7 @@ class ProdukMobilController extends Controller
      */
     public function index()
     {
-        $produk_mobil = ProdukMobil::with(['kategori_mobil'])->get();
+        $produk_mobil = ProdukMobil::with(['kategoriMobil'])->get();
         $kategori_mobils = KategoriMobil::get();
         return view('admin.produk.produk_mobil.index', compact(
             'produk_mobil',

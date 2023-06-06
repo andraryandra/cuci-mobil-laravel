@@ -72,6 +72,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::resource('booking-cuci', BookingCuciController::class)->only([
         'index', 'store', 'show', 'update', 'destroy'
     ]);
+
     Route::get('booking-cuci-sedang-dicuci', [BookingCuciController::class, 'indexSedangDicuci'])->name('booking-cuci.sedangDicuci');
     Route::get('booking-cuci-selesai-dicuci', [BookingCuciController::class, 'indexSelesaiDicuci'])->name('booking-cuci.selesaiDicuci');
     Route::put('booking-cuci/{id}/update-status', [BookingCuciController::class, 'updateKaryawan'])->name('booking-cuci.updateKaryawan');
