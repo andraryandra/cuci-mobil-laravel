@@ -35,7 +35,7 @@
                         <div class="my-3">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
-                                Create Booking Cuci Mobil
+                                <i class="fa fa-plus-circle"></i> Create Booking Cuci Mobil
                             </button>
                         </div>
 
@@ -87,7 +87,7 @@
                                                         @if ($item->status_pesan == 'PENDING')
                                                             Menunggu Cucian
                                                         @elseif ($item->status_pesan == 'PROCESS')
-                                                            Sedang Dicuci
+                                                            <i class="fa fa-spin fa-spinner"></i> Sedang Dicuci
                                                         @elseif ($item->status_pesan == 'SUCCESS')
                                                             Pencucian Selesai
                                                         @endif
@@ -99,12 +99,11 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <button class="btn btn-success col-md-12" type="submit">
-                                                                Cucian Selesai
+                                                                <i class="fa fa-check-circle"></i> Cucian Selesai
                                                             </button>
                                                         </form>
                                                     </div>
                                                 </div>
-
                                             </td>
 
                                             {{-- <td class="text-center">
@@ -125,7 +124,7 @@
                                                         <button class="dropdown-item btn btn-warning text-light"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalEdit{{ $item->id }}">
-                                                            Edit
+                                                            <i class="fa fa-edit"></i> Edit
                                                         </button>
                                                         <form action="{{ route('booking-cuci.destroy', $item->id) }}"
                                                             method="POST"
@@ -133,7 +132,9 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
-                                                                class="dropdown-item btn btn-danger">Delete</button>
+                                                                class="dropdown-item btn btn-danger text-white">
+                                                                <i class="fa fa-trash"></i> Delete
+                                                            </button>
                                                         </form>
                                                     </div>
                                                 </div>

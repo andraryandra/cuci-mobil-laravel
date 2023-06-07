@@ -1,56 +1,55 @@
 @extends('layouts.app')
 @section('title', 'Dashboard - Admin')
 @section('contentAdmin')
-    <div class="container-fluid">
-        <!-- Page-Title -->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="page-title-box">
-                    <h4 class="page-title">Booking Cuci Mobil</h4>
-                </div>
+    {{-- <div class="container-fluid"> --}}
+    <!-- Page-Title -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="page-title-box">
+                <h4 class="page-title">Booking Cuci Mobil</h4>
             </div>
         </div>
+    </div>
 
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>Success!</strong> {{ session('success') }}.
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @elseif (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <strong>Error!</strong> {{ session('error') }}.
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        @endif
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> {{ session('success') }}.
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @elseif (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> {{ session('error') }}.
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
 
-        <!--end row-->
-        <div class="row">
-            <div class="col-lg-12 col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="my-3">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop">
-                                Create Booking Cuci Mobil
-                            </button>
-                        </div>
-
-                        <div class="table-responsive-custom">
+    <!--end row-->
+    <div class="row">
+        <div class="col-lg-12 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="my-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#staticBackdrop">
+                            <i class="fa fa-plus-circle"></i> Create Booking Cuci Mobil
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <div class="table-responsive-sm">
                             <table id="datatable" class="table table-bordered table-striped" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
                                         <th class="text-center">Kategori Mobil</th>
                                         <th class="text-center">Nama Pemesan</th>
-                                        {{-- <th class="text-center">No Telp</th> --}}
                                         <th class="text-center">Nama Mobil</th>
                                         <th class="text-center">No Plat Mobil</th>
                                         <th class="text-center">Tanggal Pesanan</th>
-                                        <th class="text-center">Karyawan</th>
+                                        {{-- <th class="text-center">Karyawan</th> --}}
                                         <th class="text-center">Status Booking</th>
                                         <th class="text-center">Status Bayar</th>
                                         <th class="text-center">Aksi</th>
@@ -62,14 +61,13 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
                                             <td class="text-center text-capitalize">{{ $item->user->name }}</td>
-                                            {{-- <td class="text-center">{{ $item->no_telp_pemesan }}</td> --}}
                                             <td class="text-center">{{ $item->nama_mobil }}</td>
                                             <td class="text-center">{{ $item->no_plat_mobil }}</td>
                                             <td class="text-center">
                                                 {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d-m-Y') }} ||
                                                 {{ $item->jam_pesan }}</td>
 
-                                            <td class="text-center text-capitalize">
+                                            {{-- <td class="text-center text-capitalize">
                                                 @if ($item->karyawan_id == null)
                                                     <button type="button" class="btn btn-info text-light me-2"
                                                         data-bs-toggle="modal"
@@ -79,22 +77,41 @@
                                                 @else
                                                     {{ $item->karyawan->name }}
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td class="text-center">
                                                 @if ($item->status_pesan == 'PENDING')
                                                     <span class="badge bg-warning text-light">Menunggu Cucian</span>
                                                 @elseif ($item->status_pesan == 'PROCESS')
                                                     <span class="badge bg-primary text-light">Sedang Dicuci</span>
                                                 @elseif ($item->status_pesan == 'SUCCESS')
-                                                    <span class="badge bg-success text-light">Pencucian Selesai</span>
+                                                    <span class="badge bg-success text-light p-2">
+                                                        <i class="fa fa-check-square"></i> Pencucian Selesai
+                                                    </span>
                                                 @endif
                                             </td>
                                             <td class="text-center">
-                                                @if ($item->status_bayar == 'UNPAID')
-                                                    <span class="badge bg-warning text-light">Belum Bayar</span>
-                                                @elseif ($item->status_bayar == 'PAID')
-                                                    <span class="badge bg-success text-light">Sudah Bayar</span>
-                                                @endif
+                                                <div class="dropdown">
+                                                    <button class="btn btn-warning dropdown-toggle text-white"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        @if ($item->status_bayar == 'UNPAID')
+                                                            Belum Dibayar
+                                                        @elseif ($item->status_bayar == 'PAID')
+                                                            Sudah Dibayar
+                                                        @endif
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <form
+                                                            action="{{ route('booking-cuci-selesai-dicuci.updateStatusBayar', $item->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button class="btn btn-success col-md-12 " type="submit">
+                                                                <i class="fa fa-credit-card-alt"></i> Sudah Dibayar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td class="align-middle">
                                                 <div class="dropdown">
@@ -104,10 +121,15 @@
                                                         Action
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a href="{{ route('booking-cuci-selesai-dicuci.sendWhatsapp', $item->id) }}"
+                                                            class="dropdown-item btn btn-success text-light"
+                                                            target="_blank">
+                                                            <i class="fa fa-whatsapp"></i> WhatsApp
+                                                        </a>
                                                         <button class="dropdown-item btn btn-warning text-light"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalEdit{{ $item->id }}">
-                                                            Edit
+                                                            <i class="fa fa-edit"></i> Edit
                                                         </button>
                                                         <form action="{{ route('booking-cuci.destroy', $item->id) }}"
                                                             method="POST"
@@ -115,11 +137,14 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
-                                                                class="dropdown-item btn btn-danger">Delete</button>
+                                                                class="dropdown-item btn btn-danger text-white">
+                                                                <i class="fa fa-trash"></i> Delete
+                                                            </button>
                                                         </form>
                                                     </div>
                                                 </div>
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -132,85 +157,8 @@
 
     </div>
 
-
-
-    {{-- <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="mt-0">Default Datatable</h5>
-                    <p class="text-muted font-13 mb-4">DataTables has most features enabled by default, so all you need to
-                        do to use it with your own tables is to call the construction function:
-                        <code>$().DataTable();</code>.
-                    </p>
-                    <div class="table-responsive">
-                        <table id="datatable" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">No</th>
-                                    <th class="text-center">Kategori Mobil</th>
-                                    <th class="text-center">Nama Pemesan</th>
-                                    <th class="text-center">No Telp</th>
-                                    <th class="text-center">Nama Mobil</th>
-                                    <th class="text-center">No Plat Mobil</th>
-                                    <th class="text-center">Tanggal Pesanan</th>
-                                    <th class="text-center">Jam Pesanan</th>
-                                    <th class="text-center">Status Booking</th>
-                                    <th class="text-center">Status Bayar</th>
-                                    <th class="text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($bookings as $item)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td class="text-center">{{ $item->kategori_mobil->kategori_mobil }}</td>
-                                        <td class="text-center text-capitalize">{{ $item->user->name }}</td>
-                                        <td class="text-center">{{ $item->no_telp_pemesan }}</td>
-                                        <td class="text-center">{{ $item->nama_mobil }}</td>
-                                        <td class="text-center">{{ $item->no_plat_mobil }}</td>
-                                        <td class="text-center">{{ $item->tanggal_pesan }}</td>
-                                        <td class="text-center">{{ $item->jam_pesan }}</td>
-                                        <td class="text-center">
-                                            @if ($item->status_pesan == 'PENDING')
-                                                <span class="badge bg-warning text-light">Menunggu Cucian</span>
-                                            @elseif ($item->status_pesan == 'PROCCESS')
-                                                <span class="badge bg-primary text-light">Sedang Dicuci</span>
-                                            @elseif ($item->status_pesan == 'SUCCESS')
-                                                <span class="badge bg-success text-light">Pencucian Selesai</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            @if ($item->status_bayar == 'UNPAID')
-                                                <span class="badge bg-warning text-light">Belum Bayar</span>
-                                            @elseif ($item->status_bayar == 'PAID')
-                                                <span class="badge bg-success text-light">Sudah Bayar</span>
-                                            @endif
-                                        </td>
-                                        <td class="d-flex align-items-center mx-2">
-                                            <button type="button" class="btn btn-warning text-light me-2"
-                                                data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->id }}">
-                                                Edit
-                                            </button>
-                                            <form action="{{ route('booking-cuci.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger mx-2">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end col -->
-    </div> --}}
-
     {{-- Modal Edit --}}
-    @include('admin.booking_cuci.edit')
+    @include('admin.booking_cuci.SudahDicuci.edit')
 
     {{-- Modal Karyawan --}}
     @include('admin.booking_cuci.edit-2')
@@ -246,7 +194,8 @@
                             <select class="custom-select" name="produk_id" id="produk-id" title="Produk" required>
                                 <option value="" selected>Select Produk</option>
                                 @foreach ($produks as $produk)
-                                    <option value="{{ $produk->id }}">{{ $produk->kategoriMobil->kategori_mobil }} ||
+                                    <option value="{{ $produk->id }}">{{ $produk->kategoriMobil->kategori_mobil }}
+                                        ||
                                         {{ $produk->nama_produk }} || Rp. {{ number_format($produk->harga_produk) }}
                                     </option>
                                 @endforeach

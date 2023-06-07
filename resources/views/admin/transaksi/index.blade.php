@@ -24,7 +24,7 @@
         @endif
 
         <!--end row-->
-        <div class="row">
+        {{-- <div class="row">
             <div class="col-lg-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
@@ -114,12 +114,146 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+
+        <div class="row">
+            <div class="col-lg-12 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{-- <div class="my-3">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop">
+                                Create Booking Cuci Mobil
+                            </button>
+                        </div> --}}
+                        <div class="table-responsive">
+                            <div class="table-responsive-sm">
+                                <table id="datatable" class="table table-bordered table-striped" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Kategori Mobil</th>
+                                            <th class="text-center">Nama Pemesan</th>
+                                            <th class="text-center">Nama Mobil</th>
+                                            <th class="text-center">No Plat Mobil</th>
+                                            <th class="text-center">Tanggal Pesanan</th>
+                                            {{-- <th class="text-center">Karyawan</th> --}}
+                                            <th class="text-center">Status Booking</th>
+                                            <th class="text-center">Status Bayar</th>
+                                            <th class="text-center">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($bookings as $item)
+                                            <tr>
+                                                <td class="text-center">{{ $loop->iteration }}</td>
+                                                <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
+                                                <td class="text-center text-capitalize">{{ $item->user->name }}</td>
+                                                <td class="text-center">{{ $item->nama_mobil }}</td>
+                                                <td class="text-center">{{ $item->no_plat_mobil }}</td>
+                                                <td class="text-center">
+                                                    {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d-m-Y') }} ||
+                                                    {{ $item->jam_pesan }}</td>
+
+                                                {{-- <td class="text-center text-capitalize">
+                                                    @if ($item->karyawan_id == null)
+                                                        <button type="button" class="btn btn-info text-light me-2"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEdit2{{ $item->id }}">
+                                                            Pilih Karyawan
+                                                        </button>
+                                                    @else
+                                                        {{ $item->karyawan->name }}
+                                                    @endif
+                                                </td> --}}
+                                                <td class="text-center">
+                                                    @if ($item->status_pesan == 'PENDING')
+                                                        <span class="badge bg-warning text-light p-2">Menunggu Cucian</span>
+                                                    @elseif ($item->status_pesan == 'PROCESS')
+                                                        <span class="badge bg-primary text-light p-2">Sedang Dicuci</span>
+                                                    @elseif ($item->status_pesan == 'SUCCESS')
+                                                        <span class="badge bg-success text-light p-2">
+                                                            <i class="fa fa-check-square"></i> Pencucian Selesai
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                                <td class="text-center">
+                                                    @if ($item->status_bayar == 'UNPAID')
+                                                        <span class="badge bg-warning text-light p-2">
+                                                            <i class="fa fa-warning"></i> Belum Bayar
+                                                        </span>
+                                                    @elseif ($item->status_bayar == 'PAID')
+                                                        <span class="badge bg-success text-light p-2">
+                                                            <i class="fa fa-check-square"></i> Sudah Bayar
+                                                        </span>
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle">
+                                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                                                        data-bs-target="#modal{{ $item->id }}">
+                                                        Action
+                                                    </button>
+                                                </td>
+
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
 
     {{-- Modal Edit --}}
-    {{-- @include('admin.booking_cuci.edit') --}}
+    @include('admin.transaksi.edit')
+
+    {{-- Modal Action --}}
+    <!-- Modal -->
+    <div class="modal fade" id="modal{{ $item->id }}" tabindex="-1" aria-labelledby="modal{{ $item->id }}Label"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal{{ $item->id }}Label">Transaksi Cuci Mobil</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-grid gap-2">
+                        <a href="{{ route('transaction-booking.sendWhatsapp', $item->id) }}"
+                            class="btn btn-success btn-lg text-light w-100 my-2" target="_blank">
+                            <i class="fa fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="{{ route('transaction-booking.pdf', $item->id) }}"
+                            class="btn btn-primary btn-lg text-light w-100 my-2" target="_blank">
+                            <i class="fa fa-file-pdf-o"></i> Kwitansi
+                        </a>
+                        <button class="btn btn-warning btn-lg text-light w-100 my-2" data-bs-dismiss="modal"
+                            data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->id }}">
+                            <i class="fa fa-edit"></i> Edit
+                        </button>
+                        <form action="{{ route('transaction-booking.destroy', $item->id) }}" method="POST"
+                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-lg text-white w-100 my-2">
+                                <i class="fa fa-trash"></i> Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
 
     {{-- Modal Karyawan --}}
     {{-- @include('admin.booking_cuci.edit-2') --}}

@@ -11,7 +11,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('booking-cuci.update', $item->id) }}" method="POST">
+                    <form action="{{ route('booking-cuci-selesai-dicuci.update', $item->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -99,9 +99,9 @@
                                     @endif
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="status_pesan" class="form-label">Status Pesan</label>
                             <select class="custom-select" id="status_pesan" name="status_pesan">
                                 <option value="PENDING" @if ($item->status_pesan == 'PENDING') selected @endif>

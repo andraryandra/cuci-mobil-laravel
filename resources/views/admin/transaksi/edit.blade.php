@@ -1,17 +1,17 @@
 @foreach ($bookings as $item)
     <!-- Modal -->
     <div class="modal fade" id="modalEdit{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" role="dialog" style="overflow-y: auto;">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Booking Cuci</h1>
+                    <h3 class="modal-title fs-5" id="staticBackdropLabel">Edit Transaksi Booking Cuci</h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('booking-cuci.update', $item->id) }}" method="POST">
+                    <form action="{{ route('transaction-booking.update', $item->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -77,43 +77,6 @@
                             <input type="time" class="form-control" id="jam_pesan" name="jam_pesan"
                                 value="{{ $item->jam_pesan }}">
                         </div>
-
-                        {{-- <div class="mb-3">
-                            <label for="karyawan_id" class="form-label">Nama Karyawan</label>
-                            <select class="custom-select" id="karyawan_id" name="karyawan_id">
-                                <option value="" selected>-- Pilih Karyawan --</option>
-                                @foreach ($users as $user)
-                                    @if ($user->role == '2' || $user->role == 'karyawan')
-                                        @foreach ($user->statusKaryawan as $item2)
-                                            @if ($item2->status == 'INACTIVE')
-                                                <option value="{{ $user->id }}"
-                                                    @if ($item->karyawan_id == $user->id) selected @endif>
-                                                    {{ $user->name }}</option>
-                                            @elseif ($item2->status == 'ACTIVE')
-                                                @if ($item->karyawan_id == $user->id)
-                                                    <option value="{{ $user->id }}" selected>
-                                                        {{ $user->name }}</option>
-                                                @endif
-                                            @endif
-                                        @endforeach
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="status_pesan" class="form-label">Status Pesan</label>
-                            <select class="custom-select" id="status_pesan" name="status_pesan">
-                                <option value="PENDING" @if ($item->status_pesan == 'PENDING') selected @endif>
-                                    Menunggu Antrian</option>
-                                <option value="PROCESS" @if ($item->status_pesan == 'PROCESS') selected @endif>
-                                    Sedang Dicuci</option>
-
-                                <option value="SUCCESS" @if ($item->status_pesan == 'SUCCESS') selected @endif>
-                                    Selesai</option>
-                            </select>
-                        </div> --}}
-
                         <div class="mb-3">
                             <label for="status_bayar" class="form-label">Status Bayar</label>
                             <select class="custom-select" id="status_bayar" name="status_bayar">
@@ -138,6 +101,15 @@
 
 
 @push('style')
+    {{-- <style>
+        .modal-dialog-scrollable {
+            max-height: 70vh;
+            /* Atur tinggi maksimal modal di sini */
+            overflow-y: auto;
+            /* Aktifkan overflow-y untuk memunculkan scrollbar jika konten melampaui tinggi maksimal */
+        }
+    </style> --}}
+
     <style>
         .custom-select {
             appearance: none;

@@ -5,13 +5,14 @@ use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\LandingPage\HomeController;
 use App\Http\Controllers\Admin\BookingCuciController;
 use App\Http\Controllers\Admin\ProdukMobilController;
+use App\Http\Controllers\Admin\SudahDicuciController;
+use App\Http\Controllers\Admin\SedangDicuciController;
 use App\Http\Controllers\Admin\UserCustomerController;
 use App\Http\Controllers\Admin\UserKaryawanController;
 use App\Http\Controllers\User\DashboardUserController;
 use App\Http\Controllers\Admin\KategoriMobilController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriProdukController;
-use App\Http\Controllers\Admin\SedangDicuciController;
 use App\Http\Controllers\LandingPage\ServicesController;
 use App\Http\Controllers\Admin\TransactionBookingController;
 
@@ -78,12 +79,24 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::resource('booking-cuci-sedang-dicuci', SedangDicuciController::class)->only([
         'index', 'update',
     ]);
+
+    Route::resource('booking-cuci-selesai-dicuci', SudahDicuciController::class)->only([
+        'index', 'update',
+    ]);
+    Route::get('/booking-cuci/{id}/send-whatsapp', [SudahDicuciController::class, 'sendWhatsAppMessage'])->name('booking-cuci-selesai-dicuci.sendWhatsapp');
+
+
+    Route::put('booking-cuci-selesai-dicuci-update/{id}/update-status', [SudahDicuciController::class, 'updateStatusBayar'])->name('booking-cuci-selesai-dicuci.updateStatusBayar');
+
     Route::put('booking-cuci-sedang-dicuci-update/{id}/update-status', [SedangDicuciController::class, 'updateStatusCuci'])->name('booking-cuci-sedang-dicuci.updateStatusCuci');
 
-    Route::get('booking-cuci-selesai-dicuci', [BookingCuciController::class, 'indexSelesaiDicuci'])->name('booking-cuci.selesaiDicuci');
+    // Route::get('booking-cuci-selesai-dicuci', [BookingCuciController::class, 'indexSelesaiDicuci'])->name('booking-cuci.selesaiDicuci');
     Route::put('booking-cuci/{id}/update-status', [BookingCuciController::class, 'updateKaryawan'])->name('booking-cuci.updateKaryawan');
 
     Route::resource('transaction-booking', TransactionBookingController::class)->only([
-        'index', 'store', 'show', 'update', 'destroy'
+        'index','show', 'update', 'destroy'
     ]);
+    Route::get('/generate-pdf-{id}', [TransactionBookingController::class,'ExportPDFTransaction'])->name('transaction-booking.pdf');
+
+    Route::get('/transaction-booking/{id}/send-whatsapp', [TransactionBookingController::class, 'sendWhatsAppMessageTransaction'])->name('transaction-booking.sendWhatsapp');
 });

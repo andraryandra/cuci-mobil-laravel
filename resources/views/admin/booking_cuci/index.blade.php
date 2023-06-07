@@ -35,7 +35,7 @@
                         <div class="my-3">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
-                                Create Booking Cuci Mobil
+                                <i class="fa fa-plus-circle"></i> Create Booking Cuci Mobil
                             </button>
                         </div>
 
@@ -73,7 +73,7 @@
                                                     <button type="button" class="btn btn-info text-light me-2"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalEdit2{{ $item->id }}">
-                                                        Pilih Karyawan
+                                                        <i class="fa fa-user-circle-o"></i> Pilih Karyawan
                                                     </button>
                                                 @else
                                                     {{ $item->karyawan->name }}
@@ -81,11 +81,13 @@
                                             </td>
                                             <td class="text-center">
                                                 @if ($item->status_pesan == 'PENDING')
-                                                    <span class="badge bg-warning text-light">Menunggu Cucian</span>
+                                                    <span class="badge bg-warning text-light p-2">
+                                                        <i class="fa fa-spin fa-circle-o-notch"></i> Menunggu Cucian
+                                                    </span>
                                                 @elseif ($item->status_pesan == 'PROCESS')
-                                                    <span class="badge bg-primary text-light">Sedang Dicuci</span>
+                                                    <span class="badge bg-primary text-light p-2">Sedang Dicuci</span>
                                                 @elseif ($item->status_pesan == 'SUCCESS')
-                                                    <span class="badge bg-success text-light">Pencucian Selesai</span>
+                                                    <span class="badge bg-success text-light p-2">Pencucian Selesai</span>
                                                 @endif
                                             </td>
                                             {{-- <td class="text-center">
@@ -106,7 +108,7 @@
                                                         <button class="dropdown-item btn btn-warning text-light"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalEdit{{ $item->id }}">
-                                                            Edit
+                                                            <i class="fa fa-edit"></i> Edit
                                                         </button>
                                                         <form action="{{ route('booking-cuci.destroy', $item->id) }}"
                                                             method="POST"
@@ -114,7 +116,9 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
-                                                                class="dropdown-item btn btn-danger">Delete</button>
+                                                                class="dropdown-item btn btn-danger text-white">
+                                                                <i class="fa fa-trash"></i> Delete
+                                                            </button>
                                                         </form>
                                                     </div>
                                                 </div>

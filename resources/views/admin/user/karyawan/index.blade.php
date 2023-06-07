@@ -31,7 +31,7 @@
                         <div class="my-3">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
-                                Create Karyawan
+                                <i class="fa fa-plus-circle"></i> Create Karyawan
                             </button>
                         </div>
                         <div class="table-responsive">
@@ -65,13 +65,14 @@
                                                     <button type="button" class="btn btn-warning text-light me-2"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalEdit{{ $item->id }}">
-                                                        Edit
+                                                        <i class="fa fa-edit"></i> Edit
                                                     </button>
                                                     <form action="{{ route('user-karyawan.destroy', $item->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger mx-2">Delete</button>
+                                                        <button type="submit" class="btn btn-danger mx-2"><i
+                                                                class="fa fa-trash"></i> Delete</button>
                                                     </form>
                                                 </div>
                                             </td>

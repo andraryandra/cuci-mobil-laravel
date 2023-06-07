@@ -7,34 +7,11 @@
         </div>
     </div>
     <ul class="list-unstyled topbar-nav float-right mb-0">
-        <li>
+        {{-- <li>
             <a class="nav-link waves-effect waves-light search-btn" href="javascript:void(0);"
                 data-target="#search-wrap"><i class="mdi mdi-magnify nav-icon"></i></a>
-        </li>
-        <li class="hidden-sm">
-            <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
-                href="javascript: void(0);" role="button" aria-haspopup="false" aria-expanded="false">
-                English <img src="{{ asset('assets/images/flags/us_flag.jpg') }}" class="ml-2" height="16"
-                    alt="" /> <i class="mdi mdi-chevron-down"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="javascript: void(0);"><span>German </span><img
-                        src="{{ asset('assets/images/flags/germany_flag.jpg') }}" alt=""
-                        class="ml-2 float-right" height="14" /></a>
-                <a class="dropdown-item" href="javascript: void(0);"><span>Italian </span><img
-                        src="{{ asset('assets/images/flags/italy_flag.jpg') }}" alt="" class="ml-2 float-right"
-                        height="14" /></a>
-                <a class="dropdown-item" href="javascript: void(0);"><span>French </span><img
-                        src="{{ asset('assets/images/flags/french_flag.jpg') }}" alt="" class="ml-2 float-right"
-                        height="14" /></a>
-                <a class="dropdown-item" href="javascript: void(0);"><span>Spanish </span><img
-                        src="{{ asset('assets/images/flags/spain_flag.jpg') }}" alt="" class="ml-2 float-right"
-                        height="14" /></a>
-                <a class="dropdown-item" href="javascript: void(0);"><span>Russian </span><img
-                        src="{{ asset('assets/images/flags/russia_flag.jpg') }}" alt="" class="ml-2 float-right"
-                        height="14" /></a>
-            </div>
-        </li>
+        </li> --}}
+
         <li class="dropdown">
             <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown"
                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -86,19 +63,14 @@
                     class="mdi mdi-fullscreen nav-icon"></i></a>
         </li>
         <li class="dropdown">
-            <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
-                href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#"
+                role="button" aria-haspopup="false" aria-expanded="false">
                 <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="profile-user" class="rounded-circle" />
                 <span class="ml-1 nav-user-name hidden-sm">Amelia <i class="mdi mdi-chevron-down"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i>
-                    Profile</a> <a class="dropdown-item" href="#"><i
-                        class="dripicons-wallet text-muted mr-2"></i> My Wallet</a>
-                <a class="dropdown-item" href="#"><i class="dripicons-gear text-muted mr-2"></i>
-                    Settings</a> <a class="dropdown-item" href="#"><i
-                        class="dripicons-lock text-muted mr-2"></i> Lock screen</a>
-                <div class="dropdown-divider"></div>
+                    Profile</a>
                 <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i>
                     Logout</a>
             </div>
@@ -108,26 +80,6 @@
         <li>
             <button class="button-menu-mobile nav-link waves-effect waves-light"><i
                     class="mdi mdi-menu nav-icon"></i></button>
-        </li>
-        <li class="hidden-sm">
-            <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown"
-                href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                <i class="mdi mdi-library-plus mr-2"></i>Tools <i class="mdi mdi-chevron-down"></i>
-            </a>
-            <div class="dropdown-menu">
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item">Photoshop </a>
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item">Visual Studio </a>
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item">Sublime Text 3 </a>
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item">Phpstorm</a>
-            </div>
-        </li>
-        <li class="hidden-sm">
-            <a class="nav-link waves-effect waves-light" href="http://themesbrand.com/amezia/landing/index.html"
-                target="_blank"><i class="mdi mdi-airplane mr-2"></i>Landing</a>
         </li>
     </ul>
 </nav>

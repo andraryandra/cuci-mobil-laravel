@@ -31,7 +31,7 @@
                         <div class="my-3">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
-                                Create Produk
+                                <i class="fa fa-plus-circle"></i> Create Produk
                             </button>
                         </div>
                         <div class="table-responsive">
@@ -59,14 +59,15 @@
                                                     <button type="button" class="btn btn-warning text-light me-2"
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modalEdit{{ $item->id }}">
-                                                        Edit
+                                                        <i class="fa fa-edit"></i> Edit
                                                     </button>
                                                     <form action="{{ route('produk-mobil.destroy', $item->id) }}"
                                                         method="POST"
                                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus produk ini?');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger mx-2">Delete</button>
+                                                        <button type="submit" class="btn btn-danger mx-2">
+                                                            <i class="fa fa-trash"></i> Delete</button>
                                                     </form>
                                                 </div>
                                             </td>

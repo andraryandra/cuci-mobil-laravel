@@ -101,7 +101,7 @@
                             </select>
                         </div> --}}
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="status_pesan" class="form-label">Status Pesan</label>
                             <select class="custom-select" id="status_pesan" name="status_pesan">
                                 <option value="PENDING" @if ($item->status_pesan == 'PENDING') selected @endif>
@@ -112,15 +112,15 @@
                                 <option value="SUCCESS" @if ($item->status_pesan == 'SUCCESS') selected @endif>
                                     Selesai</option>
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="status_bayar" class="form-label">Status Bayar</label>
                             <select class="custom-select" id="status_bayar" name="status_bayar">
-                                <option value="UNPAID" {{ $item->status_bayar == 'belum_bayar' ? 'selected' : '' }}>
-                                    Belum Bayar</option>
-                                <option value="PAID" {{ $item->status_bayar == 'sudah_bayar' ? 'selected' : '' }}>
-                                    Sudah Bayar</option>
+                                <option value="UNPAID" @if ($item->status_bayar == 'UNPAID') selected @endif>
+                                    Menunggu Pembayaran</option>
+                                <option value="PAID" @if ($item->status_bayar == 'PAID') selected @endif>
+                                    Sudah Dibayar</option>
                             </select>
                         </div>
 

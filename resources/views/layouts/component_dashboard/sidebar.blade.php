@@ -38,7 +38,7 @@
                 <ul class="nav-second-level" aria-expanded="false">
                     <li><a href="{{ route('booking-cuci.index') }}">Antrian Cuci</a></li>
                     <li><a href="{{ route('booking-cuci-sedang-dicuci.index') }}">Sedang Di Cuci</a></li>
-                    <li><a href="{{ route('booking-cuci.selesaiDicuci') }}">Cucian Selesai</a></li>
+                    <li><a href="{{ route('booking-cuci-selesai-dicuci.index') }}">Cucian Selesai</a></li>
                 </ul>
             </li>
             <li>
