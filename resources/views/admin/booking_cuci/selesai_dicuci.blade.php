@@ -14,12 +14,16 @@
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success!</strong> {{ session('success') }}.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         @elseif (session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Error!</strong> {{ session('error') }}.
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         @endif
 
@@ -42,7 +46,7 @@
                                         <th class="text-center">No</th>
                                         <th class="text-center">Kategori Mobil</th>
                                         <th class="text-center">Nama Pemesan</th>
-                                        <th class="text-center">No Telp</th>
+                                        {{-- <th class="text-center">No Telp</th> --}}
                                         <th class="text-center">Nama Mobil</th>
                                         <th class="text-center">No Plat Mobil</th>
                                         <th class="text-center">Tanggal Pesanan</th>
@@ -58,7 +62,7 @@
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
                                             <td class="text-center text-capitalize">{{ $item->user->name }}</td>
-                                            <td class="text-center">{{ $item->no_telp_pemesan }}</td>
+                                            {{-- <td class="text-center">{{ $item->no_telp_pemesan }}</td> --}}
                                             <td class="text-center">{{ $item->nama_mobil }}</td>
                                             <td class="text-center">{{ $item->no_plat_mobil }}</td>
                                             <td class="text-center">
@@ -93,20 +97,27 @@
                                                 @endif
                                             </td>
                                             <td class="align-middle">
-                                                <div class="d-flex justify-content-between">
-                                                    <button type="button" class="btn btn-warning text-light me-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEdit{{ $item->id }}">
-                                                        Edit
+                                                <div class="dropdown">
+                                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                                        id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        Action
                                                     </button>
-                                                    <form action="{{ route('booking-cuci.destroy', $item->id) }}"
-                                                        method="POST"
-                                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger"
-                                                            style="margin-left: 8px;">Delete</button>
-                                                    </form>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <button class="dropdown-item btn btn-warning text-light"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modalEdit{{ $item->id }}">
+                                                            Edit
+                                                        </button>
+                                                        <form action="{{ route('booking-cuci.destroy', $item->id) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="dropdown-item btn btn-danger">Delete</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -211,7 +222,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="staticBackdropLabel">Booking Cuci</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('booking-cuci.store') }}" method="POST">
@@ -219,8 +232,8 @@
 
                         <div class="mb-3">
                             <label for="kategori-mobil" class="form-label">Kategori Mobil ID</label>
-                            <select class="custom-select kategori-mobil" name="kategori_mobil_id" id="kategori-mobil"
-                                required>
+                            <select class="custom-select" name="kategori_mobil_id" id="kategori-mobil"
+                                title="Kategori Mobil" required>
                                 <option value="" selected>Select Kategori Mobil</option>
                                 @foreach ($kategori_mobils as $kategori_mobil)
                                     <option value="{{ $kategori_mobil->id }}">{{ $kategori_mobil->kategori_mobil }}
@@ -230,7 +243,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="produk-id" class="form-label">Kategori Mobil ID</label>
-                            <select class="custom-select produk-id" name="produk_id" id="produk-id" required>
+                            <select class="custom-select" name="produk_id" id="produk-id" title="Produk" required>
                                 <option value="" selected>Select Produk</option>
                                 @foreach ($produks as $produk)
                                     <option value="{{ $produk->id }}">{{ $produk->kategoriMobil->kategori_mobil }} ||
@@ -239,9 +252,10 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" name="user_id" id="user_id" required>
+                            <select class="custom-select" name="user_id" id="user_id" title="User" required>
                                 <option value="" selected>Select User</option>
                                 @foreach ($users as $user)
                                     @if ($user->role == '0' || $user->role == 'user')
@@ -253,27 +267,32 @@
                         <div class="mb-3">
                             <label for="no_telp_pemesan" class="form-label">No. Telp Pemesan</label>
                             <input type="text" class="form-control" id="no_telp_pemesan" name="no_telp_pemesan"
-                                required>
+                                title="No Telp" placeholder="No Telp" required>
                         </div>
                         <div class="mb-3">
                             <label for="nama_mobil" class="form-label">Nama Mobil</label>
-                            <input type="text" class="form-control" id="nama_mobil" name="nama_mobil" required>
+                            <input type="text" class="form-control" id="nama_mobil" name="nama_mobil"
+                                title="Nama Mobil" placeholder="Nama Mobil" required>
                         </div>
                         <div class="mb-3">
                             <label for="no_plat_mobil" class="form-label">No. Plat Mobil</label>
-                            <input type="text" class="form-control" id="no_plat_mobil" name="no_plat_mobil" required>
+                            <input type="text" class="form-control" id="no_plat_mobil" name="no_plat_mobil"
+                                title="No Plat Mobil" placeholder="No Plat Mobil" required>
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_pesan" class="form-label">Tanggal Pesan</label>
-                            <input type="date" class="form-control" id="tanggal_pesan" name="tanggal_pesan" required>
+                            <input type="date" class="form-control" id="tanggal_pesan" name="tanggal_pesan"
+                                title="Tanggal Pesan" placeholder="Tanggal Pesan" required>
                         </div>
                         <div class="mb-3">
                             <label for="jam_pesan" class="form-label">Jam Pesan</label>
-                            <input type="time" class="form-control" id="jam_pesan" name="jam_pesan" required>
+                            <input type="time" class="form-control" id="jam_pesan" name="jam_pesan"
+                                title="Jam Pesan" placeholder="Jam Pesan" required>
                         </div>
                         <div class="mb-3">
                             <label for="status_pesan" class="form-label">Status Pesan</label>
-                            <select class="custom-select" name="status_pesan" id="status_pesan" required>
+                            <select class="custom-select" name="status_pesan" id="status_pesan" title="Status Pesan"
+                                required>
                                 <option value="" selected>Select Status Pesan</option>
                                 <option value="PENDING">Menunggu Cucian</option>
                                 <option value="PROCESS">Sedang Dicuci</option>
@@ -282,7 +301,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="status_bayar" class="form-label">Status Bayar</label>
-                            <select class="custom-select" name="status_bayar" id="status_bayar" required>
+                            <select class="custom-select" name="status_bayar" id="status_bayar" title="Status Bayar"
+                                required>
                                 <option value="" selected>Select Status Bayar</option>
                                 <option value="UNPAID">Belum Bayar</option>
                                 <option value="PAID">Sudah Bayar</option>

@@ -27,14 +27,14 @@ class BookingCuciController extends Controller
         return view('admin.booking_cuci.index', compact('bookings','users','kategori_mobils','produks'));
     }
 
-    public function indexSedangDicuci()
-    {
-        $bookings = BookingCuci::with(['kategoriMobil','karyawan','user'])->where('status_pesan', 'PROCESS')->get();
-        $users = User::get();
-        $kategori_mobils = KategoriMobil::get();
-        $produks = ProdukMobil::get();
-        return view('admin.booking_cuci.sedang_dicuci', compact('bookings','users','kategori_mobils','produks'));
-    }
+    // public function indexSedangDicuci()
+    // {
+    //     $bookings = BookingCuci::with(['kategoriMobil','karyawan','user'])->where('status_pesan', 'PROCESS')->get();
+    //     $users = User::get();
+    //     $kategori_mobils = KategoriMobil::get();
+    //     $produks = ProdukMobil::get();
+    //     return view('admin.booking_cuci.sedang_dicuci', compact('bookings','users','kategori_mobils','produks'));
+    // }
 
     public function indexSelesaiDicuci()
     {
@@ -175,36 +175,36 @@ class BookingCuciController extends Controller
     }
 
     public function updateKaryawan(Request $request, $id)
-{
-    $this->validate(request(), [
-        'karyawan_id' => 'nullable',
-        'status_pesan' => 'nullable',
-        'status' => 'nullable'
-    ]);
-
-    try {
-        DB::beginTransaction();
-
-        $booking = BookingCuci::findOrFail($id);
-
-        $booking->update([
-            'karyawan_id' => $request->karyawan_id,
-            'status_pesan' => 'PROCESS',
+    {
+        $this->validate(request(), [
+            'karyawan_id' => 'nullable',
+            'status_pesan' => 'nullable',
+            'status' => 'nullable'
         ]);
 
-        $statusKaryawan = StatusKaryawan::where('karyawan_id', $request->karyawan_id)->first();
-        $statusKaryawan->status = 'ACTIVE';
-        $statusKaryawan->save();
+        try {
+            DB::beginTransaction();
 
-        DB::commit();
+            $booking = BookingCuci::findOrFail($id);
 
-        return back()->with(['success' => 'Data Berhasil Disimpan!']);
-    } catch (\Exception $e) {
-        DB::rollback();
+            $booking->update([
+                'karyawan_id' => $request->karyawan_id,
+                'status_pesan' => 'PROCESS',
+            ]);
 
-        return back()->with(['error' => 'Data Gagal Disimpan!']);
+            $statusKaryawan = StatusKaryawan::where('karyawan_id', $request->karyawan_id)->first();
+            $statusKaryawan->status = 'ACTIVE';
+            $statusKaryawan->save();
+
+            DB::commit();
+
+            return back()->with(['success' => 'Data Berhasil Disimpan!']);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return back()->with(['error' => 'Data Gagal Disimpan!']);
+        }
     }
-}
     /**
      * Remove the specified resource from storage.
      *

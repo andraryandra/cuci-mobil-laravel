@@ -11,6 +11,7 @@ use App\Http\Controllers\User\DashboardUserController;
 use App\Http\Controllers\Admin\KategoriMobilController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriProdukController;
+use App\Http\Controllers\Admin\SedangDicuciController;
 use App\Http\Controllers\LandingPage\ServicesController;
 use App\Http\Controllers\Admin\TransactionBookingController;
 
@@ -73,7 +74,12 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
         'index', 'store', 'show', 'update', 'destroy'
     ]);
 
-    Route::get('booking-cuci-sedang-dicuci', [BookingCuciController::class, 'indexSedangDicuci'])->name('booking-cuci.sedangDicuci');
+    // Route::get('booking-cuci-sedang-dicuci', [BookingCuciController::class, 'indexSedangDicuci'])->name('booking-cuci.sedangDicuci');
+    Route::resource('booking-cuci-sedang-dicuci', SedangDicuciController::class)->only([
+        'index', 'update',
+    ]);
+    Route::put('booking-cuci-sedang-dicuci-update/{id}/update-status', [SedangDicuciController::class, 'updateStatusCuci'])->name('booking-cuci-sedang-dicuci.updateStatusCuci');
+
     Route::get('booking-cuci-selesai-dicuci', [BookingCuciController::class, 'indexSelesaiDicuci'])->name('booking-cuci.selesaiDicuci');
     Route::put('booking-cuci/{id}/update-status', [BookingCuciController::class, 'updateKaryawan'])->name('booking-cuci.updateKaryawan');
 

