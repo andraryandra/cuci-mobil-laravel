@@ -51,12 +51,11 @@ class RegisteredUserController extends Controller
 
         // Upload and save the photo with random name
         if ($request->hasFile('photo')) {
-            $photo = $request->file('photo');
-            $photoName = Str::random(40) . '.' . $photo->extension();
-            $photoPath = $photo->storeAs('profileUser', $photoName);
+            $photoPath = $request->file('photo')->store('profileUser', 'public');
             $user->photo = $photoPath;
             $user->save();
         }
+
 
         event(new Registered($user));
 

@@ -61,14 +61,13 @@
         <li class="dropdown">
             <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#"
                 role="button" aria-haspopup="false" aria-expanded="false">
-                @if (Auth::check())
-                    <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="profile-user"
-                        class="rounded-circle" />
+                @if (Auth::user()->photo == null)
+                    <img src="{{ asset('assets/images/users/user.png') }}" alt="profile-user{{ Auth::user()->id }}"
+                        class="rounded-circle" width="40">
                 @else
-                    <img src="{{ Storage::url(Auth::user()->photo) }}" alt="profile-user" class="rounded-circle" />
+                    <img src="{{ Storage::url(Auth::user()->photo) }}" alt="profile-user{{ Auth::user()->id }}"
+                        class="rounded-circle" width="40">
                 @endif
-                {{-- <img src="{{ Storage::url(Auth::user()->photo) }}" alt="profile-user" class="rounded-circle" /> --}}
-                {{-- <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="profile-user" class="rounded-circle" /> --}}
                 <span class="ml-1 nav-user-name hidden-sm">{{ Auth::user()->name }} <i
                         class="mdi mdi-chevron-down"></i></span>
             </a>
