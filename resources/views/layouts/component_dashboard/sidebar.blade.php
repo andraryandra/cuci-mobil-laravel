@@ -52,6 +52,14 @@
             <li>
                 <a href="{{ route('user.home') }}"><i class="mdi mdi-speedometer"></i><span>Dashboards</span></a>
             </li>
+            <li>
+                <a href="{{ route('booking-cuci-customer.index') }}"><i class="mdi mdi-calendar"></i><span>Booking
+                        Cuci</span></a>
+            </li>
+            <li>
+                <a href="{{ route('transaction-customer.index') }}"><i class="mdi mdi-calendar"></i><span>Transaksi
+                        Customer</span></a>
+            </li>
         @endif
 
 

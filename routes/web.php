@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriProdukController;
 use App\Http\Controllers\LandingPage\ServicesController;
 use App\Http\Controllers\Admin\TransactionBookingController;
+use App\Http\Controllers\User\BookingCuciCustomerController;
+use App\Http\Controllers\User\TransactionCustomerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,7 @@ Route::get('services', [ServicesController::class, 'index'])->name('landingPage.
 require __DIR__.'/auth.php';
 
 
+Route::get('/generate-pdf-{id}', [TransactionBookingController::class,'ExportPDFTransaction'])->name('transaction-booking.pdf');
 
 
 /*------------------------------------------
@@ -52,6 +55,16 @@ All Normal Users Routes List
 Route::middleware(['auth', 'user-access:user'])->group(function () {
 
     Route::get('/home', [DashboardUserController::class, 'index'])->name('user.home');
+
+    Route::resource('transaction-customer', TransactionCustomerController::class)->only([
+        'index', 'update', 'destroy'
+    ]);
+
+    Route::resource('booking-cuci-customer', BookingCuciCustomerController::class)->only([
+        'index',  'update', 'destroy'
+    ]);
+
+
 });
 
 /*------------------------------------------
@@ -96,7 +109,6 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::resource('transaction-booking', TransactionBookingController::class)->only([
         'index','show', 'update', 'destroy'
     ]);
-    Route::get('/generate-pdf-{id}', [TransactionBookingController::class,'ExportPDFTransaction'])->name('transaction-booking.pdf');
 
     Route::get('/transaction-booking/{id}/send-whatsapp', [TransactionBookingController::class, 'sendWhatsAppMessageTransaction'])->name('transaction-booking.sendWhatsapp');
 });

@@ -27,28 +27,6 @@ class BookingCuciController extends Controller
         return view('admin.booking_cuci.index', compact('bookings','users','kategori_mobils','produks'));
     }
 
-    // public function indexSedangDicuci()
-    // {
-    //     $bookings = BookingCuci::with(['kategoriMobil','karyawan','user'])->where('status_pesan', 'PROCESS')->get();
-    //     $users = User::get();
-    //     $kategori_mobils = KategoriMobil::get();
-    //     $produks = ProdukMobil::get();
-    //     return view('admin.booking_cuci.sedang_dicuci', compact('bookings','users','kategori_mobils','produks'));
-    // }
-
-    // public function indexSelesaiDicuci()
-    // {
-    //     $bookings = BookingCuci::with(['kategoriMobil','karyawan','user'])
-    //     ->where('status_pesan', 'SUCCESS')
-    //     ->where('status_bayar', 'UNPAID')
-    //     ->get();
-
-    //     $users = User::get();
-    //     $kategori_mobils = KategoriMobil::get();
-    //     $produks = ProdukMobil::get();
-    //     return view('admin.booking_cuci.selesai_dicuci', compact('bookings','users','kategori_mobils','produks'));
-    // }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -153,9 +131,9 @@ class BookingCuciController extends Controller
         ]);
 
         $booking = BookingCuci::findOrFail($id);
-        $booking->user_id = $request->user_id;
-        $booking->kategori_mobil_id = $request->kategori_mobil_id;
-        $booking->produk_id = $request->produk_id;
+        $booking->user_id = intval($request->user_id);
+        $booking->kategori_mobil_id = intval($request->kategori_mobil_id);
+        $booking->produk_id = intval($request->produk_id);
         // $booking->karyawan_id = $request->karyawan_id;
         $booking->nama_pemesan = $request->user_id;
         $booking->no_telp_pemesan = $request->no_telp_pemesan;
@@ -165,6 +143,7 @@ class BookingCuciController extends Controller
         $booking->jam_pesan = $request->jam_pesan;
         // $booking->status_pesan = $request->status_pesan;
         $booking->status_bayar = $request->status_bayar;
+        // dd($booking);
         $booking->save();
 
         if($booking){

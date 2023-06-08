@@ -1,39 +1,31 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
-// use PDF;
-// use Barryvdh\DomPDF\Facade as PDF;
 use Dompdf\Dompdf;
 use App\Models\User;
-// use Barryvdh\DomPDF\PDF;
 use App\Models\BookingCuci;
 use App\Models\ProdukMobil;
 use Illuminate\Http\Request;
 use App\Models\KategoriMobil;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Auth;
 
-class TransactionBookingController extends Controller
+class TransactionCustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $bookings = BookingCuci::with(['kategoriMobil','karyawan','user'])
         ->where('status_pesan', 'SUCCESS')
         ->where('status_bayar', 'PAID')
+        ->where('user_id', auth()->user()->id)
         ->get();
 
         $users = User::get();
         $kategori_mobils = KategoriMobil::get();
         $produks = ProdukMobil::get();
-        return view('admin.transaksi.index', compact('bookings','users','kategori_mobils','produks'));
+        return view('user.transaksi.index', compact('bookings','users','kategori_mobils','produks'));
     }
 
 
@@ -41,7 +33,7 @@ class TransactionBookingController extends Controller
     {
         $this->validate(request(),
         [
-            'user_id' => 'nullable',
+            // 'user_id' => 'nullable',
             'kategori_mobil_id' => 'nullable',
             'produk_id' => 'nullable',
             // 'karyawan_id' => 'nullable',
@@ -49,10 +41,10 @@ class TransactionBookingController extends Controller
             'no_telp_pemesan' => 'required',
             'nama_mobil' => 'required',
             'no_plat_mobil' => 'required',
-            'tanggal_pesan' => 'required',
-            'jam_pesan' => 'required',
+            'tanggal_pesan' => 'nullable',
+            'jam_pesan' => 'nullable',
             // 'status_pesan' => 'nullable',
-            'status_bayar' => 'nullable',
+            // 'status_bayar' => 'nullable',
         ]);
 
         $booking = BookingCuci::findOrFail($id);
@@ -60,14 +52,14 @@ class TransactionBookingController extends Controller
         $booking->kategori_mobil_id = $request->kategori_mobil_id;
         $booking->produk_id = $request->produk_id;
         // $booking->karyawan_id = $request->karyawan_id;
-        $booking->nama_pemesan = $request->user_id;
+        $booking->nama_pemesan = Auth::id();
         $booking->no_telp_pemesan = $request->no_telp_pemesan;
         $booking->nama_mobil = $request->nama_mobil;
         $booking->no_plat_mobil = $request->no_plat_mobil;
-        $booking->tanggal_pesan = $request->tanggal_pesan;
-        $booking->jam_pesan = $request->jam_pesan;
+        // $booking->tanggal_pesan = $request->tanggal_pesan;
+        // $booking->jam_pesan = $request->jam_pesan;
         // $booking->status_pesan = $request->status_pesan;
-        $booking->status_bayar = $request->status_bayar;
+        // $booking->status_bayar = $request->status_bayar;
         $booking->save();
 
         if($booking){
@@ -139,7 +131,7 @@ class TransactionBookingController extends Controller
         $dompdf = new Dompdf();
 
         // Render tampilan ke dalam PDF
-        $html = View::make('admin.transaksi.kwitansi', compact('booking'))->render();
+        $html = View::make('user.transaksi.kwitansi', compact('booking'))->render();
         $dompdf->loadHtml($html);
         $dompdf->setPaper('A4', 'portrait');
         $dompdf->render();

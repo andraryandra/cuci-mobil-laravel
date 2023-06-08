@@ -1,46 +1,41 @@
 @foreach ($bookings as $item)
-    <!-- Modal Edit -->
-    <div class="modal fade" id="modalEdit{{ $item->id }}" tabindex="-1" role="dialog"
-        aria-labelledby="modalEdit{{ $item->id }}Label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+    <!-- Modal -->
+    <div class="modal fade" id="modalEdit{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" role="dialog" style="overflow-y: auto;">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalEdit{{ $item->id }}Label">Edit Booking Cuci</h5>
+                    <h3 class="modal-title fs-5" id="staticBackdropLabel">Edit Transaksi Booking Cuci</h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('booking-cuci.update', $item->id) }}" method="POST">
+                    <form action="{{ route('transaction-customer.update', $item->id) }}" method="POST">
                         @csrf
                         @method('PUT')
 
-
                         <div class="mb-3">
-                            <label for="kategori_mobil_id_{{ $item->id }}" class="form-label">Kategori Mobil
-                                ID</label>
-                            <select class="custom-select kategori-mobil" id="kategori_mobil_id_{{ $item->id }}"
-                                name="kategori_mobil_id" required>
+                            <label for="kategori_mobil_id" class="form-label">Kategori Mobil ID</label>
+                            <select class="custom-select kategori-mobil" id="kategori_mobil_id"
+                                name="kategori_mobil_id">
                                 @foreach ($kategori_mobils as $kategori_mobil)
                                     <option value="{{ $kategori_mobil->id }}"
                                         {{ $item->kategori_mobil_id == $kategori_mobil->id ? 'selected' : '' }}>
-                                        {{ $kategori_mobil->kategori_mobil }}
-                                    </option>
+                                        {{ $kategori_mobil->kategori_mobil }}</option>
                                 @endforeach
                             </select>
                         </div>
 
                         <div class="mb-3">
-                            <label for="produk_id_{{ $item->id }}" class="form-label">Produk ID</label>
-                            <select class="custom-select" id="produk_id_{{ $item->id }}" name="produk_id" required>
-                                <!-- Tambahkan atribut 'data-kategori-mobil-id' untuk setiap opsi produk -->
+                            <label for="produk_id" class="form-label">Produk ID</label>
+                            <select class="custom-select produk-id" id="produk_id" name="produk_id">
                                 @foreach ($produks as $produk)
                                     <option value="{{ $produk->id }}"
-                                        data-kategori-mobil-id="{{ $produk->kategori_mobil_id }}"
                                         {{ $item->produk_id == $produk->id ? 'selected' : '' }}>
                                         {{ $produk->kategoriMobil->kategori_mobil }} || {{ $produk->nama_produk }} ||
-                                        Rp. {{ number_format($produk->harga_produk) }}
-                                    </option>
+                                        Rp.
+                                        {{ number_format($produk->harga_produk) }}
                                 @endforeach
                             </select>
                         </div>
@@ -48,7 +43,8 @@
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Nama Pemesan</label>
                             <select class="custom-select" id="user_id" name="user_id">
-                                <option value="{{ $item->user->id }}">{{ $item->user->name }}</option>
+                                <option value="{{ $item->user->id }}">
+                                    {{ $item->user->name }}</option>
                             </select>
                         </div>
 
@@ -70,7 +66,7 @@
                                 value="{{ $item->no_plat_mobil }}">
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="tanggal_pesan" class="form-label">Tanggal Pesan</label>
                             <input type="date" class="form-control" id="tanggal_pesan" name="tanggal_pesan"
                                 value="{{ $item->tanggal_pesan }}">
@@ -81,7 +77,6 @@
                             <input type="time" class="form-control" id="jam_pesan" name="jam_pesan"
                                 value="{{ $item->jam_pesan }}">
                         </div>
-
                         <div class="mb-3">
                             <label for="status_bayar" class="form-label">Status Bayar</label>
                             <select class="custom-select" id="status_bayar" name="status_bayar">
@@ -90,7 +85,7 @@
                                 <option value="PAID" @if ($item->status_bayar == 'PAID') selected @endif>
                                     Sudah Dibayar</option>
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -101,54 +96,20 @@
             </div>
         </div>
     </div>
-
-    @push('script')
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var kategoriMobilSelect = document.getElementById('kategori_mobil_id_{{ $item->id }}');
-                var produkSelect = document.getElementById('produk_id_{{ $item->id }}');
-
-                kategoriMobilSelect.addEventListener('change', function() {
-                    var selectedKategoriMobilId = this.value;
-
-                    // Menghapus semua opsi produk sebelumnya
-                    produkSelect.innerHTML = '';
-
-                    if (selectedKategoriMobilId) {
-                        // Mendapatkan daftar produk berdasarkan kategori mobil yang dipilih
-                        var produkList = {!! $produks->toJson() !!};
-
-                        // Membuat opsi produk yang sesuai dengan kategori mobil terpilih
-                        produkList.forEach(function(produk) {
-                            if (produk.kategori_mobil_id == selectedKategoriMobilId) {
-                                var option = document.createElement('option');
-                                option.value = produk.id;
-                                option.textContent = produk.nama_produk + ' || Rp. ' +
-                                    parseFloat(produk.harga_produk).toLocaleString();
-                                produkSelect.appendChild(option);
-                            }
-                        });
-
-                        // Mengatur opsi terpilih berdasarkan nilai yang disimpan sebelumnya
-                        produkSelect.value = {{ $item->produk_id }};
-                    }
-                });
-
-                // Memastikan produk terpilih saat modal dimuat
-                var initialKategoriMobilId = kategoriMobilSelect.value;
-                if (initialKategoriMobilId) {
-                    // Memicu perubahan pada kategori mobil untuk mengisi produk
-                    kategoriMobilSelect.dispatchEvent(new Event('change'));
-                }
-            });
-        </script>
-    @endpush
 @endforeach
 
 
 
-
 @push('style')
+    {{-- <style>
+        .modal-dialog-scrollable {
+            max-height: 70vh;
+            /* Atur tinggi maksimal modal di sini */
+            overflow-y: auto;
+            /* Aktifkan overflow-y untuk memunculkan scrollbar jika konten melampaui tinggi maksimal */
+        }
+    </style> --}}
+
     <style>
         .custom-select {
             appearance: none;

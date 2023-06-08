@@ -46,7 +46,6 @@
                                         <th class="text-center">No</th>
                                         <th class="text-center">Kategori Mobil</th>
                                         <th class="text-center">Nama Pemesan</th>
-                                        {{-- <th class="text-center">No Telp</th> --}}
                                         <th class="text-center">Nama Mobil</th>
                                         <th class="text-center">No Plat Mobil</th>
                                         <th class="text-center">Tanggal Pesanan</th>
@@ -60,7 +59,14 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
-                                            <td class="text-center text-capitalize">{{ $item->user->name }}</td>
+                                            <td class="text-center text-capitalize">
+                                                <a href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#show{{ $item->id }}">
+                                                    <u>{{ $item->user->name }}</u>
+                                                    <span class="show-button">Show</span>
+                                                </a>
+                                            </td>
+
                                             {{-- <td class="text-center">{{ $item->no_telp_pemesan }}</td> --}}
                                             <td class="text-center">{{ $item->nama_mobil }}</td>
                                             <td class="text-center">{{ $item->no_plat_mobil }}</td>
@@ -90,21 +96,16 @@
                                                     <span class="badge bg-success text-light p-2">Pencucian Selesai</span>
                                                 @endif
                                             </td>
-                                            {{-- <td class="text-center">
-                                                @if ($item->status_bayar == 'UNPAID')
-                                                    <span class="badge bg-warning text-light">Belum Bayar</span>
-                                                @elseif ($item->status_bayar == 'PAID')
-                                                    <span class="badge bg-success text-light">Sudah Bayar</span>
-                                                @endif
-                                            </td> --}}
-                                            <td class="align-middle">
+                                            <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                        id="dropdownMenuButton" data-bs-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
-                                                        Action
+                                                        id="dropdownMenuButton_{{ $item->id }}"
+                                                        data-bs-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="fa fa-navicon"></i> Action
                                                     </button>
-                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <div class="dropdown-menu"
+                                                        aria-labelledby="dropdownMenuButton_{{ $item->id }}">
                                                         <button class="dropdown-item btn btn-warning text-light"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#modalEdit{{ $item->id }}">
@@ -133,91 +134,14 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
-
-    {{-- <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="mt-0">Default Datatable</h5>
-                    <p class="text-muted font-13 mb-4">DataTables has most features enabled by default, so all you need to
-                        do to use it with your own tables is to call the construction function:
-                        <code>$().DataTable();</code>.
-                    </p>
-                    <div class="table-responsive">
-                        <table id="datatable" class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-center">No</th>
-                                    <th class="text-center">Kategori Mobil</th>
-                                    <th class="text-center">Nama Pemesan</th>
-                                    <th class="text-center">No Telp</th>
-                                    <th class="text-center">Nama Mobil</th>
-                                    <th class="text-center">No Plat Mobil</th>
-                                    <th class="text-center">Tanggal Pesanan</th>
-                                    <th class="text-center">Jam Pesanan</th>
-                                    <th class="text-center">Status Booking</th>
-                                    <th class="text-center">Status Bayar</th>
-                                    <th class="text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($bookings as $item)
-                                    <tr>
-                                        <td class="text-center">{{ $loop->iteration }}</td>
-                                        <td class="text-center">{{ $item->kategori_mobil->kategori_mobil }}</td>
-                                        <td class="text-center text-capitalize">{{ $item->user->name }}</td>
-                                        <td class="text-center">{{ $item->no_telp_pemesan }}</td>
-                                        <td class="text-center">{{ $item->nama_mobil }}</td>
-                                        <td class="text-center">{{ $item->no_plat_mobil }}</td>
-                                        <td class="text-center">{{ $item->tanggal_pesan }}</td>
-                                        <td class="text-center">{{ $item->jam_pesan }}</td>
-                                        <td class="text-center">
-                                            @if ($item->status_pesan == 'PENDING')
-                                                <span class="badge bg-warning text-light">Menunggu Cucian</span>
-                                            @elseif ($item->status_pesan == 'PROCCESS')
-                                                <span class="badge bg-primary text-light">Sedang Dicuci</span>
-                                            @elseif ($item->status_pesan == 'SUCCESS')
-                                                <span class="badge bg-success text-light">Pencucian Selesai</span>
-                                            @endif
-                                        </td>
-                                        <td class="text-center">
-                                            @if ($item->status_bayar == 'UNPAID')
-                                                <span class="badge bg-warning text-light">Belum Bayar</span>
-                                            @elseif ($item->status_bayar == 'PAID')
-                                                <span class="badge bg-success text-light">Sudah Bayar</span>
-                                            @endif
-                                        </td>
-                                        <td class="d-flex align-items-center mx-2">
-                                            <button type="button" class="btn btn-warning text-light me-2"
-                                                data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->id }}">
-                                                Edit
-                                            </button>
-                                            <form action="{{ route('booking-cuci.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger mx-2">Delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end col -->
-    </div> --}}
-
     {{-- Modal Edit --}}
     @include('admin.booking_cuci.edit')
 
     {{-- Modal Karyawan --}}
     @include('admin.booking_cuci.edit-2')
+
+    @include('admin.booking_cuci.show')
 
     {{-- Modal Produk --}}
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -322,10 +246,6 @@
         </div>
     </div>
 
-
-
-
-
 @endsection
 
 
@@ -365,6 +285,56 @@
         }
     </style>
 
+    <style>
+        .text-center.text-capitalize a {
+            position: relative;
+            display: inline-block;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .text-center.text-capitalize a::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #333;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 0.3s;
+        }
+
+        .text-center.text-capitalize a:hover {
+            color: #0077ff;
+        }
+
+        .text-center.text-capitalize a:hover::before {
+            transform: scaleX(1);
+        }
+
+        .text-center.text-capitalize a .show-button {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #0077ff;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .text-center.text-capitalize a:hover .show-button {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+
 
     {{-- <link rel="stylesheet" href="{{ asset('bootstrap5-3/css/bootstrap.min.css') }}"> --}}
 @endpush
@@ -379,10 +349,10 @@
         });
     </script>
 
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var kategoriMobilSelect = document.querySelector('.kategori-mobil');
-            var produkSelect = document.querySelector('.produk-id');
+            var kategoriMobilSelect = document.getElementById('kategori_mobil_id');
+            var produkSelect = document.getElementById('produk_id');
 
             kategoriMobilSelect.addEventListener('change', function() {
                 var selectedKategoriMobilId = this.value;
@@ -399,8 +369,8 @@
                         if (produk.kategori_mobil_id == selectedKategoriMobilId) {
                             var option = document.createElement('option');
                             option.value = produk.id;
-                            option.textContent = produk.nama_produk + ' || Rp. ' + parseFloat(produk
-                                .harga_produk).toLocaleString();
+                            option.textContent = produk.nama_produk + ' || Rp. ' +
+                                parseFloat(produk.harga_produk).toLocaleString();
                             produkSelect.appendChild(option);
                         }
                     });
@@ -414,7 +384,8 @@
                 kategoriMobilSelect.dispatchEvent(new Event('change'));
             }
         });
-    </script>
+    </script> --}}
+
 
 
     <script>

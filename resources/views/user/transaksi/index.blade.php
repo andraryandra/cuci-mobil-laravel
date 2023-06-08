@@ -1,12 +1,12 @@
 @extends('layouts.app')
-@section('title', 'Dashboard - Admin')
-@section('contentAdmin')
+@section('title', 'Dashboard - User')
+@section('contentUser')
     <div class="container-fluid">
         <!-- Page-Title -->
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
-                    <h4 class="page-title">Transaksi Cuci Mobil</h4>
+                    <h4 class="page-title">Transaksi Cuci Mobil - Customer {{ Auth::user()->name }}</h4>
                 </div>
             </div>
         </div>
@@ -23,110 +23,10 @@
             </div>
         @endif
 
-        <!--end row-->
-        {{-- <div class="row">
-            <div class="col-lg-12 col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive-custom">
-                            <table id="datatable" class="table table-bordered table-striped" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">No</th>
-                                        <th class="text-center">Kategori Mobil</th>
-                                        <th class="text-center">Nama Pemesan</th>
-                                        <th class="text-center">No Telp</th>
-                                        <th class="text-center">Nama Mobil</th>
-                                        <th class="text-center">No Plat Mobil</th>
-                                        <th class="text-center">Tanggal Pesanan</th>
-                                        <th class="text-center">Karyawan</th>
-                                        <th class="text-center">Status Booking</th>
-                                        <th class="text-center">Status Bayar</th>
-                                        <th class="text-center">Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($bookings as $item)
-                                        <tr>
-                                            <td class="text-center">{{ $loop->iteration }}</td>
-                                            <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
-                                            <td class="text-center text-capitalize">{{ $item->user->name }}</td>
-                                            <td class="text-center">{{ $item->no_telp_pemesan }}</td>
-                                            <td class="text-center">{{ $item->nama_mobil }}</td>
-                                            <td class="text-center">{{ $item->no_plat_mobil }}</td>
-                                            <td class="text-center">
-                                                {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d-m-Y') }} ||
-                                                {{ $item->jam_pesan }}</td>
-
-                                            <td class="text-center text-capitalize">
-                                                @if ($item->karyawan_id == null)
-                                                    <button type="button" class="btn btn-info text-light me-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEdit2{{ $item->id }}">
-                                                        Pilih Karyawan
-                                                    </button>
-                                                @else
-                                                    {{ $item->karyawan->name }}
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
-                                                @if ($item->status_pesan == 'PENDING')
-                                                    <span class="badge bg-warning text-light">Menunggu Cucian</span>
-                                                @elseif ($item->status_pesan == 'PROCESS')
-                                                    <span class="badge bg-primary text-light">Sedang Dicuci</span>
-                                                @elseif ($item->status_pesan == 'SUCCESS')
-                                                    <span class="badge bg-success text-light">Pencucian Selesai</span>
-                                                @endif
-                                            </td>
-                                            <td class="text-center">
-                                                @if ($item->status_bayar == 'UNPAID')
-                                                    <span class="badge bg-warning text-light">Belum Bayar</span>
-                                                @elseif ($item->status_bayar == 'PAID')
-                                                    <span class="badge bg-success text-light">Sudah Bayar</span>
-                                                @endif
-                                            </td>
-                                            <td class="align-middle">
-                                                <div class="d-flex justify-content-between">
-                                                    <button type="button"
-                                                        class="btn btn-sm btn-warning text-light me-2 mr-2"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#modalEdit{{ $item->id }}">
-                                                        Edit
-                                                    </button>
-                                                    <form action="{{ route('transaction-booking.destroy', $item->id) }}"
-                                                        method="POST"
-                                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="btn btn-sm btn-danger me-2">Delete</button>
-                                                    </form>
-                                                    <a href="https://api.whatsapp.com/send?phone=85314005779"
-                                                        target="_blank" class="btn btn-sm btn-success">WhatsApp</a>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-
         <div class="row">
             <div class="col-lg-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        {{-- <div class="my-3">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop">
-                                Create Booking Cuci Mobil
-                            </button>
-                        </div> --}}
                         <div class="table-responsive">
                             <div class="table-responsive-sm">
                                 <table id="datatable" class="table table-bordered table-striped" style="width: 100%;">
@@ -138,7 +38,6 @@
                                             <th class="text-center">Nama Mobil</th>
                                             <th class="text-center">No Plat Mobil</th>
                                             <th class="text-center">Tanggal Pesanan</th>
-                                            {{-- <th class="text-center">Karyawan</th> --}}
                                             <th class="text-center">Status Booking</th>
                                             <th class="text-center">Status Bayar</th>
                                             <th class="text-center">Aksi</th>
@@ -155,18 +54,6 @@
                                                 <td class="text-center">
                                                     {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d-m-Y') }} ||
                                                     {{ $item->jam_pesan }}</td>
-
-                                                {{-- <td class="text-center text-capitalize">
-                                                    @if ($item->karyawan_id == null)
-                                                        <button type="button" class="btn btn-info text-light me-2"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modalEdit2{{ $item->id }}">
-                                                            Pilih Karyawan
-                                                        </button>
-                                                    @else
-                                                        {{ $item->karyawan->name }}
-                                                    @endif
-                                                </td> --}}
                                                 <td class="text-center">
                                                     @if ($item->status_pesan == 'PENDING')
                                                         <span class="badge bg-warning text-light p-2">Menunggu Cucian</span>
@@ -211,7 +98,7 @@
     </div>
 
     {{-- Modal Edit --}}
-    @include('admin.transaksi.edit')
+    @include('user.transaksi.edit')
 
     {{-- Modal Action --}}
     <!-- Modal -->
@@ -229,26 +116,26 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-grid gap-2">
-                            <a href="{{ route('transaction-booking.sendWhatsapp', $item->id) }}"
+                            {{-- <a href="{{ route('transaction-booking.sendWhatsapp', $item->id) }}"
                                 class="btn btn-success btn-lg text-light w-100 my-2" target="_blank">
                                 <i class="fa fa-whatsapp"></i> WhatsApp
-                            </a>
+                            </a> --}}
                             <a href="{{ route('transaction-booking.pdf', $item->id) }}"
                                 class="btn btn-primary btn-lg text-light w-100 my-2" target="_blank">
                                 <i class="fa fa-file-pdf-o"></i> Kwitansi
                             </a>
-                            <button class="btn btn-warning btn-lg text-light w-100 my-2" data-bs-dismiss="modal"
+                            {{-- <button class="btn btn-warning btn-lg text-light w-100 my-2" data-bs-dismiss="modal"
                                 data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->id }}">
                                 <i class="fa fa-edit"></i> Edit
-                            </button>
-                            <form action="{{ route('transaction-booking.destroy', $item->id) }}" method="POST"
+                            </button> --}}
+                            {{-- <form action="{{ route('transaction-booking.destroy', $item->id) }}" method="POST"
                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-lg text-white w-100 my-2">
                                     <i class="fa fa-trash"></i> Delete
                                 </button>
-                            </form>
+                            </form> --}}
                         </div>
                     </div>
 
