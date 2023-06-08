@@ -60,7 +60,13 @@
                                         <tr>
                                             <td class="text-center">{{ $loop->iteration }}</td>
                                             <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
-                                            <td class="text-center text-capitalize">{{ $item->user->name }}</td>
+                                            <td class="text-center text-capitalize">
+                                                <a href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#show{{ $item->id }}">
+                                                    <u>{{ $item->user->name }}</u>
+                                                    <span class="show-button">Show</span>
+                                                </a>
+                                            </td>
                                             {{-- <td class="text-center">{{ $item->no_telp_pemesan }}</td> --}}
                                             <td class="text-center">{{ $item->nama_mobil }}</td>
                                             <td class="text-center">{{ $item->no_plat_mobil }}</td>
@@ -156,6 +162,8 @@
 
     {{-- Modal Karyawan --}}
     @include('admin.booking_cuci.edit-2')
+
+    @include('admin.booking_cuci.sedangDicuci.show')
 
     {{-- Modal Produk --}}
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"

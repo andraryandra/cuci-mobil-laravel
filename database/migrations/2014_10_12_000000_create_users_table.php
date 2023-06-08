@@ -21,6 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('role')->default(0);
             /* Users: 0=>User, 1=>Admin, 2=>Manager */
+            $table->bigInteger('phone')->nullable();
+            $table->string('photo')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

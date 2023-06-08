@@ -121,12 +121,15 @@
             <div class="col-lg-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        {{-- <div class="my-3">
+                        <div class="my-3">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
-                                Create Booking Cuci Mobil
+                                <i class="fa fa-plus-circle mr-1"></i> Create Booking Cuci Mobil
                             </button>
-                        </div> --}}
+                            <a href="{{ route('booking-cuci.exportCSV') }}" class="btn btn-primary">
+                                <i class="fa fa-file-excel-o mr-1"></i> Export CSV
+                            </a>
+                        </div>
                         <div class="table-responsive">
                             <div class="table-responsive-sm">
                                 <table id="datatable" class="table table-bordered table-striped" style="width: 100%;">
@@ -149,7 +152,13 @@
                                             <tr>
                                                 <td class="text-center">{{ $loop->iteration }}</td>
                                                 <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
-                                                <td class="text-center text-capitalize">{{ $item->user->name }}</td>
+                                                <td class="text-center text-capitalize">
+                                                    <a href="#" data-bs-toggle="modal"
+                                                        data-bs-target="#show{{ $item->id }}">
+                                                        <u>{{ $item->user->name }}</u>
+                                                        <span class="show-button">Show</span>
+                                                    </a>
+                                                </td>
                                                 <td class="text-center">{{ $item->nama_mobil }}</td>
                                                 <td class="text-center">{{ $item->no_plat_mobil }}</td>
                                                 <td class="text-center">
@@ -212,6 +221,7 @@
 
     {{-- Modal Edit --}}
     @include('admin.transaksi.edit')
+    @include('admin.transaksi.show')
 
     {{-- Modal Action --}}
     <!-- Modal -->
@@ -299,6 +309,57 @@
             /* Sesuaikan dengan lebar tabel jika diperlukan */
         }
     </style>
+
+    <style>
+        .text-center.text-capitalize a {
+            position: relative;
+            display: inline-block;
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .text-center.text-capitalize a::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #333;
+            transform: scaleX(0);
+            transform-origin: left center;
+            transition: transform 0.3s;
+        }
+
+        .text-center.text-capitalize a:hover {
+            color: #0077ff;
+        }
+
+        .text-center.text-capitalize a:hover::before {
+            transform: scaleX(1);
+        }
+
+        .text-center.text-capitalize a .show-button {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #0077ff;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 4px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .text-center.text-capitalize a:hover .show-button {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+
 
 
     {{-- <link rel="stylesheet" href="{{ asset('bootstrap5-3/css/bootstrap.min.css') }}"> --}}

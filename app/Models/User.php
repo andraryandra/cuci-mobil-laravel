@@ -49,10 +49,19 @@ class User extends Authenticatable
         return $this->hasMany(StatusKaryawan::class, 'karyawan_id', 'id');
     }
 
+    // protected function role(): Attribute
+    // {
+    //     return new Attribute(
+    //         get: fn ($value) =>  ["user", "admin", "karyawan"][$value],
+    //     );
+    // }
+
     protected function role(): Attribute
-    {
-        return new Attribute(
-            get: fn ($value) =>  ["user", "admin", "karyawan"][$value],
-        );
-    }
+{
+    return new Attribute(function ($value) {
+        $roles = ["user", "admin", "karyawan"];
+        return isset($roles[$value]) ? $roles[$value] : null;
+    });
+}
+
 }

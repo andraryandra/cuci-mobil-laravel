@@ -13,6 +13,8 @@ use App\Http\Controllers\User\DashboardUserController;
 use App\Http\Controllers\Admin\KategoriMobilController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriProdukController;
+use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\LandingPage\ServicesController;
 use App\Http\Controllers\Admin\TransactionBookingController;
 use App\Http\Controllers\User\BookingCuciCustomerController;
@@ -46,6 +48,9 @@ require __DIR__.'/auth.php';
 
 Route::get('/generate-pdf-{id}', [TransactionBookingController::class,'ExportPDFTransaction'])->name('transaction-booking.pdf');
 
+Route::resource('user-profile', ProfileController::class)->only([
+    'index', 'update'
+]);
 
 /*------------------------------------------
 --------------------------------------------
@@ -111,4 +116,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     ]);
 
     Route::get('/transaction-booking/{id}/send-whatsapp', [TransactionBookingController::class, 'sendWhatsAppMessageTransaction'])->name('transaction-booking.sendWhatsapp');
+
+    Route::get('export-booking-cuci-mobil', [LaporanController::class, 'index'])->name('booking-cuci-export.index');
+    Route::get('export-booking-cuci-mobil-csv', [LaporanController::class, 'exportBookingCuciMobilCSV'])->name('booking-cuci.exportCSV');
+    Route::post('export-booking-cuci-mobil-csv-custom', [LaporanController::class, 'exportBookingCuciMobilCustomCSV'])->name('booking-cuci.exportCustomCSV');
+
 });

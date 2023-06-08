@@ -7,12 +7,8 @@
         </div>
     </div>
     <ul class="list-unstyled topbar-nav float-right mb-0">
-        {{-- <li>
-            <a class="nav-link waves-effect waves-light search-btn" href="javascript:void(0);"
-                data-target="#search-wrap"><i class="mdi mdi-magnify nav-icon"></i></a>
-        </li> --}}
 
-        <li class="dropdown">
+        {{-- <li class="dropdown">
             <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-toggle="dropdown"
                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <i class="mdi mdi-bell-outline nav-icon"></i> <span
@@ -57,7 +53,7 @@
                 <a href="javascript:void(0);" class="dropdown-item text-center text-primary">View all <i
                         class="fi-arrow-right"></i></a>
             </div>
-        </li>
+        </li> --}}
         <li class="hidden-sm">
             <a class="nav-link waves-effect waves-light" href="javascript:void(0);" id="btn-fullscreen"><i
                     class="mdi mdi-fullscreen nav-icon"></i></a>
@@ -65,15 +61,28 @@
         <li class="dropdown">
             <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#"
                 role="button" aria-haspopup="false" aria-expanded="false">
-                <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="profile-user" class="rounded-circle" />
+                @if (Auth::check())
+                    <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="profile-user"
+                        class="rounded-circle" />
+                @else
+                    <img src="{{ Storage::url(Auth::user()->photo) }}" alt="profile-user" class="rounded-circle" />
+                @endif
+                {{-- <img src="{{ Storage::url(Auth::user()->photo) }}" alt="profile-user" class="rounded-circle" /> --}}
+                {{-- <img src="{{ asset('assets/images/users/user-1.jpg') }}" alt="profile-user" class="rounded-circle" /> --}}
                 <span class="ml-1 nav-user-name hidden-sm">{{ Auth::user()->name }} <i
                         class="mdi mdi-chevron-down"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#"><i class="dripicons-user text-muted mr-2"></i>
+                <a class="dropdown-item" href="{{ route('user-profile.index') }}"><i
+                        class="dripicons-user text-muted mr-2"></i>
                     Profile</a>
-                <a class="dropdown-item" href="#"><i class="dripicons-exit text-muted mr-2"></i>
-                    Logout</a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a class="dropdown-item" href="#"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="dripicons-exit text-muted mr-2"></i> Logout
+                </a>
             </div>
         </li>
     </ul>

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -37,18 +38,35 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone' => 'required|numeric|digits_between:10,13',
+            'photo' => 'nullable|mimes:jpg,png,jpeg|max:2048',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'phone' => $request->phone,
         ]);
+
+        // Upload and save the photo with random name
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $photoName = Str::random(40) . '.' . $photo->extension();
+            $photoPath = $photo->storeAs('profileUser', $photoName);
+            $user->photo = $photoPath;
+            $user->save();
+        }
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        if (Auth::user()->role === 'admin' || Auth::user()->role === '1') {
+            return redirect()->route('admin.home');
+        } else {
+            return redirect()->route('user.home');
+        }
     }
+
 }

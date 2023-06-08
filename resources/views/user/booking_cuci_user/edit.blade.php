@@ -5,7 +5,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Booking Cuci</h1>
+                    <h4 class="modal-title fs-5" id="staticBackdropLabel">Edit Booking Cuci -
+                        {{ $item->user->name }} || {{ $item->kategoriMobil->kategori_mobil }}</h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -19,7 +20,7 @@
                             <label for="kategori_mobil_id_{{ $item->id }}" class="form-label">Kategori Mobil
                                 ID</label>
                             <select class="custom-select kategori-mobil" id="kategori_mobil_id_{{ $item->id }}"
-                                name="kategori_mobil_id" required>
+                                name="kategori_mobil_id" required disabled>
                                 <option value="" selected>-- Pilih Kategori Mobil --</option>
                                 @foreach ($kategori_mobils as $kategori_mobil)
                                     <option value="{{ $kategori_mobil->id }}"
@@ -32,7 +33,8 @@
 
                         <div class="mb-3">
                             <label for="produk_id_{{ $item->id }}" class="form-label">Produk ID</label>
-                            <select class="custom-select" id="produk_id_{{ $item->id }}" name="produk_id" required>
+                            <select class="custom-select" id="produk_id_{{ $item->id }}" name="produk_id" required
+                                disabled>
                                 <!-- Tambahkan atribut 'data-kategori-mobil-id' untuk setiap opsi produk -->
                                 <option value="" selected>-- Pilih Produk --</option>
                                 @foreach ($produks as $produk)
@@ -48,7 +50,7 @@
 
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" id="user_id" name="user_id">
+                            <select class="custom-select" id="user_id" name="user_id" disabled>
                                 <option value="{{ $item->user->id }}">
                                     {{ $item->user->name }}</option>
                             </select>

@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Auth\AuthenticationException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,16 +29,27 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
+        try {
+            $credentials = $request->only('email', 'password');
 
-        $request->session()->regenerate();
+            if (Auth::attempt($credentials)) {
+                $request->session()->regenerate();
 
-        if (Auth::user()->role === 'admin' || Auth::user()->role === '1') {
-            return redirect()->route('admin.home');
-        } else {
-            return redirect()->route('user.home');
+                if (Auth::user()->role === 'admin' || Auth::user()->role === '1') {
+                    return redirect()->route('admin.home');
+                } else {
+                    return redirect()->route('user.home');
+                }
+            }
+
+            throw new AuthenticationException();
+        } catch (AuthenticationException $exception) {
+            return redirect()->route('login')->withErrors([
+                'email' => 'Email atau password salah.',
+            ]);
         }
     }
+
 
     /**
      * Destroy an authenticated session.

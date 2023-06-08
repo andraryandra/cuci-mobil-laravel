@@ -3,12 +3,14 @@
         <li class="menu-title">Main</li>
         @if (Auth::user()->role == 'admin' || Auth::user()->role == '1')
             <li>
-                <a href="{{ route('admin.home') }}"><i class="mdi mdi-speedometer"></i><span>Dashboards</span></a>
+                <a href="{{ route('admin.home') }}"><i
+                        class="mdi mdi-home
+                    "></i><span>Dashboards</span></a>
             </li>
 
             <li>
                 <a href="javascript: void(0);">
-                    <i class="mdi mdi-account-location"></i><span>Users</span><span class="menu-arrow"><i
+                    <i class="mdi mdi-account-multiple"></i><span>Users</span><span class="menu-arrow"><i
                             class="mdi mdi-chevron-right"></i></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
@@ -19,7 +21,7 @@
             </li>
             <li>
                 <a href="javascript: void(0);">
-                    <i class="mdi mdi-account-location"></i><span>Kategori</span><span class="menu-arrow"><i
+                    <i class="mdi mdi-tag"></i><span>Kategori</span><span class="menu-arrow"><i
                             class="mdi mdi-chevron-right"></i></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
@@ -28,11 +30,11 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ route('produk-mobil.index') }}"><i class="mdi mdi-calendar"></i><span>Produk</span></a>
+                <a href="{{ route('produk-mobil.index') }}"><i class="mdi mdi-view-grid"></i><span>Produk</span></a>
             </li>
             <li>
                 <a href="javascript: void(0);">
-                    <i class="mdi mdi-account-location"></i><span>Cuci Mobil</span><span class="menu-arrow"><i
+                    <i class="mdi mdi-car-wash"></i><span>Cuci Mobil</span><span class="menu-arrow"><i
                             class="mdi mdi-chevron-right"></i></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
@@ -43,21 +45,23 @@
             </li>
             <li>
                 <a href="{{ route('transaction-booking.index') }}"><i
-                        class="mdi mdi-calendar"></i><span>Transaksi</span></a>
+                        class="mdi mdi-cash"></i><span>Transaksi</span></a>
             </li>
             <li>
-                <a href="calendar.html"><i class="mdi mdi-calendar"></i><span>Calendar</span></a>
+                <a href="{{ route('booking-cuci-export.index') }}"><i
+                        class="mdi mdi-file-multiple
+                        "></i><span>Laporan</span></a>
             </li>
         @elseif (Auth::user()->role == 'user' || Auth::user()->role == '0')
             <li>
-                <a href="{{ route('user.home') }}"><i class="mdi mdi-speedometer"></i><span>Dashboards</span></a>
+                <a href="{{ route('user.home') }}"><i class="mdi mdi-home"></i><span>Dashboards</span></a>
             </li>
             <li>
-                <a href="{{ route('booking-cuci-customer.index') }}"><i class="mdi mdi-calendar"></i><span>Booking
+                <a href="{{ route('booking-cuci-customer.index') }}"><i class="mdi mdi-car-wash"></i><span>Booking
                         Cuci</span></a>
             </li>
             <li>
-                <a href="{{ route('transaction-customer.index') }}"><i class="mdi mdi-calendar"></i><span>Transaksi
+                <a href="{{ route('transaction-customer.index') }}"><i class="mdi mdi-cash"></i><span>Transaksi
                         Customer</span></a>
             </li>
         @endif
