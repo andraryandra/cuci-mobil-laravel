@@ -156,10 +156,15 @@ class BookingCuciController extends Controller
     public function updateKaryawan(Request $request, $id)
     {
         $this->validate(request(), [
-            'karyawan_id' => 'nullable',
+            'karyawan_id' => 'required',
             'status_pesan' => 'nullable',
             'status' => 'nullable'
-        ]);
+        ],
+    [
+        'karyawan_id.required' => 'Karyawan Harus Dipilih!',
+        'status_pesan.required' => 'Status Pesan Harus Dipilih!',
+        'status.required' => 'Status Harus Dipilih!',
+    ]);
 
         try {
             DB::beginTransaction();
@@ -177,7 +182,11 @@ class BookingCuciController extends Controller
 
             DB::commit();
 
-            return back()->with(['success' => 'Data Berhasil Disimpan!']);
+            if ($booking) {
+                return back()->with(['success' => 'Data Berhasil Disimpan!']);
+            } else {
+                return back()->with(['error' => 'Data Gagal Disimpan!']);
+            }
         } catch (\Exception $e) {
             DB::rollback();
 

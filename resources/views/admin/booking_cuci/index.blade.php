@@ -25,6 +25,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+        @elseif (session('warning'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Warning!</strong> {{ session('warning') }}.
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         @endif
 
         <!--end row-->

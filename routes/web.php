@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriProdukController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\LandingPage\ServicesController;
 use App\Http\Controllers\Admin\TransactionBookingController;
 use App\Http\Controllers\User\BookingCuciCustomerController;
@@ -51,6 +52,10 @@ Route::get('/generate-pdf-{id}', [TransactionBookingController::class,'ExportPDF
 Route::resource('user-profile', ProfileController::class)->only([
     'index', 'update'
 ]);
+
+Route::get('booking-cucis/{booking_id}/rating/create', [RatingController::class, 'create'])->name('booking-cucis.rating.create');
+Route::post('booking-cucis/{booking_id}/rating/store', [RatingController::class, 'store'])->name('booking-cucis.rating.store');
+
 
 /*------------------------------------------
 --------------------------------------------
@@ -120,5 +125,8 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::get('export-booking-cuci-mobil', [LaporanController::class, 'index'])->name('booking-cuci-export.index');
     Route::get('export-booking-cuci-mobil-csv', [LaporanController::class, 'exportBookingCuciMobilCSV'])->name('booking-cuci.exportCSV');
     Route::post('export-booking-cuci-mobil-csv-custom', [LaporanController::class, 'exportBookingCuciMobilCustomCSV'])->name('booking-cuci.exportCustomCSV');
+
+     // Route::post('booking-cucis/{booking_id}/rating/store', [RatingController::class, 'store'])->name('booking-cucis.rating.store');
+    // Route::post('booking-cucis/{booking}/rating/store', [RatingController::class, 'store'])->name('booking-cucis.rating.store');
 
 });

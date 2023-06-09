@@ -14,9 +14,9 @@
                             class="mdi mdi-chevron-right"></i></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
-                    <li><a href="{{ route('user-admin.index') }}">Admin</a></li>
-                    <li><a href="{{ route('user-karyawan.index') }}">Karyawan</a></li>
-                    <li><a href="{{ route('user-customer.index') }}">Customer</a></li>
+                    <li><a href="{{ route('user-admin.index') }}"><i class=" ti-layout-menu"></i>Admin</a></li>
+                    <li><a href="{{ route('user-karyawan.index') }}"><i class=" ti-layout-menu"></i>Karyawan</a></li>
+                    <li><a href="{{ route('user-customer.index') }}"><i class=" ti-layout-menu"></i>Customer</a></li>
                 </ul>
             </li>
             <li>
@@ -26,7 +26,8 @@
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
                     {{-- <li><a href="{{ route('kategori-produk.index') }}">Kategori Produk</a></li> --}}
-                    <li><a href="{{ route('kategori-mobil.index') }}">Kategori Mobil</a></li>
+                    <li><a href="{{ route('kategori-mobil.index') }}"><i class=" ti-layout-menu"></i>Kategori Mobil</a>
+                    </li>
                 </ul>
             </li>
             <li>
@@ -38,9 +39,11 @@
                             class="mdi mdi-chevron-right"></i></span>
                 </a>
                 <ul class="nav-second-level" aria-expanded="false">
-                    <li><a href="{{ route('booking-cuci.index') }}">Antrian Cuci</a></li>
-                    <li><a href="{{ route('booking-cuci-sedang-dicuci.index') }}">Sedang Di Cuci</a></li>
-                    <li><a href="{{ route('booking-cuci-selesai-dicuci.index') }}">Cucian Selesai</a></li>
+                    <li><a href="{{ route('booking-cuci.index') }}"><i class=" ti-layout-menu"></i>Antrian Cuci</a></li>
+                    <li><a href="{{ route('booking-cuci-sedang-dicuci.index') }}"><i class=" ti-layout-menu"></i> Sedang
+                            Di Cuci</a></li>
+                    <li><a href="{{ route('booking-cuci-selesai-dicuci.index') }}"><i class=" ti-layout-menu"></i>Cucian
+                            Selesai</a></li>
                 </ul>
             </li>
             <li>

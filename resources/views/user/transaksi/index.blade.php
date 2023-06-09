@@ -38,6 +38,7 @@
                                             <th class="text-center">Nama Mobil</th>
                                             <th class="text-center">No Plat Mobil</th>
                                             <th class="text-center">Tanggal Pesanan</th>
+                                            <th class="text-center">Rating</th>
                                             <th class="text-center">Status Booking</th>
                                             <th class="text-center">Status Bayar</th>
                                             <th class="text-center">Aksi</th>
@@ -60,6 +61,19 @@
                                                 <td class="text-center">
                                                     {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d-m-Y') }} ||
                                                     {{ $item->jam_pesan }}</td>
+                                                <td class="text-center">
+                                                    @if ($item->rating)
+                                                        @for ($i = 1; $i <= $item->rating; $i++)
+                                                            <span class="fa fa-star checked text-warning"></span>
+                                                        @endfor
+                                                    @else
+                                                        <button type="button" class="btn btn-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#ratingModal{{ $item->id }}"><i
+                                                                class="fa fa-star "></i> Beri
+                                                            Rating</button>
+                                                    @endif
+                                                </td>
                                                 <td class="text-center">
                                                     @if ($item->status_pesan == 'PENDING')
                                                         <span class="badge bg-warning text-light p-2">
@@ -109,6 +123,7 @@
 
     {{-- Modal Edit --}}
     @include('user.transaksi.edit')
+    @include('user.transaksi.rating')
 
     {{-- Modal Action --}}
     <!-- Modal -->

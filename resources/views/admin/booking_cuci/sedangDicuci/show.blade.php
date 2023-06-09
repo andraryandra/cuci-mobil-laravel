@@ -188,15 +188,15 @@
                                 value="{{ $item->jam_pesan }}">
                         </div>
 
-
-
                         <div class="mb-3">
-                            <label for="status_bayar" class="form-label">Status Bayar</label>
-                            <select class="custom-select" id="status_bayar" name="status_bayar" disabled>
-                                <option value="UNPAID" @if ($item->status_bayar == 'UNPAID') selected @endif>
-                                    Menunggu Pembayaran</option>
-                                <option value="PAID" @if ($item->status_bayar == 'PAID') selected @endif>
-                                    Sudah Dibayar</option>
+                            <label for="status_pesan" class="form-label">Status Bayar</label>
+                            <select class="custom-select" id="status_pesan" name="status_pesan" disabled>
+                                <option value="PENDING" @if ($item->status_pesan == 'PENDING') selected @endif>
+                                    Pending</option>
+                                <option value="PROCESS" @if ($item->status_pesan == 'PROCESS') selected @endif>
+                                    Diproses</option>
+                                <option value="SUCCESS" @if ($item->status_pesan == 'SUCCESS') selected @endif>
+                                    Selesai</option>
                             </select>
                         </div>
 

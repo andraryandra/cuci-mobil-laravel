@@ -16,7 +16,8 @@
                         @method('PUT')
                         <div class="mb-3">
                             <label for="karyawan_id" class="form-label">Nama Karyawan</label>
-                            <select class="custom-select" id="karyawan_id" name="karyawan_id">
+                            <select class="custom-select @error('karyawan_id') is-invalid @enderror" id="karyawan_id"
+                                name="karyawan_id">
                                 <option value="" selected>-- Pilih Karyawan --</option>
                                 @foreach ($users as $user)
                                     @if ($user->role == '2' || $user->role == 'karyawan')
@@ -29,6 +30,9 @@
                                     @endif
                                 @endforeach
                             </select>
+                            @error('karyawan_id')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
 

@@ -42,13 +42,13 @@ class UserKaryawanController extends Controller
     $this->validate(request(), [
         'name' => 'required',
         'email' => 'required',
-        'password' => 'required',
-        'role' => 'required'
+        'password' => 'nullable',
+        'role' => 'nullable'
     ], [
         'name.required' => 'Nama tidak boleh kosong',
         'email.required' => 'Email tidak boleh kosong',
-        'password.required' => 'Password tidak boleh kosong',
-        'role.required' => 'Role tidak boleh kosong'
+        // 'password.required' => 'Password tidak boleh kosong',
+        // 'role.required' => 'Role tidak boleh kosong'
     ]);
 
     try {
@@ -57,8 +57,8 @@ class UserKaryawanController extends Controller
         $usersAdmin = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => $request->role,
-            'password' => bcrypt($request->password)
+            'role' => 2,
+            'password' => bcrypt('karyawan')
         ]);
 
         $statusKaryawan = StatusKaryawan::create([

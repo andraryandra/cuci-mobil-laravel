@@ -122,10 +122,6 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="my-3">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop">
-                                <i class="fa fa-plus-circle mr-1"></i> Create Booking Cuci Mobil
-                            </button>
                             <a href="{{ route('booking-cuci.exportCSV') }}" class="btn btn-primary">
                                 <i class="fa fa-file-excel-o mr-1"></i> Export CSV
                             </a>
@@ -141,7 +137,7 @@
                                             <th class="text-center">Nama Mobil</th>
                                             <th class="text-center">No Plat Mobil</th>
                                             <th class="text-center">Tanggal Pesanan</th>
-                                            {{-- <th class="text-center">Karyawan</th> --}}
+                                            <th class="text-center">Rating</th>
                                             <th class="text-center">Status Booking</th>
                                             <th class="text-center">Status Bayar</th>
                                             <th class="text-center">Aksi</th>
@@ -163,19 +159,22 @@
                                                 <td class="text-center">{{ $item->no_plat_mobil }}</td>
                                                 <td class="text-center">
                                                     {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d-m-Y') }} ||
-                                                    {{ $item->jam_pesan }}</td>
-
-                                                {{-- <td class="text-center text-capitalize">
-                                                    @if ($item->karyawan_id == null)
-                                                        <button type="button" class="btn btn-info text-light me-2"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modalEdit2{{ $item->id }}">
-                                                            Pilih Karyawan
-                                                        </button>
+                                                    {{ $item->jam_pesan }}
+                                                </td>
+                                                <td class="text-center">
+                                                    @if ($item->rating)
+                                                        @for ($i = 1; $i <= $item->rating; $i++)
+                                                            <span class="fa fa-star checked text-warning"></span>
+                                                        @endfor
                                                     @else
-                                                        {{ $item->karyawan->name }}
+                                                        <button type="button" class="btn btn-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#ratingModal{{ $item->id }}"><i
+                                                                class="fa fa-star"></i> Beri
+                                                            Rating</button>
                                                     @endif
-                                                </td> --}}
+                                                </td>
+
                                                 <td class="text-center">
                                                     @if ($item->status_pesan == 'PENDING')
                                                         <span class="badge bg-warning text-light p-2">Menunggu Cucian</span>
@@ -204,11 +203,13 @@
                                                         <i class="fa fa-navicon"></i> Action
                                                     </button>
                                                 </td>
-
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+
+
+
                             </div>
                         </div>
                     </div>
@@ -222,6 +223,7 @@
     {{-- Modal Edit --}}
     @include('admin.transaksi.edit')
     @include('admin.transaksi.show')
+    @include('admin.transaksi.rating')
 
     {{-- Modal Action --}}
     <!-- Modal -->
@@ -359,19 +361,33 @@
             visibility: visible;
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.raty/latest/jquery.raty.css">
 
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/starability-css/starability-minified.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> --}}
 
-
-    {{-- <link rel="stylesheet" href="{{ asset('bootstrap5-3/css/bootstrap.min.css') }}"> --}}
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/starability-all/dist/starability-all.min.css"> --}}
 @endpush
 
 @push('script')
-    <script src="{{ asset('bootstrap5-3/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ url('https://code.jquery.com/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('bootstrap5-3/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.raty/latest/jquery.raty.js"></script>
 
     <script>
         $(document).ready(function() {
             $('option[value=""]').css('display', 'none');
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#rating').raty({
+                starType: 'i',
+                starOn: 'fas fa-star',
+                starOff: 'fas fa-star-o',
+                readOnly: false
+            });
         });
     </script>
 @endpush

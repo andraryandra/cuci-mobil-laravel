@@ -201,14 +201,14 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="status_pengerjaan" class="form-label">Status Pengerjaan</label>
-                            <select class="custom-select" id="status_pengerjaan" name="status_pengerjaan" disabled>
-                                <option value="PENDING" @if ($item->status_pengerjaan == 'PENDING') selected @endif>
-                                    Menunggu Cucian</option>
-                                <option value="PROCESS" @if ($item->status_pengerjaan == 'PROCESS') selected @endif>
-                                    Sedang Dicuci</option>
-                                <option value="SUCCESS" @if ($item->status_pengerjaan == 'SUCCESS') selected @endif>
-                                    Pencucian Selesai</option>
+                            <label for="status_pesan" class="form-label">Status Pengerjaan</label>
+                            <select class="custom-select" id="status_pesan" name="status_pesan" disabled>
+                                <option value="PENDING" @if ($item->status_pesan == 'PENDING') selected @endif>
+                                    Pending</option>
+                                <option value="PROCESS" @if ($item->status_pesan == 'PROCESS') selected @endif>
+                                    Diproses</option>
+                                <option value="SUCCESS" @if ($item->status_pesan == 'SUCCESS') selected @endif>
+                                    Selesai</option>
                             </select>
 
                         </div>
