@@ -42,10 +42,12 @@
 
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" id="user_id" name="user_id">
+                            {{-- <select class="custom-select" id="user_id" name="user_id">
                                 <option value="{{ $item->user->id }}">
-                                    {{ $item->user->name }}</option>
-                            </select>
+                                    {{ $item->nama_pemesan }}</option>
+                            </select> --}}
+                            <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
+                                value="{{ $item->nama_pemesan }}">
                         </div>
 
                         <div class="mb-3">

@@ -1,91 +1,85 @@
-<footer>
-    <div class="footer-wrapper section-bg2" data-background="assets/img/gallery/footer-bg.png">
-        <!-- Footer Start-->
-        <div class="footer-area footer-padding">
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-xl-4 col-lg-4 col-md-5 col-sm-7">
-                        <div class="single-footer-caption mb-50">
-                            <div class="single-footer-caption mb-30">
-                                <!-- logo -->
-                                <div class="footer-logo mb-35">
-                                    <a href="index.html"><img src="assets/img/logo/logo2_footer.png" alt=""></a>
-                                </div>
-                                <div class="footer-tittle">
-                                    <div class="footer-pera">
-                                        <p>Duis aute irure dolor inasfa reprehenderit in voluptate velit esse cillum
-                                            reeut cupidatatfug.</p>
-                                    </div>
-                                    <ul class="mb-40">
-                                        <li class="number"><a href="#">(80) 783 367-3904</a></li>
-                                        <li class="number2"><a href="#">contact@carwash.com</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Opening hour</h4>
-                                <ul>
-                                    <li><a href="#">Mon-Fri (9.00-19.00)</a></li>
-                                    <li><a href="#">Sat (12.00-19.00)</a></li>
-                                    <li><a href="#">Sun <span>(Closed)</span></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <div class="footer-tittle">
-                                <h4>Navigation</h4>
-                                <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About</a></li>
-                                    <li><a href="#">Services</a></li>
-                                    <li><a href="#">Blog</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
-                        <div class="single-footer-caption mb-50">
-                            <!-- social -->
-                            <div class="footer-social">
-                                <a href="#"><i class="fab fa-twitter"></i></a>
-                                <a href="https://bit.ly/sai4ull"><i class="fab fa-facebook-f"></i></a>
-                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- footer-bottom area -->
-        <div class="footer-bottom-area">
-            <div class="container">
-                <div class="footer-border">
-                    <div class="row">
-                        <div class="col-xl-12 ">
-                            <div class="footer-copy-right text-center">
-                                <p>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                    Copyright &copy;
-                                    <script>
-                                        document.write(new Date().getFullYear());
-                                    </script> All rights reserved | This template is made with <i
-                                        class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                                        target="_blank">Colorlib</a>
-                                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Footer End-->
-    </div>
-</footer>
+   <!-- Footer top -->
+   <div class="template-footer-top">
+
+       <!-- Layout 25x25x25x25 -->
+       <div class="template-layout-25x25x25x25 template-clear-fix">
+
+           <!-- Left column -->
+           <div class="template-layout-column-left">
+               <h6>About</h6>
+               <p>Autospan Hand Wash is an eco-friendly hand car wash and detailing service based in Portland.
+               </p>
+               <img src="media/image/logo.png" alt="" class="template-logo" />
+           </div>
+
+           <!-- Center left column -->
+           <div class="template-layout-column-center-left">
+               <h6>Services</h6>
+               <ul class="template-list-reset">
+                   <li><a href="service-style-1.html">Exterior Hand Wash</a></li>
+                   <li><a href="service-style-1.html">Tower Hand Dry</a></li>
+                   <li><a href="service-style-1.html">Tire Dressing</a></li>
+                   <li><a href="service-style-1.html">Wheel Shine</a></li>
+                   <li><a href="service-style-1.html">Interior Vacuum</a></li>
+                   <li><a href="service-style-1.html">Sealer Hand Wax</a></li>
+               </ul>
+           </div>
+
+           <!-- Center right column -->
+           <div class="template-layout-column-center-right">
+               <h6>Company</h6>
+               <ul class="template-list-reset">
+                   <li><a href="about-style-1.html">About Us</a></li>
+                   <li><a href="gallery.html">Gallery</a></li>
+                   <li><a href="service-style-2.html">Our Services</a></li>
+                   <li><a href="book-your-wash.html">Book Your Wash</a></li>
+                   <li><a href="gallery.html">Portfolio</a></li>
+                   <li><a href="contact-style-1.html">Contact</a></li>
+               </ul>
+           </div>
+
+           <!-- Right column -->
+           <div class="template-layout-column-right">
+               <h6>Newsletter</h6>
+               <form class="template-component-newsletter-form">
+                   <div class="template-component-form-field">
+                       <label for="newsletter-form-email">Your e-mail address *</label>
+                       <input type="text" name="newsletter-form-email" id="newsletter-form-email" />
+                   </div>
+                   <div class="template-margin-top-2">
+                       <input type="submit" value="Subscribe" class="template-component-button"
+                           name="newsletter-form-submit" id="newsletter-form-submit" />
+                   </div>
+               </form>
+           </div>
+
+       </div>
+
+   </div>
+
+   <!-- Footer bottom -->
+   <div class="template-footer-bottom">
+
+       <!-- Social icon list -->
+       <ul class="template-component-social-icon-list template-component-social-icon-list-2">
+           <li><a href="https://twitter.com/quanticalabs" class="template-icon-social-twitter" target="_blank"></a></li>
+           <li><a href="https://www.facebook.com/QuanticaLabs" class="template-icon-social-facebook"
+                   target="_blank"></a></li>
+           <li><a href="https://dribbble.com/quanticalabs" class="template-icon-social-dribbble" target="_blank"></a>
+           </li>
+           <li><a href="http://themeforest.net/user/QuanticaLabs/portfolio?ref=quanticalabs"
+                   class="template-icon-social-envato" target="_blank"></a></li>
+           <li><a href="https://www.behance.net/quanticalabs" class="template-icon-social-behance" target="_blank"></a>
+           </li>
+           <li><a href="https://www.youtube.com/user/quanticalabs" class="template-icon-social-youtube"
+                   target="_blank"></a></li>
+       </ul>
+
+       <!-- Copyright -->
+       <div class="template-footer-bottom-copyright">
+           By <a href="http://quanticalabs.com" target="_blank">QuanticaLabs</a> &copy; 2016 <a
+               href="http://themeforest.net/user/QuanticaLabs/portfolio?ref=quanticalabs" target="_blank">Auto Spa
+               Template</a>
+       </div>
+
+   </div>

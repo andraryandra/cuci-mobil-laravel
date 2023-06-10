@@ -6,7 +6,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title fs-5" id="staticBackdropLabel">Edit Booking Cuci -
-                        {{ $item->user->name }} || {{ $item->kategoriMobil->kategori_mobil }}</h4>
+                        {{ $item->nama_pemesan }} || {{ $item->kategoriMobil->kategori_mobil }}</h4>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -48,13 +48,13 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="user_id" class="form-label">Nama Pemesan</label>
                             <select class="custom-select" id="user_id" name="user_id" disabled>
                                 <option value="{{ $item->user->id }}">
                                     {{ $item->user->name }}</option>
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                             <label for="no_telp_pemesan" class="form-label">Nomor Telepon Pemesan</label>

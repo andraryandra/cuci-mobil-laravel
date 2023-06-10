@@ -63,7 +63,7 @@
                                             <td class="text-center text-capitalize">
                                                 <a href="#" data-bs-toggle="modal"
                                                     data-bs-target="#show{{ $item->id }}">
-                                                    <u>{{ $item->user->name }}</u>
+                                                    <u>{{ $item->nama_pemesan }}</u>
                                                     <span class="show-button">Show</span>
                                                 </a>
                                             </td>
@@ -167,7 +167,7 @@
     @include('admin.booking_cuci.SudahDicuci.edit')
 
     {{-- Modal Karyawan --}}
-    @include('admin.booking_cuci.edit-2')
+    {{-- @include('admin.booking_cuci.edit-2') --}}
 
     @include('admin.booking_cuci.SudahDicuci.show')
 
@@ -203,8 +203,7 @@
                             <select class="custom-select" name="produk_id" id="produk-id" title="Produk" required>
                                 <option value="" selected>Select Produk</option>
                                 @foreach ($produks as $produk)
-                                    <option value="{{ $produk->id }}">{{ $produk->kategoriMobil->kategori_mobil }}
-                                        ||
+                                    <option value="{{ $produk->id }}">{{ $produk->kategoriMobil->kategori_mobil }} ||
                                         {{ $produk->nama_produk }} || Rp. {{ number_format($produk->harga_produk) }}
                                     </option>
                                 @endforeach
@@ -212,15 +211,17 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" name="user_id" id="user_id" title="User" required>
+                            <label for="nama_pemesan" class="form-label">Nama Pemesan</label>
+                            {{-- <select class="custom-select" name="user_id" id="user_id" title="User" required>
                                 <option value="" selected>Select User</option>
                                 @foreach ($users as $user)
                                     @if ($user->role == '0' || $user->role == 'user')
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
+                                title="User" placeholder="Nama Pemesan" required>
                         </div>
                         <div class="mb-3">
                             <label for="no_telp_pemesan" class="form-label">No. Telp Pemesan</label>

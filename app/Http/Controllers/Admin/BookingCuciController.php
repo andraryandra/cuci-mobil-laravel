@@ -50,8 +50,8 @@ class BookingCuciController extends Controller
             'user_id' => 'nullable',
             'kategori_mobil_id' => 'nullable',
             'produk_id' => 'nullable',
-            'karyawan_id' => 'nullable',
-            'nama_pemesan' => 'nullable',
+            // 'karyawan_id' => 'nullable',
+            'nama_pemesan' => 'required',
             'no_telp_pemesan' => 'required',
             'nama_mobil' => 'required',
             'no_plat_mobil' => 'required',
@@ -65,8 +65,8 @@ class BookingCuciController extends Controller
         $booking->user_id = $request->user_id;
         $booking->kategori_mobil_id = $request->kategori_mobil_id;
         $booking->produk_id = $request->produk_id;
-        $booking->karyawan_id = $request->karyawan_id;
-        $booking->nama_pemesan = $request->user_id;
+        // $booking->karyawan_id = $request->karyawan_id;
+        $booking->nama_pemesan = $request->nama_pemesan;
         $booking->no_telp_pemesan = $request->no_telp_pemesan;
         $booking->nama_mobil = $request->nama_mobil;
         $booking->no_plat_mobil = $request->no_plat_mobil;
@@ -113,58 +113,51 @@ class BookingCuciController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        $this->validate(request(),
-        [
-            'user_id' => 'nullable',
-            'kategori_mobil_id' => 'nullable',
-            'produk_id' => 'nullable',
-            // 'karyawan_id' => 'nullable',
-            'nama_pemesan' => 'nullable',
-            'no_telp_pemesan' => 'required',
-            'nama_mobil' => 'required',
-            'no_plat_mobil' => 'required',
-            'tanggal_pesan' => 'required',
-            'jam_pesan' => 'required',
-            // 'status_pesan' => 'nullable',
-            'status_bayar' => 'nullable',
-        ]);
+{
+    $this->validate(request(), [
+        'user_id' => 'nullable', // Remove 'required'
+        'kategori_mobil_id' => 'nullable',
+        'produk_id' => 'nullable',
+        // 'karyawan_id' => 'nullable',
+        'nama_pemesan' => 'required',
+        'no_telp_pemesan' => 'required',
+        'nama_mobil' => 'required',
+        'no_plat_mobil' => 'required',
+        'tanggal_pesan' => 'required',
+        'jam_pesan' => 'required',
+        // 'status_pesan' => 'nullable',
+        // 'status_bayar' => 'nullable',
+    ]);
 
-        $booking = BookingCuci::findOrFail($id);
-        $booking->user_id = intval($request->user_id);
-        $booking->kategori_mobil_id = intval($request->kategori_mobil_id);
-        $booking->produk_id = intval($request->produk_id);
-        // $booking->karyawan_id = $request->karyawan_id;
-        $booking->nama_pemesan = $request->user_id;
-        $booking->no_telp_pemesan = $request->no_telp_pemesan;
-        $booking->nama_mobil = $request->nama_mobil;
-        $booking->no_plat_mobil = $request->no_plat_mobil;
-        $booking->tanggal_pesan = $request->tanggal_pesan;
-        $booking->jam_pesan = $request->jam_pesan;
-        // $booking->status_pesan = $request->status_pesan;
-        $booking->status_bayar = $request->status_bayar;
-        // dd($booking);
-        $booking->save();
+    $booking = BookingCuci::findOrFail($id);
+    $booking->user_id = $request->user_id ? intval($request->user_id) : null; // Set to null if user_id is empty
+    $booking->kategori_mobil_id = intval($request->kategori_mobil_id);
+    $booking->produk_id = intval($request->produk_id);
+    // $booking->karyawan_id = $request->karyawan_id;
+    $booking->nama_pemesan = $request->nama_pemesan;
+    $booking->no_telp_pemesan = $request->no_telp_pemesan;
+    $booking->nama_mobil = $request->nama_mobil;
+    $booking->no_plat_mobil = $request->no_plat_mobil;
+    $booking->tanggal_pesan = $request->tanggal_pesan;
+    $booking->jam_pesan = $request->jam_pesan;
+    // $booking->status_pesan = $request->status_pesan;
+    // $booking->status_bayar = $request->status_bayar;
+    // dd($booking);
+    $booking->save();
 
-        if($booking){
-            return back()->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
-            return back()->with(['error' => 'Data Gagal Disimpan!']);
-        }
+    if ($booking) {
+        return back()->with(['success' => 'Data Berhasil Disimpan!']);
+    } else {
+        return back()->with(['error' => 'Data Gagal Disimpan!']);
     }
+}
 
-    public function updateKaryawan(Request $request, $id)
+
+    public function updateStatusCuci(Request $request, $id)
     {
         $this->validate(request(), [
-            'karyawan_id' => 'required',
             'status_pesan' => 'nullable',
-            'status' => 'nullable'
-        ],
-    [
-        'karyawan_id.required' => 'Karyawan Harus Dipilih!',
-        'status_pesan.required' => 'Status Pesan Harus Dipilih!',
-        'status.required' => 'Status Harus Dipilih!',
-    ]);
+        ]);
 
         try {
             DB::beginTransaction();
@@ -172,27 +165,60 @@ class BookingCuciController extends Controller
             $booking = BookingCuci::findOrFail($id);
 
             $booking->update([
-                'karyawan_id' => $request->karyawan_id,
+                // 'karyawan_id' => $booking->karyawan_id,
                 'status_pesan' => 'PROCESS',
             ]);
 
-            $statusKaryawan = StatusKaryawan::where('karyawan_id', $request->karyawan_id)->first();
-            $statusKaryawan->status = 'ACTIVE';
-            $statusKaryawan->save();
-
             DB::commit();
 
-            if ($booking) {
-                return back()->with(['success' => 'Data Berhasil Disimpan!']);
-            } else {
-                return back()->with(['error' => 'Data Gagal Disimpan!']);
-            }
+            return back()->with(['success' => 'Data Berhasil Disimpan!']);
         } catch (\Exception $e) {
             DB::rollback();
 
             return back()->with(['error' => 'Data Gagal Disimpan!']);
         }
     }
+
+    // public function updateKaryawan(Request $request, $id)
+    // {
+    //     $this->validate(request(), [
+    //         'karyawan_id' => 'nullable',
+    //         'status_pesan' => 'nullable',
+    //         'status' => 'nullable'
+    //     ],
+    // [
+    //     'karyawan_id.required' => 'Karyawan Harus Dipilih!',
+    //     'status_pesan.required' => 'Status Pesan Harus Dipilih!',
+    //     'status.required' => 'Status Harus Dipilih!',
+    // ]);
+
+    //     try {
+    //         DB::beginTransaction();
+
+    //         $booking = BookingCuci::findOrFail($id);
+
+    //         $booking->update([
+    //             'karyawan_id' => $request->karyawan_id,
+    //             'status_pesan' => 'PROCESS',
+    //         ]);
+
+    //         $statusKaryawan = StatusKaryawan::where('karyawan_id', $request->karyawan_id)->first();
+    //         $statusKaryawan->status = 'ACTIVE';
+    //         $statusKaryawan->save();
+
+    //         DB::commit();
+
+    //         if ($booking) {
+    //             return back()->with(['success' => 'Data Berhasil Disimpan!']);
+    //         } else {
+    //             return back()->with(['error' => 'Data Gagal Disimpan!']);
+    //         }
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+
+    //         return back()->with(['error' => 'Data Gagal Disimpan!']);
+    //     }
+    // }
     /**
      * Remove the specified resource from storage.
      *

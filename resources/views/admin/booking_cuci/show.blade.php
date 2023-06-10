@@ -108,13 +108,13 @@
         </div> --}}
 
 
-    <div class="modal fade" id="show{{ $item->id }}" tabindex="-1" aria-labelledby="show{{ $item->id }}"
+    <div class="modal fade" id="modalShow{{ $item->id }}" tabindex="-1" aria-labelledby="show{{ $item->id }}"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="modalShow{{ $item->id }}Label">Show Booking Cuci -
-                        {{ $item->user->name }} || {{ $item->kategoriMobil->kategori_mobil }}</h3>
+                        {{ $item->nama_pemesan }} || {{ $item->kategoriMobil->kategori_mobil }}</h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -153,9 +153,11 @@
 
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" id="user_id" name="user_id" disabled required>
+                            {{-- <select class="custom-select" id="user_id" name="user_id" disabled required>
                                 <option value="{{ $item->user->id }}">{{ $item->user->name }}</option>
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
+                                value="{{ $item->nama_pemesan }}" readonly>
                         </div>
 
                         <div class="mb-3">
@@ -201,16 +203,15 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="status_Ppesan" class="form-label">Status Pengerjaan</label>
+                            <label for="status_pesan" class="form-label">Status Pengerjaan</label>
                             <select class="custom-select" id="status_pesan" name="status_pesan" disabled>
                                 <option value="PENDING" @if ($item->status_pesan == 'PENDING') selected @endif>
-                                    Pending</option>
+                                    Menunggu Antrian</option>
                                 <option value="PROCESS" @if ($item->status_pesan == 'PROCESS') selected @endif>
                                     Diproses</option>
                                 <option value="SUCCESS" @if ($item->status_pesan == 'SUCCESS') selected @endif>
                                     Selesai</option>
                             </select>
-
                         </div>
                     </div>
                 </div>

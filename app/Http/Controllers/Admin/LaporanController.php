@@ -30,80 +30,84 @@ class LaporanController extends Controller
     }
 
     public function exportBookingCuciMobilCSV()
-    {
-        $filename = 'export.csv';
+{
+    $filename = 'export.csv';
 
-        $headers = [
-            'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-        ];
+    $headers = [
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+    ];
 
-        $callback = function () {
-            $handle = fopen('php://output', 'w');
+    $callback = function () {
+        $handle = fopen('php://output', 'w');
 
-            // Write the CSV headers
+        // Write the CSV headers
+        fputcsv($handle, [
+            'Produk ID',
+            'User ID',
+            'Nama Produk',
+            'Harga Produk',
+            'Kategori Mobil',
+            'Nama Pemesan',
+            'No. Telp Pemesan',
+            'Nama Mobil',
+            'No. Plat Mobil',
+            'Tanggal Pesan',
+            'Jam Pesan',
+            'Status Pesan',
+            'Status Pembayaran',
+        ]);
+
+        // Fetch the data from the tables
+        $data = DB::table('produk_mobils')
+            ->join('booking_cucis', 'produk_mobils.id', '=', 'booking_cucis.produk_id')
+            ->join('kategori_mobils', 'booking_cucis.kategori_mobil_id', '=', 'kategori_mobils.id')
+            ->leftJoin('users', 'booking_cucis.user_id', '=', 'users.id') // Use leftJoin instead of join
+            ->select(
+                'produk_mobils.id as produk_id',
+                'users.id as user_id',
+                'produk_mobils.nama_produk',
+                'produk_mobils.harga_produk',
+                'kategori_mobils.kategori_mobil',
+                'booking_cucis.nama_pemesan',
+                'booking_cucis.no_telp_pemesan',
+                'booking_cucis.nama_mobil',
+                'booking_cucis.no_plat_mobil',
+                'booking_cucis.tanggal_pesan',
+                'booking_cucis.jam_pesan',
+                'booking_cucis.status_pesan',
+                'booking_cucis.status_bayar',
+            )
+            ->get();
+
+        // Write the data rows to the CSV
+        foreach ($data as $row) {
+            $user_id = $row->user_id ?? ''; // Use null coalescing operator to handle null user_id
+
             fputcsv($handle, [
-                'Produk ID',
-                'User ID',
-                'Nama Produk',
-                'Harga Produk',
-                'Kategori Mobil',
-                'Nama Pemesan',
-                'No. Telp Pemesan',
-                'Nama Mobil',
-                'No. Plat Mobil',
-                'Tanggal Pesan',
-                'Jam Pesan',
-                'Status Pesan',
-                'Status Pembayaran',
+                $row->produk_id,
+                $user_id,
+                $row->nama_produk,
+                $row->harga_produk,
+                $row->kategori_mobil,
+                $row->nama_pemesan,
+                $row->no_telp_pemesan,
+                $row->nama_mobil,
+                $row->no_plat_mobil,
+                $row->tanggal_pesan,
+                $row->jam_pesan,
+                $row->status_pesan,
+                $row->status_bayar,
             ]);
+        }
 
-            // Fetch the data from the tables
-            $data = DB::table('produk_mobils')
-                ->join('booking_cucis', 'produk_mobils.id', '=', 'booking_cucis.produk_id')
-                ->join('kategori_mobils', 'booking_cucis.kategori_mobil_id', '=', 'kategori_mobils.id')
-                ->join('users', 'booking_cucis.user_id', '=', 'users.id')
-                ->select(
-                    'produk_mobils.id as produk_id',
-                    'users.id as user_id',
-                    'produk_mobils.nama_produk',
-                    'produk_mobils.harga_produk',
-                    'kategori_mobils.kategori_mobil',
-                    'users.name as nama_pemesan',
-                    'booking_cucis.no_telp_pemesan',
-                    'booking_cucis.nama_mobil',
-                    'booking_cucis.no_plat_mobil',
-                    'booking_cucis.tanggal_pesan',
-                    'booking_cucis.jam_pesan',
-                    'booking_cucis.status_pesan',
-                    'booking_cucis.status_bayar',
-                )
-                ->get();
+        fclose($handle);
+    };
 
-            // Write the data rows to the CSV
-            foreach ($data as $row) {
-                fputcsv($handle, [
-                    $row->produk_id,
-                    $row->user_id,
-                    $row->nama_produk,
-                    $row->harga_produk,
-                    $row->kategori_mobil,
-                    $row->nama_pemesan,
-                    $row->no_telp_pemesan,
-                    $row->nama_mobil,
-                    $row->no_plat_mobil,
-                    $row->tanggal_pesan,
-                    $row->jam_pesan,
-                    $row->status_pesan,
-                    $row->status_bayar,
-                ]);
-            }
+    return new StreamedResponse($callback, 200, $headers);
+}
 
-            fclose($handle);
-        };
 
-        return new StreamedResponse($callback, 200, $headers);
-    }
 
     public function exportBookingCuciMobilCustomCSV(Request $request)
 {
@@ -138,17 +142,18 @@ class LaporanController extends Controller
         ]);
 
         // Fetch the data from the tables based on date range
+        // Fetch the data from the tables
         $data = DB::table('produk_mobils')
             ->join('booking_cucis', 'produk_mobils.id', '=', 'booking_cucis.produk_id')
             ->join('kategori_mobils', 'booking_cucis.kategori_mobil_id', '=', 'kategori_mobils.id')
-            ->join('users', 'booking_cucis.user_id', '=', 'users.id')
+            ->leftJoin('users', 'booking_cucis.user_id', '=', 'users.id') // Use leftJoin instead of join
             ->select(
                 'produk_mobils.id as produk_id',
                 'users.id as user_id',
                 'produk_mobils.nama_produk',
                 'produk_mobils.harga_produk',
                 'kategori_mobils.kategori_mobil',
-                'users.name as nama_pemesan',
+                'booking_cucis.nama_pemesan',
                 'booking_cucis.no_telp_pemesan',
                 'booking_cucis.nama_mobil',
                 'booking_cucis.no_plat_mobil',
@@ -157,14 +162,15 @@ class LaporanController extends Controller
                 'booking_cucis.status_pesan',
                 'booking_cucis.status_bayar',
             )
-            ->whereBetween('booking_cucis.tanggal_pesan', [$tanggalAwal, $tanggalAkhir])
             ->get();
 
         // Write the data rows to the CSV
         foreach ($data as $row) {
+            $user_id = $row->user_id ?? ''; // Use null coalescing operator to handle null user_id
+
             fputcsv($handle, [
                 $row->produk_id,
-                $row->user_id,
+                $user_id,
                 $row->nama_produk,
                 $row->harga_produk,
                 $row->kategori_mobil,

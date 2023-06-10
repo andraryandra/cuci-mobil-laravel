@@ -16,11 +16,11 @@ class CreateBookingCucisTable extends Migration
         Schema::create('booking_cucis', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignId('kategori_mobil_id')->constrained('kategori_mobils')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('produk_id')->constrained('produk_mobils')->onDelete('cascade')->onUpdate('cascade');
             // $table->foreignId('karyawan_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade')->nullable();
-            $table->bigInteger('karyawan_id')->nullable();
+            // $table->bigInteger('karyawan_id')->nullable();
 
             $table->string('nama_pemesan');
             $table->string('no_telp_pemesan');

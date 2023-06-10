@@ -112,14 +112,14 @@ class UserKaryawanController extends Controller
                 $usersAdmin->update([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'role' => $request->role
+                    // 'role' => $request->role
                 ]);
             }else{
                 $usersAdmin->update([
                     'name' => $request->name,
                     'email' => $request->email,
-                    'role' => $request->role,
-                    'password' => bcrypt($request->password)
+                    // 'role' => $request->role,
+                    // 'password' => bcrypt($request->password)
                 ]);
             }
 

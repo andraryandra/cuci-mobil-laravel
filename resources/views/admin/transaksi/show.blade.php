@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="modalShow{{ $item->id }}Label">Show Booking Cuci -
-                        {{ $item->user->name }} || {{ $item->kategoriMobil->kategori_mobil }}</h3>
+                        {{ $item->nama_pemesan }} || {{ $item->kategoriMobil->kategori_mobil }}</h3>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -44,9 +44,11 @@
 
                         <div class="mb-3">
                             <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" id="user_id" name="user_id" disabled required>
+                            {{-- <select class="custom-select" id="user_id" name="user_id" disabled required>
                                 <option value="{{ $item->user->id }}">{{ $item->user->name }}</option>
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
+                                value="{{ $item->nama_pemesan }}" disabled>
                         </div>
 
                         <div class="mb-3">

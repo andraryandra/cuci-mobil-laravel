@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RatingController;
+use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\LandingPage\HomeController;
 use App\Http\Controllers\Admin\BookingCuciController;
@@ -11,13 +14,11 @@ use App\Http\Controllers\Admin\UserCustomerController;
 use App\Http\Controllers\Admin\UserKaryawanController;
 use App\Http\Controllers\User\DashboardUserController;
 use App\Http\Controllers\Admin\KategoriMobilController;
+use App\Http\Controllers\LandingPage\BookingController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriProdukController;
-use App\Http\Controllers\Admin\LaporanController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\RatingController;
-use App\Http\Controllers\LandingPage\ServicesController;
 use App\Http\Controllers\Admin\TransactionBookingController;
+use App\Http\Controllers\LandingPage\ContactController;
 use App\Http\Controllers\User\BookingCuciCustomerController;
 use App\Http\Controllers\User\TransactionCustomerController;
 
@@ -37,8 +38,12 @@ use App\Http\Controllers\User\TransactionCustomerController;
 // });
 
 Route::get('/', [HomeController::class, 'index'])->name('landingPage.home');
-Route::get('services', [ServicesController::class, 'index'])->name('landingPage.services');
+Route::get('bookings', [BookingController::class, 'index'])->name('landingPage.booking');
+Route::get('contact', [ContactController::class, 'indexLandingPage'])->name('landingPage.contact');
 
+Route::resource('contact-landing-page', ContactController::class)->only([
+    'index','store','update','destroy'
+]);
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
@@ -56,6 +61,8 @@ Route::resource('user-profile', ProfileController::class)->only([
 Route::get('booking-cucis/{booking_id}/rating/create', [RatingController::class, 'create'])->name('booking-cucis.rating.create');
 Route::post('booking-cucis/{booking_id}/rating/store', [RatingController::class, 'store'])->name('booking-cucis.rating.store');
 
+
+Route::post('booking-cucis/customer/store', [BookingCuciCustomerController::class, 'store'])->name('booking-cucis-customer.store');
 
 /*------------------------------------------
 --------------------------------------------
@@ -114,7 +121,7 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
     Route::put('booking-cuci-sedang-dicuci-update/{id}/update-status', [SedangDicuciController::class, 'updateStatusCuci'])->name('booking-cuci-sedang-dicuci.updateStatusCuci');
 
     // Route::get('booking-cuci-selesai-dicuci', [BookingCuciController::class, 'indexSelesaiDicuci'])->name('booking-cuci.selesaiDicuci');
-    Route::put('booking-cuci/{id}/update-status', [BookingCuciController::class, 'updateKaryawan'])->name('booking-cuci.updateKaryawan');
+    Route::put('booking-cuci/{id}/update-status', [BookingCuciController::class, 'updateStatusCuci'])->name('booking-cuci.updateStatusCuci');
 
     Route::resource('transaction-booking', TransactionBookingController::class)->only([
         'index','show', 'update', 'destroy'

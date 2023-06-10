@@ -13,15 +13,15 @@ class CreateStatusKaryawansTable extends Migration
      */
     public function up()
     {
-        Schema::create('status_karyawans', function (Blueprint $table) {
-            $table->id();
+        // Schema::create('status_karyawans', function (Blueprint $table) {
+        //     $table->id();
 
-            $table->foreignId('karyawan_id')->nullable()->constrained('users')->nullOnDelete()->nullable();
+        //     $table->foreignId('karyawan_id')->nullable()->constrained('users')->nullOnDelete()->nullable();
 
-            $table->enum('status', ['ACTIVE', 'INACTIVE'])->default('INACTIVE');
+        //     $table->enum('status', ['ACTIVE', 'INACTIVE'])->default('INACTIVE');
 
-            $table->timestamps();
-        });
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -31,6 +31,6 @@ class CreateStatusKaryawansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('status_karyawans');
+        // Schema::dropIfExists('status_karyawans');
     }
 }

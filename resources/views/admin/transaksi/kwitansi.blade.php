@@ -63,7 +63,7 @@
     <div class="header">
         <p class="info"><b>Detail Info Pemesanan:</b></p>
         <p class="info">Booking ID: {{ $booking->id }}</p>
-        <p class="info">Nama Pelanggan: {{ $booking->user->name }}</p>
+        <p class="info">Nama Pelanggan: {{ $booking->nama_pemesan }}</p>
         <p class="info">Kategori Mobil: {{ $booking->kategoriMobil->kategori_mobil }}</p>
         <p class="info">Nama Mobil: {{ $booking->nama_mobil }}</p>
         <p class="info">No Plat Mobil: {{ $booking->no_plat_mobil }}</p>

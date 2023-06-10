@@ -45,7 +45,7 @@ class TransactionBookingController extends Controller
             'kategori_mobil_id' => 'nullable',
             'produk_id' => 'nullable',
             // 'karyawan_id' => 'nullable',
-            'nama_pemesan' => 'nullable',
+            'nama_pemesan' => 'required',
             'no_telp_pemesan' => 'required',
             'nama_mobil' => 'required',
             'no_plat_mobil' => 'required',
@@ -56,11 +56,11 @@ class TransactionBookingController extends Controller
         ]);
 
         $booking = BookingCuci::findOrFail($id);
-        $booking->user_id = $request->user_id;
+        $booking->user_id = $request->user_id ? intval($request->user_id) : null; // Set to null if user_id is empty
         $booking->kategori_mobil_id = $request->kategori_mobil_id;
         $booking->produk_id = $request->produk_id;
         // $booking->karyawan_id = $request->karyawan_id;
-        $booking->nama_pemesan = $request->user_id;
+        $booking->nama_pemesan = $request->nama_pemesan;
         $booking->no_telp_pemesan = $request->no_telp_pemesan;
         $booking->nama_mobil = $request->nama_mobil;
         $booking->no_plat_mobil = $request->no_plat_mobil;

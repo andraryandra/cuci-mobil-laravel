@@ -56,7 +56,7 @@
                                             <td class="text-center text-capitalize">
                                                 <a href="#" data-bs-toggle="modal"
                                                     data-bs-target="#show{{ $item->id }}">
-                                                    <u>{{ $item->user->name }}</u>
+                                                    <u>{{ $item->nama_pemesan }}</u>
                                                     <span class="show-button">Show</span>
                                                 </a>
                                             </td>
@@ -113,7 +113,7 @@
                                                                 @method('DELETE')
                                                                 <button type="submit"
                                                                     class="dropdown-item btn btn-danger text-white">
-                                                                    <i class="fa fa-trash"></i> Delete
+                                                                    <i class="fa fa-trash"></i> Batal
                                                                 </button>
                                                             </form>
                                                         </div>

@@ -50,7 +50,7 @@
                                         <th class="text-center">Nama Mobil</th>
                                         <th class="text-center">No Plat Mobil</th>
                                         <th class="text-center">Tanggal Pesanan</th>
-                                        <th class="text-center">Karyawan</th>
+                                        {{-- <th class="text-center">Karyawan</th> --}}
                                         <th class="text-center">Status Booking</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
@@ -63,7 +63,7 @@
                                             <td class="text-center text-capitalize">
                                                 <a href="#" data-bs-toggle="modal"
                                                     data-bs-target="#show{{ $item->id }}">
-                                                    <u>{{ $item->user->name }}</u>
+                                                    <u>{{ $item->nama_pemesan }}</u>
                                                     <span class="show-button">Show</span>
                                                 </a>
                                             </td>
@@ -74,7 +74,7 @@
                                                 {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d-m-Y') }} ||
                                                 {{ $item->jam_pesan }}</td>
 
-                                            <td class="text-center text-capitalize">
+                                            {{-- <td class="text-center text-capitalize">
                                                 @if ($item->karyawan_id == null)
                                                     <button type="button" class="btn btn-info text-light me-2"
                                                         data-bs-toggle="modal"
@@ -84,7 +84,7 @@
                                                 @else
                                                     {{ $item->karyawan->name }}
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td class="text-center">
                                                 <div class="dropdown">
                                                     <button class="btn btn-primary dropdown-toggle" type="button"
@@ -161,7 +161,7 @@
     @include('admin.booking_cuci.sedangDicuci.edit')
 
     {{-- Modal Karyawan --}}
-    @include('admin.booking_cuci.edit-2')
+    {{-- @include('admin.booking_cuci.edit-2')   --}}
 
     @include('admin.booking_cuci.sedangDicuci.show')
 
@@ -204,15 +204,17 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" name="user_id" id="user_id" title="User" required>
+                            <label for="nama_pemesan" class="form-label">Nama Pemesan</label>
+                            {{-- <select class="custom-select" name="user_id" id="user_id" title="User" required>
                                 <option value="" selected>Select User</option>
                                 @foreach ($users as $user)
                                     @if ($user->role == '0' || $user->role == 'user')
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endif
                                 @endforeach
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
+                                title="User" placeholder="Nama Pemesan" required>
                         </div>
                         <div class="mb-3">
                             <label for="no_telp_pemesan" class="form-label">No. Telp Pemesan</label>

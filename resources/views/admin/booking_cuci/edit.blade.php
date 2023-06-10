@@ -46,10 +46,12 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" id="user_id" name="user_id">
+                            <label for="nama_pemesan" class="form-label">Nama Pemesan</label>
+                            {{-- <select class="custom-select" id="user_id" name="user_id">
                                 <option value="{{ $item->user->id }}">{{ $item->user->name }}</option>
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
+                                value="{{ $item->nama_pemesan }}">
                         </div>
 
                         <div class="mb-3">
@@ -82,7 +84,7 @@
                                 value="{{ $item->jam_pesan }}">
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                             <label for="status_bayar" class="form-label">Status Bayar</label>
                             <select class="custom-select" id="status_bayar" name="status_bayar">
                                 <option value="UNPAID" @if ($item->status_bayar == 'UNPAID') selected @endif>
@@ -90,7 +92,7 @@
                                 <option value="PAID" @if ($item->status_bayar == 'PAID') selected @endif>
                                     Sudah Dibayar</option>
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

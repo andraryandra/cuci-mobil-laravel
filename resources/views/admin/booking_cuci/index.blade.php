@@ -56,7 +56,7 @@
                                         <th class="text-center">Nama Mobil</th>
                                         <th class="text-center">No Plat Mobil</th>
                                         <th class="text-center">Tanggal Pesanan</th>
-                                        <th class="text-center">Karyawan</th>
+                                        {{-- <th class="text-center">Karyawan</th> --}}
                                         <th class="text-center">Status Booking</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
@@ -68,10 +68,15 @@
                                             <td class="text-center">{{ $item->kategoriMobil->kategori_mobil }}</td>
                                             <td class="text-center text-capitalize">
                                                 <a href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#show{{ $item->id }}">
-                                                    <u>{{ $item->user->name }}</u>
+                                                    data-bs-target="#modalShow{{ $item->id }}">
+                                                    {{ $item->nama_pemesan }}
                                                     <span class="show-button">Show</span>
                                                 </a>
+                                                {{-- <a href="#" data-bs-toggle="modal"
+                                                data-bs-target="#show{{ $item->id }}">
+                                                <u>{{ $item->user->name }}</u>
+                                                <span class="show-button">Show</span>
+                                            </a> --}}
                                             </td>
 
                                             {{-- <td class="text-center">{{ $item->no_telp_pemesan }}</td> --}}
@@ -81,7 +86,7 @@
                                                 {{ \Carbon\Carbon::parse($item->tanggal_pesan)->format('d-m-Y') }} ||
                                                 {{ $item->jam_pesan }}</td>
 
-                                            <td class="text-center text-capitalize">
+                                            {{-- <td class="text-center text-capitalize">
                                                 @if ($item->karyawan_id == null)
                                                     <button type="button" class="btn btn-info text-light me-2"
                                                         data-bs-toggle="modal"
@@ -91,17 +96,32 @@
                                                 @else
                                                     {{ $item->karyawan->name }}
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td class="text-center">
-                                                @if ($item->status_pesan == 'PENDING')
-                                                    <span class="badge bg-warning text-light p-2">
-                                                        <i class="fa fa-spin fa-circle-o-notch"></i> Menunggu Cucian
-                                                    </span>
-                                                @elseif ($item->status_pesan == 'PROCESS')
-                                                    <span class="badge bg-primary text-light p-2">Sedang Dicuci</span>
-                                                @elseif ($item->status_pesan == 'SUCCESS')
-                                                    <span class="badge bg-success text-light p-2">Pencucian Selesai</span>
-                                                @endif
+                                                <div class="dropdown">
+                                                    <button class="btn btn-warning text-white dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton" data-bs-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        @if ($item->status_pesan == 'PENDING')
+                                                            <i class="fa fa-spin fa-spinner"></i> Menunggu Cucian
+                                                        @elseif ($item->status_pesan == 'PROCESS')
+                                                            <i class="fa fa-spin fa-spinner"></i> Sedang Dicuci
+                                                        @elseif ($item->status_pesan == 'SUCCESS')
+                                                            Pencucian Selesai
+                                                        @endif
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <form
+                                                            action="{{ route('booking-cuci.updateStatusCuci', $item->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button class="btn btn-primary col-md-12" type="submit">
+                                                                <i class="fa fa-check-circle"></i> Sedang Dicuci
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                             <td>
                                                 <div class="dropdown">
@@ -146,7 +166,7 @@
     @include('admin.booking_cuci.edit')
 
     {{-- Modal Karyawan --}}
-    @include('admin.booking_cuci.edit-2')
+    {{-- @include('admin.booking_cuci.edit-2') --}}
 
     @include('admin.booking_cuci.show')
 
@@ -189,15 +209,9 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="user_id" class="form-label">Nama Pemesan</label>
-                            <select class="custom-select" name="user_id" id="user_id" title="User" required>
-                                <option value="" selected>Select User</option>
-                                @foreach ($users as $user)
-                                    @if ($user->role == '0' || $user->role == 'user')
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
+                            <label for="nama_pemesan" class="form-label">Nama Pemesan</label>
+                            <input type="text" class="form-control" id="nama_pemesan" name="nama_pemesan"
+                                title="User" placeholder="Nama Pemesan" required>
                         </div>
                         <div class="mb-3">
                             <label for="no_telp_pemesan" class="form-label">No. Telp Pemesan</label>

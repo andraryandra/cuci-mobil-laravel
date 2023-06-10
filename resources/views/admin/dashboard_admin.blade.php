@@ -119,9 +119,11 @@
     <div class="row">
         <div class="col-md-12 col-lg-6 col-xl-6">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     <h5 class="card-title">Total Transaksi per Produk</h5>
-                    <div style="height: 230px;">
+                </div>
+                <div class="card-body">
+                    <div style="height: 260px;">
                         <canvas id="chartpendapatan"></canvas>
                     </div>
                 </div>
@@ -129,9 +131,11 @@
         </div>
         <div class="col-md-12 col-lg-6 col-xl-6">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     <h5 class="card-title">Total Transaksi Omset per Kategori Mobil</h5>
-                    <div style="height: 230px;">
+                </div>
+                <div class="card-body">
+                    <div style="height: 260px;">
                         <div class="chart-container">
                             <canvas id="omsetChart"></canvas>
                         </div>
@@ -141,8 +145,10 @@
         </div>
         <div class="col-md-12 col-lg-6 col-xl-6">
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     <h5 class="card-title">Total Transaksi per Kategori Mobil</h5>
+                </div>
+                <div class="card-body">
                     <div style="height: 400px">
                         <canvas id="kategori-chart"></canvas>
                     </div>
