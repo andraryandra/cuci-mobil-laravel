@@ -43,7 +43,7 @@
 
                         <div class="mb-3">
                             <label for="deskripsi_produk" class="form-label">Deskripsi Produk</label>
-                            <textarea class="form-control" id="deskripsi_produk" name="deskripsi_produk" required>{{ $item->deskripsi_produk }}</textarea>
+                            <textarea class="form-control ckeditor-edit-produk" id="deskripsi_produk" name="deskripsi_produk" required>{{ $item->deskripsi_produk }}</textarea>
                         </div>
 
                         <div class="modal-footer">

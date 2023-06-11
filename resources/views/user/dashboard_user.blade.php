@@ -84,7 +84,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Total Transaksi per Produk</h5>
-                    <div style="height: 230px;">
+                    <div style="height: 260px;">
                         <canvas id="chartpendapatan"></canvas>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Riwayat Transaksi per Kategori Mobil</h5>
-                    <div style="height: 230px;">
+                    <div style="height: 260px;">
                         <div class="chart-container">
                             <canvas id="omsetChart"></canvas>
                         </div>

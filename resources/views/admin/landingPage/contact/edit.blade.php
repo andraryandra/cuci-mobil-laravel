@@ -5,7 +5,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit User Customer</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Contact</h1>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -24,8 +24,8 @@
 
                         <div class="form-group">
                             <label for="description_contact">Description</label>
-                            <textarea name="description_contact" id="description_contact" class="form-control"
-                                value={{ $item->description_contact }} rows="3" required>{{ $item->description_contact }}</textarea>
+                            <textarea name="description_contact" id="my-editor-2-{{ $item->id }}" class="form-control ckeditor2" rows="3"
+                                required>{{ $item->description_contact }}</textarea>
                         </div>
 
                         <div class="form-group">
@@ -38,7 +38,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Update User</button>
+                            <button type="submit" class="btn btn-primary">Update Contact</button>
                         </div>
                     </form>
                 </div>
@@ -70,4 +70,24 @@
             opacity: 1;
         }
     </style>
+@endpush
+
+@push('script')
+    {{-- <script src="{{ url('https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js') }}"></script>
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+        // Replace CKEditor for textarea with ID "my-editor-2"
+        var elements = document.getElementsByClassName('ckeditor');
+        for (var i = 0; i < elements.length; i++) {
+            if (!elements[i].classList.contains('ckeditor-applied')) {
+                CKEDITOR.replace(elements[i], options);
+                elements[i].classList.add('ckeditor-applied');
+            }
+        }
+    </script> --}}
 @endpush

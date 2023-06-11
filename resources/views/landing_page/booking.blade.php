@@ -52,7 +52,7 @@
                                             <div class="form-check">
                                                 <input class="form-check-input kategori-mobil-radio" type="radio"
                                                     name="kategori_mobil_id" id="kategori-mobil-{{ $item->id }}"
-                                                    value="{{ $item->id }}" hidden>
+                                                    required value="{{ $item->id }}" hidden>
                                                 <i class="bi bi-cart-check-fill" hidden style="font-size: 15px;"></i>
                                                 {{ $item->kategori_mobil }}
                                             </div>
@@ -97,12 +97,12 @@
                                         <span class="template-component-booking-package-duration-unit">min</span>
                                     </div>
                                     <ul class="template-component-booking-package-service-list">
-                                        <li data-id="{{ $produk->id }}">{{ $produk->deskripsi_produk }}</li>
+                                        <li data-id="{{ $produk->id }}">{!! $produk->deskripsi_produk !!}</li>
                                     </ul>
 
                                     <div class="custom-radio-button">
                                         <label class="btn">
-                                            <input type="radio" name="produk_id" value="{{ $produk->id }}"
+                                            <input type="radio" name="produk_id" value="{{ $produk->id }}" required
                                                 class="template-component-button-radio">
                                             <span class="custom-button"><i class="bi bi-check2-circle"
                                                     style="font-size: 1.5rem;"></i> Booking Sekarang Juga!</span>
@@ -154,29 +154,24 @@
                                 </h5>
                                 <span>Total Price</span>
                             </li>
-
-
                         </ul>
-
                     </div>
 
                     <!-- Form Content -->
                     <div class="template-component-booking-item-content template-margin-top-reset">
-                        {{-- <input type="text" name="kategori_mobil_id" value="1" id="">
-                        <input type="text" name="produk_id" value="1" id=""> --}}
-                        <ul class="template-layout-50x50 template-layout-margin-reset template-clear-fix" hidden>
+                        {{-- <ul class="template-layout-50x50 template-layout-margin-reset template-clear-fix" hidden>
                             <li class="template-layout-column-left template-margin-bottom-reset">
                                 <div class="template-component-form-field">
                                     <label for="booking-form-first-name">User ID *</label>
                                     @if (Auth::check())
                                         <input type="text" name="user_id" id="booking-form-first-name"
-                                            value="{{ Auth::user()->id }}" required />
+                                            value="{{ Auth::user()->id }}" />
                                     @else
-                                        <input type="text" name="user_id" id="booking-form-first-name" required />
+                                        <input type="text" name="user_id" id="booking-form-first-name" />
                                     @endif
                                 </div>
                             </li>
-                        </ul>
+                        </ul> --}}
                         <!-- Layout -->
                         <ul class="template-layout-50x50 template-layout-margin-reset template-clear-fix">
 
@@ -185,8 +180,8 @@
                                 <div class="template-component-form-field">
                                     <label for="booking-form-first-name">Nama Pemesan *</label>
                                     @if (Auth::check())
-                                        <input type="text" name="nama_pemesan" id="booking-form-first-name"
-                                            value="{{ Auth::user()->name }}" required />
+                                        <input type="text" name="nama_pemesan" id="booking-form-first-name" required
+                                            value="{{ Auth::user()->name }}" />
                                     @else
                                         <input type="text" name="nama_pemesan" id="booking-form-first-name" required />
                                     @endif
@@ -198,8 +193,8 @@
                                 <div class="template-component-form-field">
                                     <label for="booking-form-second-name">No. Telephone *</label>
                                     @if (Auth::check())
-                                        <input type="text" name="no_telp_pemesan" id="booking-form-second-name"
-                                            value="{{ Auth::user()->phone }}" required />
+                                        <input type="text" name="no_telp_pemesan" id="booking-form-second-name" required
+                                            value="{{ Auth::user()->phone }}" />
                                     @else
                                         <input type="text" name="no_telp_pemesan" id="booking-form-second-name"
                                             required />
@@ -235,7 +230,7 @@
                             <li class="template-layout-column-left template-margin-bottom-reset">
                                 <div class="template-component-form-field">
                                     <label for="booking-form-vehicle-make">Tanggal Pesan</label>
-                                    <input type="date" name="tanggal_pesan" id="booking-form-vehicle-make" />
+                                    <input type="date" name="tanggal_pesan" id="booking-form-vehicle-make" required />
                                 </div>
                             </li>
 
@@ -243,7 +238,7 @@
                             <li class="template-layout-column-center template-margin-bottom-reset">
                                 <div class="template-component-form-field">
                                     <label for="booking-form-vehicle-model">Jam Pesan</label>
-                                    <input type="time" name="jam_pesan" id="booking-form-vehicle-model" />
+                                    <input type="time" name="jam_pesan" id="booking-form-vehicle-model " required />
                                 </div>
                             </li>
                         </ul>

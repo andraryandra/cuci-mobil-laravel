@@ -42,14 +42,20 @@
     @stack('style')
 
     <!-- Header -->
-    <div
-        class="
+    <div class="
         @if (Request::routeIs('landingPage*.home')) template-header
         @elseif (Request::routeIs('landingPage*.booking'))
-        template-header template-header-background template-header-background-1
+        template-header template-header-background
+        template-header-background-1
         @elseif (Request::routeIs('landingPage*.contact'))
-        template-header template-header-background template-header-background-1 @endif
-    ">
+        template-header template-header-background template-header-background-2 @endif
+    "
+        style="
+    @if (Request::routeIs('landingPage*.booking')) background-image: url('landing-page/assets/media/image/header/header_06.png');
+     @elseif (Request::routeIs('landingPage*.contact'))
+        background-image: url('landing-page/assets/media/image/header/header_06.png'); @endif">
+
+
 
         <!-- Top header -->
         <div class="template-header-top">

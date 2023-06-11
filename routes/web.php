@@ -64,6 +64,10 @@ Route::post('booking-cucis/{booking_id}/rating/store', [RatingController::class,
 
 Route::post('booking-cucis/customer/store', [BookingCuciCustomerController::class, 'store'])->name('booking-cucis-customer.store');
 
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});
+
 /*------------------------------------------
 --------------------------------------------
 All Normal Users Routes List

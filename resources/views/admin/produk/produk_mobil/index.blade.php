@@ -53,7 +53,7 @@
                                             <td>{{ $item->kategoriMobil->kategori_mobil }}</td>
                                             <td>{{ $item->nama_produk }}</td>
                                             <td>Rp. {{ number_format($item->harga_produk, 0, ',', '.') }}</td>
-                                            <td>{{ $item->deskripsi_produk }}</td>
+                                            <td>{!! $item->deskripsi_produk !!}</td>
                                             <td class="d-flex align-items-center">
                                                 <div class="d-flex justify-content-between">
                                                     <button type="button" class="btn btn-warning text-light me-2"
@@ -121,7 +121,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi_produk" class="form-label">Deskripsi Produk</label>
-                            <textarea class="form-control" id="deskripsi_produk" name="deskripsi_produk" placeholder="Deskripsi" required></textarea>
+                            <textarea class="form-control" id="ckeditor-produk" name="deskripsi_produk" placeholder="Deskripsi" required></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -216,5 +216,25 @@
             var nilaiInput = inputHarga.value.replace(/\D/g, '');
             inputHarga.value = nilaiInput;
         });
+    </script>
+
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+
+        // Inisialisasi CKEditor pada textarea tambah
+        CKEDITOR.replace('ckeditor-produk', options);
+        var elements = document.getElementsByClassName('ckeditor-edit-produk');
+        for (var i = 0; i < elements.length; i++) {
+            if (!elements[i].className.includes('ckeditor-applied')) {
+                CKEDITOR.replace(elements[i], options);
+                elements[i].className += ' ckeditor-applied';
+            }
+        }
     </script>
 @endpush

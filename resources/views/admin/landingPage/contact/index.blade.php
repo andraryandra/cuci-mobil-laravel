@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="page-title-box">
-                    <h4 class="page-title">Customer Create</h4>
+                    <h4 class="page-title">Contact</h4>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                         <div class="my-3">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop">
-                                <i class="fa fa-plus-circle"></i> Create Customer
+                                <i class="fa fa-plus-circle"></i> Create Contact
                             </button>
                         </div>
                         <div class="table-responsive">
@@ -53,7 +53,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $item->title_contact }}</td>
-                                            <td>{{ $item->description_contact }}</td>
+                                            <td>{!! $item->description_contact !!}</td>
                                             <td class="d-flex align-items-center">
                                                 <div class="d-flex justify-content-between">
                                                     <button type="button" class="btn btn-warning text-light me-2"
@@ -62,12 +62,14 @@
                                                         <i class="fa fa-edit"></i> Edit
                                                     </button>
                                                     <form action="{{ route('contact-landing-page.destroy', $item->id) }}"
-                                                        method="POST">
+                                                        method="POST"
+                                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger mx-2"><i
                                                                 class="fa fa-trash"></i> Delete</button>
                                                     </form>
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -110,7 +112,7 @@
 
                         <div class="mb-3">
                             <label for="description_contact" class="form-label">Deskripsi Contact</label>
-                            <textarea name="description_contact" id="description_contact" cols="30" rows="10" class="form-control"
+                            <textarea name="description_contact" id="my-editor-1" cols="30" rows="10" class="form-control ckeditor"
                                 placeholder="Deskripsi Contact" required></textarea>
                         </div>
 
@@ -158,9 +160,30 @@
 
 @push('script')
     <script src="{{ asset('bootstrap5-3/js/bootstrap.bundle.min.js') }}"></script>
+
     <script>
         $(document).ready(function() {
             $('option[value=""]').css('display', 'none');
         });
+    </script>
+
+    <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+    <script>
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+
+        // Inisialisasi CKEditor pada textarea tambah
+        CKEDITOR.replace('my-editor-1', options);
+        var elements = document.getElementsByClassName('ckeditor2');
+        for (var i = 0; i < elements.length; i++) {
+            if (!elements[i].className.includes('ckeditor-applied')) {
+                CKEDITOR.replace(elements[i], options);
+                elements[i].className += ' ckeditor-applied';
+            }
+        }
     </script>
 @endpush

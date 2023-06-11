@@ -34,7 +34,8 @@
 
                         <div class="form-group">
                             <label for="ulasan">Ulasan:</label>
-                            <textarea class="form-control" name="ulasan" id="ulasan" rows="4" placeholder="Tuliskan Pengalaman anda"></textarea>
+                            <textarea class="form-control" name="ulasan" id="ulasan" rows="4" placeholder="Tuliskan Pengalaman anda"
+                                required></textarea>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>

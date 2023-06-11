@@ -14,21 +14,31 @@ class BookingCuciCustomerController extends Controller
 {
     public function index()
     {
-        $bookings = BookingCuci::with(['kategoriMobil','user'])
-        ->where('user_id', Auth::id())
-        ->where('status_pesan', 'PENDING')->get();
+        $user_id = Auth::id();
+
+        $bookings = BookingCuci::with(['kategoriMobil', 'user'])
+            ->where(function ($query) use ($user_id) {
+                if ($user_id) {
+                    $query->where('user_id', $user_id);
+                }
+            })
+            ->whereIn('status_pesan', ['PENDING', 'PROCESS','SUCCESS'])
+            ->whereIn('status_bayar', ['UNPAID'])
+            ->get();
 
         $users = User::get();
         $kategori_mobils = KategoriMobil::get();
         $produks = ProdukMobil::with(['kategoriMobil'])->get();
-        return view('user.booking_cuci_user.index', compact('users','kategori_mobils','produks','bookings'));
+
+        return view('user.booking_cuci_user.index', compact('users', 'kategori_mobils', 'produks', 'bookings'));
     }
+
+
 
     public function store(Request $request)
     {
         $this->validate(request(),
         [
-            'user_id' => 'nullable',
             'kategori_mobil_id' => 'nullable',
             'produk_id' => 'nullable',
             // 'karyawan_id' => 'nullable',
@@ -40,10 +50,23 @@ class BookingCuciCustomerController extends Controller
             'jam_pesan' => 'required',
             'status_pesan' => 'nullable',
             'status_bayar' => 'nullable',
-        ]);
+        ],
+        [
+            'kategori_mobil_id.required' => 'Kategori Mobil Harus Diisi!',
+            'produk_id.required' => 'Produk Harus Diisi!',
+            // 'karyawan_id.required' => 'Karyawan Harus Diisi!',
+            'nama_pemesan.required' => 'Nama Pemesan Harus Diisi!',
+            'no_telp_pemesan.required' => 'No Telp Pemesan Harus Diisi!',
+            'nama_mobil.required' => 'Nama Mobil Harus Diisi!',
+            'no_plat_mobil.required' => 'No Plat Mobil Harus Diisi!',
+            'tanggal_pesan.required' => 'Tanggal Pesan Harus Diisi!',
+            'jam_pesan.required' => 'Jam Pesan Harus Diisi!',
+        ]
+    );
+
 
         $booking = new BookingCuci();
-        $booking->user_id = $request->user_id;
+        $booking->user_id = Auth::check() ? Auth::id() : null;
         $booking->kategori_mobil_id = $request->kategori_mobil_id;
         $booking->produk_id = $request->produk_id;
         // $booking->karyawan_id = $request->karyawan_id;
@@ -55,6 +78,9 @@ class BookingCuciCustomerController extends Controller
         $booking->jam_pesan = $request->jam_pesan;
         $booking->status_pesan = 'PENDING';
         $booking->status_bayar = 'UNPAID';
+
+        // dd($request->all());
+
         $booking->save();
 
         if($booking){
@@ -66,40 +92,51 @@ class BookingCuciCustomerController extends Controller
 
     public function update(Request $request, $id)
     {
-        $this->validate(request(),
-        [
-            'user_id' => 'nullable',
+        $this->validate(request(), [
+            'user_id' => 'nullable', // Remove 'required'
             'kategori_mobil_id' => 'nullable',
             'produk_id' => 'nullable',
             // 'karyawan_id' => 'nullable',
-            'nama_pemesan' => 'nullable',
+            'nama_pemesan' => 'required',
             'no_telp_pemesan' => 'required',
             'nama_mobil' => 'required',
             'no_plat_mobil' => 'required',
-            'tanggal_pesan' => 'nullable',
-            'jam_pesan' => 'nullable',
+            'tanggal_pesan' => 'required',
+            'jam_pesan' => 'required',
             // 'status_pesan' => 'nullable',
             // 'status_bayar' => 'nullable',
+        ],
+        [
+            'kategori_mobil_id.required' => 'Kategori Mobil Harus Diisi!',
+            'produk_id.required' => 'Produk Harus Diisi!',
+            // 'karyawan_id.required' => 'Karyawan Harus Diisi!',
+            'nama_pemesan.required' => 'Nama Pemesan Harus Diisi!',
+            'no_telp_pemesan.required' => 'No Telp Pemesan Harus Diisi!',
+            'nama_mobil.required' => 'Nama Mobil Harus Diisi!',
+            'no_plat_mobil.required' => 'No Plat Mobil Harus Diisi!',
+            'tanggal_pesan.required' => 'Tanggal Pesan Harus Diisi!',
+            'jam_pesan.required' => 'Jam Pesan Harus Diisi!',
         ]);
 
         $booking = BookingCuci::findOrFail($id);
-        $booking->user_id = $request->user_id;
-        $booking->kategori_mobil_id = $request->kategori_mobil_id;
-        $booking->produk_id = $request->produk_id;
+        $booking->user_id = Auth::check() ? Auth::id() : null;
+        $booking->kategori_mobil_id = intval($request->kategori_mobil_id);
+        $booking->produk_id = intval($request->produk_id);
         // $booking->karyawan_id = $request->karyawan_id;
-        $booking->nama_pemesan = Auth::id();
+        $booking->nama_pemesan = $request->nama_pemesan;
         $booking->no_telp_pemesan = $request->no_telp_pemesan;
         $booking->nama_mobil = $request->nama_mobil;
         $booking->no_plat_mobil = $request->no_plat_mobil;
-        // $booking->tanggal_pesan = $request->tanggal_pesan;
-        // $booking->jam_pesan = $request->jam_pesan;
+        $booking->tanggal_pesan = $request->tanggal_pesan;
+        $booking->jam_pesan = $request->jam_pesan;
         // $booking->status_pesan = $request->status_pesan;
         // $booking->status_bayar = $request->status_bayar;
+        // dd($booking);
         $booking->save();
 
-        if($booking){
+        if ($booking) {
             return back()->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             return back()->with(['error' => 'Data Gagal Disimpan!']);
         }
     }
