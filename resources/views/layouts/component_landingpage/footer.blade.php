@@ -14,14 +14,11 @@
 
            <!-- Center left column -->
            <div class="template-layout-column-center-left">
-               <h6>Services</h6>
+               <h6>Kategori Cuci Boking</h6>
                <ul class="template-list-reset">
-                   <li><a href="service-style-1.html">Exterior Hand Wash</a></li>
-                   <li><a href="service-style-1.html">Tower Hand Dry</a></li>
-                   <li><a href="service-style-1.html">Tire Dressing</a></li>
-                   <li><a href="service-style-1.html">Wheel Shine</a></li>
-                   <li><a href="service-style-1.html">Interior Vacuum</a></li>
-                   <li><a href="service-style-1.html">Sealer Hand Wax</a></li>
+                   @foreach ($kategori_mobil->take(5) as $item)
+                       <li><a href="service-style-1.html">{{ $item->kategori_mobil }}</a></li>
+                   @endforeach
                </ul>
            </div>
 
@@ -29,16 +26,13 @@
            <div class="template-layout-column-center-right">
                <h6>Company</h6>
                <ul class="template-list-reset">
-                   <li><a href="about-style-1.html">About Us</a></li>
-                   <li><a href="gallery.html">Gallery</a></li>
-                   <li><a href="service-style-2.html">Our Services</a></li>
-                   <li><a href="book-your-wash.html">Book Your Wash</a></li>
-                   <li><a href="gallery.html">Portfolio</a></li>
-                   <li><a href="contact-style-1.html">Contact</a></li>
+                   <li><a href="{{ route('landingPage.home') }}">Home</a></li>
+                   <li><a href="{{ route('landingPage.contact') }}">Contact</a></li>
+                   <li><a href="{{ route('landingPage.booking') }}">Booking</a></li>
                </ul>
            </div>
 
-           <!-- Right column -->
+           {{-- <!-- Right column -->
            <div class="template-layout-column-right">
                <h6>Newsletter</h6>
                <form class="template-component-newsletter-form">
@@ -51,7 +45,7 @@
                            name="newsletter-form-submit" id="newsletter-form-submit" />
                    </div>
                </form>
-           </div>
+           </div> --}}
 
        </div>
 
@@ -65,14 +59,8 @@
            <li><a href="https://twitter.com/quanticalabs" class="template-icon-social-twitter" target="_blank"></a></li>
            <li><a href="https://www.facebook.com/QuanticaLabs" class="template-icon-social-facebook"
                    target="_blank"></a></li>
-           <li><a href="https://dribbble.com/quanticalabs" class="template-icon-social-dribbble" target="_blank"></a>
-           </li>
-           <li><a href="http://themeforest.net/user/QuanticaLabs/portfolio?ref=quanticalabs"
-                   class="template-icon-social-envato" target="_blank"></a></li>
-           <li><a href="https://www.behance.net/quanticalabs" class="template-icon-social-behance" target="_blank"></a>
-           </li>
-           <li><a href="https://www.youtube.com/user/quanticalabs" class="template-icon-social-youtube"
-                   target="_blank"></a></li>
+
+
        </ul>
 
        <!-- Copyright -->

@@ -30,6 +30,8 @@ class CreateBookingCucisTable extends Migration
             $table->string('jam_pesan');
             $table->string('status_pesan')->nullable();
             $table->string('status_bayar')->nullable();
+            $table->text('ulasan')->nullable();
+            $table->integer('rating')->nullable();
 
 
             $table->timestamps();

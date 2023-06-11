@@ -48,7 +48,11 @@
                                     <label class="form-check-label" for="kategori-mobil-{{ $item->id }}">
                                         <div>
                                             <!-- Icon -->
-                                            <div class="template-icon-vehicle-small-car"></div>
+                                            <div class="text-center">
+                                                <img src="{{ Storage::url($item->gambar_kategori_mobil) }}"
+                                                    alt="{{ $item->id }}" width="65"
+                                                    style="display: inline-block;  border-radius: 20%; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                                            </div>
                                             <div class="form-check">
                                                 <input class="form-check-input kategori-mobil-radio" type="radio"
                                                     name="kategori_mobil_id" id="kategori-mobil-{{ $item->id }}"
@@ -93,8 +97,8 @@
                                     </div>
                                     <div class="template-component-booking-package-duration">
                                         <span class="template-icon-booking-meta-duration"></span>
-                                        <span class="template-component-booking-package-duration-value">25</span>
-                                        <span class="template-component-booking-package-duration-unit">min</span>
+                                        <span
+                                            class="template-component-booking-package-duration-value">{{ $produk->estimasi_waktu }}</span>
                                     </div>
                                     <ul class="template-component-booking-package-service-list">
                                         <li data-id="{{ $produk->id }}">{!! $produk->deskripsi_produk !!}</li>

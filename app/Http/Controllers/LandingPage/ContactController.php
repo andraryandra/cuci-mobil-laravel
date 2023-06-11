@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\LandingPage;
 
 use Illuminate\Http\Request;
+use App\Models\KategoriMobil;
 use App\Models\ContactLandingPage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -12,15 +13,17 @@ class ContactController extends Controller
     public function indexLandingPage()
     {
         $contacts = ContactLandingPage::get();
+        $kategori_mobil = KategoriMobil::get();
 
-        return view('landing_page.contact', compact('contacts'));
+        return view('landing_page.contact', compact('contacts','kategori_mobil'));
     }
 
     public function index()
     {
         $contact = ContactLandingPage::get();
+        $kategori_mobil = KategoriMobil::get();
 
-        return view('admin.landingPage.contact.index', compact('contact'));
+        return view('admin.landingPage.contact.index', compact('contact','kategori_mobil'));
     }
 
     public function store(Request $request)

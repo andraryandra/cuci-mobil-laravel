@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\KategoriMobil;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class KategoriMobilController extends Controller
 {
@@ -39,21 +40,43 @@ class KategoriMobilController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,
-        ['kategori_mobil' => 'required'],
-        ['kategori_mobil.required' => 'Nama Kategori Mobil tidak boleh kosong']);
+        [
+            'kategori_mobil' => 'required',
+            'gambar_kategori_mobil' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+        ],
+        [
+            'kategori_mobil.required' => 'Nama Kategori Mobil tidak boleh kosong',
+            'gambar_kategori_mobil.image' => 'File harus berupa gambar',
+            'gambar_kategori_mobil.mimes' => 'File harus berupa gambar',
+            'gambar_kategori_mobil.max' => 'Ukuran file maksimal 2MB',
+        ]);
 
-        $kategori_mobil = KategoriMobil::create([
+        $kategori_mobils = KategoriMobil::create([
             'kategori_mobil' => $request->kategori_mobil,
             'slug_kategori_mobil' => Str::slug($request->kategori_mobil)
         ]);
 
-        if($kategori_mobil){
+        if ($request->hasFile('gambar_kategori_mobil')) {
+            if ($request->file('gambar_kategori_mobil')->isValid()) {
+                $kategoriPath = $request->file('gambar_kategori_mobil')->store('kategori', 'public');
+                $kategori_mobils->gambar_kategori_mobil = $kategoriPath;
+                $kategori_mobils->save();
+            } else {
+                return back()->withErrors(['gambar_kategori_mobil' => 'Failed to upload image.']);
+            }
+        }
+
+        $kategori_mobils->save();
+
+        // dd($kategori_mobils);
+
+        if($kategori_mobils){
             return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
         }else{
             return redirect()->back()->with(['error' => 'Data Gagal Disimpan!']);
         }
-
     }
+
 
     /**
      * Display the specified resource.
@@ -86,38 +109,57 @@ class KategoriMobilController extends Controller
      */
     public function update(Request $request, $id)
     {
-                // Validate the request...
-                $this->validate($request,
-                ['kategori_mobil' => 'required'],
-                ['kategori_mobil.required' => 'Nama Kategori Mobil tidak boleh kosong']);
+        $this->validate($request,
+            [
+                'kategori_mobil' => 'required',
+                'gambar_kategori_mobil' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
+            ],
+            [
+                'kategori_mobil.required' => 'Nama Kategori Mobil tidak boleh kosong',
+                'gambar_kategori_mobil.image' => 'File harus berupa gambar',
+                'gambar_kategori_mobil.mimes' => 'File harus berupa gambar',
+                'gambar_kategori_mobil.max' => 'Ukuran file maksimal 2MB',
+            ]);
 
-                $kategori_mobil = KategoriMobil::where('id', $id)->update([
-                    'kategori_mobil' => $request->kategori_mobil,
-                    'slug_kategori_mobil' => Str::slug($request->kategori_mobil)
-                ]);
+        $kategori_mobil = KategoriMobil::findOrFail($id);
+        $kategori_mobil->kategori_mobil = $request->kategori_mobil;
+        $kategori_mobil->slug_kategori_mobil = Str::slug($request->kategori_mobil);
 
-                if($kategori_mobil){
-                    return redirect()->back()->with(['success' => 'Data Berhasil Disimpan!']);
-                }else{
-                    return redirect()->back()->with(['error' => 'Data Gagal Disimpan!']);
-                }
+        if ($request->hasFile('gambar_kategori_mobil')) {
+            // Menghapus gambar kategori mobil yang lama jika ada
+            if ($kategori_mobil->gambar_kategori_mobil) {
+                Storage::disk('public')->delete($kategori_mobil->gambar_kategori_mobil);
+            }
+
+            $gambar_kategori_mobilPath = $request->file('gambar_kategori_mobil')->store('kategori', 'public');
+            $kategori_mobil->gambar_kategori_mobil = $gambar_kategori_mobilPath;
+        }
+
+        $kategori_mobil->save();
+
+        if ($kategori_mobil) {
+            return redirect()->back()->with(['success' => 'Data Berhasil Diperbarui!']);
+        } else {
+            return redirect()->back()->with(['error' => 'Data Gagal Diperbarui!']);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-                        // Validate the request...
-                        $kategori_mobil = KategoriMobil::where('id', $id)->delete();
+        $kategori_mobil = KategoriMobil::findOrFail($id);
 
-                        if($kategori_mobil){
-                            return redirect()->back()->with(['success' => 'Data Berhasil Dihapus!']);
-                        }else{
-                            return redirect()->back()->with(['error' => 'Data Gagal Dihapus!']);
-                        }
+        // Menghapus gambar kategori mobil jika ada
+        if ($kategori_mobil->gambar_kategori_mobil) {
+            Storage::disk('public')->delete($kategori_mobil->gambar_kategori_mobil);
+        }
+
+        $kategori_mobil->delete();
+
+        if ($kategori_mobil) {
+            return redirect()->back()->with(['success' => 'Data Berhasil Dihapus!']);
+        } else {
+            return redirect()->back()->with(['error' => 'Data Gagal Dihapus!']);
+        }
     }
+
 }

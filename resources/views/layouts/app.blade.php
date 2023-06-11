@@ -43,9 +43,9 @@
         <!-- LOGO -->
         <div class="topbar-left">
             <a href="{{ route('admin.home') }}" class="logo">
-                <span><img src="{{ asset('assets/images/logo-sm.png') }}" alt="logo-small" class="logo-sm" />
-                </span><span><img src="{{ asset('assets/images/logo.png') }}" alt="logo-large"
-                        class="logo-lg" /></span>
+                <span><img src="{{ asset('logo/logo-sm.png') }}" alt="logo-small" class="" width="65" />
+                </span><span><img src="{{ asset('logo/logo.png') }}" alt="logo-large" class=""
+                        width="120" /></span>
             </a>
         </div>
 

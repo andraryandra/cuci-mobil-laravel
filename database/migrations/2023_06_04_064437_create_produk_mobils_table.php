@@ -16,10 +16,11 @@ class CreateProdukMobilsTable extends Migration
         Schema::create('produk_mobils', function (Blueprint $table) {
             $table->id();
 
-            $table->foreignId('kategori_mobil_id')->constrained('kategori_mobils')->onDelete('cascade');
+            $table->foreignId('kategori_mobil_id')->constrained('kategori_mobils')->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('nama_produk');
             $table->decimal('harga_produk', 12, 2);
+            $table->string('estimasi_waktu');
             $table->text('deskripsi_produk');
 
             $table->string('slug_produk');

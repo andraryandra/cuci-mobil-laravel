@@ -1,5 +1,6 @@
 <?php
 
+use UniSharp\LaravelFilemanager\Lfm;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\LaporanController;
@@ -15,10 +16,12 @@ use App\Http\Controllers\Admin\UserKaryawanController;
 use App\Http\Controllers\User\DashboardUserController;
 use App\Http\Controllers\Admin\KategoriMobilController;
 use App\Http\Controllers\LandingPage\BookingController;
+use App\Http\Controllers\LandingPage\ContactController;
 use App\Http\Controllers\Admin\DashboardAdminController;
 use App\Http\Controllers\Admin\KategoriProdukController;
 use App\Http\Controllers\Admin\TransactionBookingController;
-use App\Http\Controllers\LandingPage\ContactController;
+use App\Http\Controllers\LandingPage\Home\HomeCarouselController;
+use App\Http\Controllers\LandingPage\Home\HomeItemController;
 use App\Http\Controllers\User\BookingCuciCustomerController;
 use App\Http\Controllers\User\TransactionCustomerController;
 
@@ -45,6 +48,19 @@ Route::resource('contact-landing-page', ContactController::class)->only([
     'index','store','update','destroy'
 ]);
 
+Route::resource('home-carousel-landing-page', HomeCarouselController::class)->only([
+    'index','store','update','destroy'
+]);
+
+Route::resource('home-body-landing-page', HomeItemController::class)->only([
+    'index','store','update','destroy'
+]);
+
+// Route::resource('home-item-landing-page', HomeItemController::class)->only([
+//     'index','store','update','destroy'
+// ]);
+
+
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
@@ -65,7 +81,8 @@ Route::post('booking-cucis/{booking_id}/rating/store', [RatingController::class,
 Route::post('booking-cucis/customer/store', [BookingCuciCustomerController::class, 'store'])->name('booking-cucis-customer.store');
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
+    // \UniSharp\LaravelFilemanager\Lfm::routes();
+    Lfm::routes();
 });
 
 /*------------------------------------------

@@ -48,6 +48,7 @@ class ProdukMobilController extends Controller
             'kategori_mobil_id' => 'nullable',
             'nama_produk' => 'required',
             'harga_produk' => 'required|integer',
+            'estimasi_waktu' => 'required',
             'deskripsi_produk' => 'required',
             'slug_produk' => 'nullable',
         ],
@@ -56,6 +57,7 @@ class ProdukMobilController extends Controller
             'nama_produk.required' => 'Nama Produk harus diisi',
             'harga_produk.required' => 'Harga Produk harus diisi',
             'deskripsi_produk.required' => 'Deskripsi Produk harus diisi',
+            'estimasi_waktu.required' => 'Estimasi Waktu harus diisi',
         ]);
 
         $produk_mobil = ProdukMobil::create([
@@ -63,6 +65,7 @@ class ProdukMobilController extends Controller
             'nama_produk' => $request->nama_produk,
             'harga_produk' => $request->harga_produk,
             'deskripsi_produk' => $request->deskripsi_produk,
+            'estimasi_waktu' => $request->estimasi_waktu,
             'slug_produk' => Str::slug($request->nama_produk),
         ]);
 
@@ -113,6 +116,7 @@ class ProdukMobilController extends Controller
             'kategori_mobil_id' => 'nullable',
             'nama_produk' => 'required',
             'harga_produk' => 'required|integer',
+            'estimasi_waktu' => 'required',
             'deskripsi_produk' => 'required',
             'slug_produk' => 'nullable',
         ],
@@ -121,6 +125,7 @@ class ProdukMobilController extends Controller
             'nama_produk.required' => 'Nama Produk harus diisi',
             'harga_produk.required' => 'Harga Produk harus diisi',
             'deskripsi_produk.required' => 'Deskripsi Produk harus diisi',
+            'estimasi_waktu.required' => 'Estimasi Waktu harus diisi',
         ]);
 
         $produk_mobil = ProdukMobil::findOrFail($id);
@@ -129,6 +134,7 @@ class ProdukMobilController extends Controller
             'kategori_mobil_id' => $request->kategori_mobil_id,
             'nama_produk' => $request->nama_produk,
             'harga_produk' => $request->harga_produk,
+            'estimasi_waktu' => $request->estimasi_waktu,
             'deskripsi_produk' => $request->deskripsi_produk,
             'slug_produk' => Str::slug($request->nama_produk),
         ]);

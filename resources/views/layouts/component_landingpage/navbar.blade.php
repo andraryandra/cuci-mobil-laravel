@@ -7,21 +7,7 @@
             <li class=""><a href="{{ route('landingPage.booking') }}"
                     class="{{ Request::routeIs('landingPage.booking') ? 'template-state-selected' : '' }}">Booking</a>
             </li>
-            <li>
-                <a href="#.html">Blog</a>
-                <ul>
-                    <li><a href="blog-small-image-right-sidebar.html">Blog Small Image - Right
-                            Sidebar</a></li>
-                    <li><a href="blog-small-image-left-sidebar.html">Blog Small Image - Left Sidebar</a>
-                    </li>
-                    <li><a href="blog-large-image-right-sidebar.html">Blog Large Image - Right
-                            Sidebar</a></li>
-                    <li><a href="blog-large-image-left-sidebar.html">Blog Large Image - Left Sidebar</a>
-                    </li>
-                    <li><a href="single-post-right-sidebar.html">Single Post - Right Sidebar</a></li>
-                    <li><a href="single-post-left-sidebar.html">Single Post - Left Sidebar</a></li>
-                </ul>
-            </li>
+
             <li class=""><a href="{{ route('landingPage.contact') }}"
                     class="{{ Request::routeIs('landingPage.contact') ? 'template-state-selected' : '' }}">Contact</a>
             </li>

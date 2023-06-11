@@ -35,6 +35,12 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="estimasi_waktu" class="form-label">Estimasi Waktu Pencucian</label>
+                            <input type="text" class="form-control" id="estimasi_waktu" name="estimasi_waktu"
+                                value="{{ $item->estimasi_waktu }}" required>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="harga_produk" class="form-label">Harga Produk</label>
                             <input type="text" class="form-control" id="harga_produk" name="harga_produk"
                                 value="{{ number_format($item->harga_produk, 0, '', '') }}" required>

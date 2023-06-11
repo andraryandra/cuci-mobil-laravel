@@ -1,40 +1,44 @@
-@foreach ($kategori_mobil as $item)
+@foreach ($carousel as $item)
     <!-- Modal -->
     <div class="modal fade" id="modalEdit{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Kategori Mobil</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit Carousel</h1>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('kategori-mobil.update', $item->id) }}" method="POST"
+                    <form action="{{ route('home-carousel-landing-page.update', $item->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="mb-3">
-                            <label for="kategori_mobil" class="form-label">Name Kategori Mobil</label>
-                            <input type="text" class="form-control" id="kategori_mobil" name="kategori_mobil"
-                                placeholder="Kategori Mobil" value="{{ $item->kategori_mobil }}" required>
+
+                        <div class="form-group">
+                            <label for="header_carousel">Header Carousel</label>
+                            <input type="text" name="header_carousel" id="header_carousel" class="form-control"
+                                value="{{ $item->header_carousel }}" required>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="gambar_kategori_mobil" class="form-label">Gambar Kategori Mobil</label>
-                            <input type="file" class="form-control" id="gambar_kategori_mobil"
-                                name="gambar_kategori_mobil" accept="image/*">
-                            <img src="{{ Storage::url($item->gambar_kategori_mobil) }}" alt="{{ $item->id }}"
-                                width="50">
-                            @error('gambar_kategori_mobil')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="form-group">
+                            <label for="sub_header_carousel">Title Carousel</label>
+                            <input type="text" name="sub_header_carousel" id="sub_header_carousel"
+                                class="form-control" value="{{ $item->sub_header_carousel }}" required>
                         </div>
+
+                        <div class="form-group">
+                            <label for="image_carousel">Image</label>
+                            <input type="file" name="image_carousel" id="image_carousel" class="form-control-file">
+                            <img src="{{ Storage::url($item->image_carousel) }}" alt="{{ $item->id }}"
+                                class="rounded mt-3" width="150">
+                        </div>
+
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Simpan Update</button>
+                            <button type="submit" class="btn btn-primary">Update Contact</button>
                         </div>
                     </form>
                 </div>
@@ -66,4 +70,7 @@
             opacity: 1;
         }
     </style>
+@endpush
+
+@push('script')
 @endpush

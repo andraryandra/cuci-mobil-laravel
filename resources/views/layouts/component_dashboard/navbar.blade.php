@@ -72,6 +72,9 @@
                         class="mdi mdi-chevron-down"></i></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="{{ route('landingPage.home') }}"><i
+                        class="dripicons-home text-muted mr-2"></i>
+                    Landing Page</a>
                 <a class="dropdown-item" href="{{ route('user-profile.index') }}"><i
                         class="dripicons-user text-muted mr-2"></i>
                     Profile</a>

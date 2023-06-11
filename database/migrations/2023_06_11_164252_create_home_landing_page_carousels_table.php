@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKategoriMobilsTable extends Migration
+class CreateHomeLandingPageCarouselsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateKategoriMobilsTable extends Migration
      */
     public function up()
     {
-        Schema::create('kategori_mobils', function (Blueprint $table) {
+        Schema::create('home_landing_page_carousels', function (Blueprint $table) {
             $table->id();
 
-            $table->string('gambar_kategori_mobil')->nullable();
-            $table->string('kategori_mobil');
-            $table->string('slug_kategori_mobil');
+            $table->string('header_carousel');
+            $table->string('sub_header_carousel');
+            $table->string('image_carousel')->nullable();
 
             $table->timestamps();
         });
@@ -31,6 +31,6 @@ class CreateKategoriMobilsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kategori_mobils');
+        Schema::dropIfExists('home_landing_page_carousels');
     }
 }
