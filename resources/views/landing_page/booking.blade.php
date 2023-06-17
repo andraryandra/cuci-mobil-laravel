@@ -3,8 +3,49 @@
 @section('template', 'template-page-contact-style-1')
 @section('contentLandingPage')
 
+
+
     <!-- Section -->
     <div class="template-component-booking template-section template-main" id="template-booking">
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Daftar Pelanggan Booking</h5>
+                <div class="list-group">
+                    @foreach ($history_bookings as $item)
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h6 class="mb-1">Kategori Mobil - {{ $item->kategoriMobil->kategori_mobil }}</h6>
+                                <small>Status: Booking Cucian Mobil ({{ $item->status_pesan }})</small>
+                            </div>
+                            <p class="mb-1">Terimakasih Telah membooking Cucian Mobil dikami {{ $item->nama_pemesan }},
+                                berikut pesanan Cucian Booking Mobil Anda,</p>
+                            <p class="mb-1">Nama Produk Booking: {{ $item->produkMobil->nama_produk }}, </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="text-muted">
+                                    <span class="mr-1">Rp.</span>
+                                    <span
+                                        class="font-weight-bold">{{ number_format($item->produkMobil->harga_produk, 0, ',', '.') }}</span>
+                                </div>
+                                <small>Tanggal & Jam Booking Cucian Mobil:
+                                    <b>{{ date('d-m-Y', strtotime($item->tanggal_pesan)) }},
+                                        {{ $item->jam_pesan }}</b></small>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="text-center mt-3">
+                    <div class="pagination">
+                        {{ $history_bookings->links() }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <br>
         <!-- Booking form -->
         <form action="{{ route('booking-cucis-customer.store') }}" method="POST">
             @csrf
@@ -22,6 +63,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+
+
+
 
                 <!-- Vehcile list -->
                 <li>
@@ -267,6 +311,7 @@
 @push('style')
     <link rel="stylesheet"
         href="{{ url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap-4/css/bootstrap.min.css') }}">
 
     <style>
         .custom-radio-button .btn {

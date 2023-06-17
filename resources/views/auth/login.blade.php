@@ -4,9 +4,9 @@
             {{-- <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
             </a> --}}
-            <a href="/">
-                <img src="https://www.pixelldesign.com/wp-content/uploads/logo-cuci-mobil-car-wash-autowash.jpg"
-                    class=" fill-current text-gray-500 rounded-lg" alt="Logo" width="125" height="100">
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('logo/logo-sm.png') }}" class=" fill-current text-gray-500 rounded-lg" alt="Logo"
+                    width="125" height="100">
             </a>
         </x-slot>
 
@@ -24,7 +24,7 @@
                 <x-label for="email" :value="__('Email')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                    placeholder="Email" required autofocus />
+                    placeholder="Email" title="Email" placeholder="Email" required autofocus />
             </div>
 
             <!-- Password -->
@@ -32,7 +32,7 @@
                 <x-label for="password" :value="__('Password')" />
 
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                    placeholder="Password" autocomplete="current-password" />
+                    title="Password" placeholder="Password" placeholder="Password" autocomplete="current-password" />
             </div>
 
             <!-- Remember Me -->

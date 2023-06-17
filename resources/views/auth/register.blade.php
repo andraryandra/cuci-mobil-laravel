@@ -1,8 +1,12 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
+            {{-- <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            </a> --}}
+            <a href="{{ url('/') }}">
+                <img src="{{ asset('logo/logo-sm.png') }}" class=" fill-current text-gray-500 rounded-lg" alt="Logo"
+                    width="125" height="100">
             </a>
         </x-slot>
 
@@ -16,8 +20,8 @@
             <div>
                 <x-label for="name" :value="__('Name')" />
 
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required
-                    autofocus />
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')"
+                    title="Name" placeholder="Name" required autofocus />
             </div>
 
             <!-- Email Address -->
@@ -25,7 +29,7 @@
                 <x-label for="email" :value="__('Email')" />
 
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                    required />
+                    title="Email" placeholder="Email" required />
             </div>
 
             <!-- Password -->
@@ -33,15 +37,15 @@
                 <x-label for="password" :value="__('Password')" />
 
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required
-                    autocomplete="new-password" />
+                    title="Password" placeholder="Password" autocomplete="new-password" />
             </div>
 
             <!-- Confirm Password -->
             <div class="mt-4">
                 <x-label for="password_confirmation" :value="__('Confirm Password')" />
 
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                    name="password_confirmation" required />
+                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" title="Confirm Password"
+                    placeholder="Confirm Password" name="password_confirmation" required />
             </div>
 
             <!-- Photo -->
@@ -54,7 +58,7 @@
             {{-- photo --}}
             <div class="mt-4">
                 <label for="photo" class="form-label">Photo</label>
-                <input type="file" name="photo" id="photo" class="form-control">
+                <input type="file" name="photo" id="photo" class="form-control" title="Photo">
             </div>
 
             <!-- Phone -->
@@ -62,7 +66,7 @@
                 <x-label for="phone" :value="__('Phone')" />
 
                 <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')"
-                    required />
+                    title="Phone" placeholder="Phone" required />
             </div>
 
             <div class="flex items-center justify-end mt-4">

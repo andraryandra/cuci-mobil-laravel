@@ -10,7 +10,8 @@
     <title>@yield('title')</title>
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('logo/logo-sm.png') }}">
+
     <link rel="stylesheet" href="{{ asset('assets/plugins/morris/morris.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/plugins/chartist/css/chartist.min.css') }}" />
     <link href="{{ asset('assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />

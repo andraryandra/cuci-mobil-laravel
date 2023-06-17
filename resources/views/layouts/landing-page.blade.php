@@ -11,6 +11,9 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
+    <!-- Logo -->
+    <link rel="icon" href="{{ asset('logo/logo-sm.png') }}">
+
     <link rel="stylesheet" type="text/css"
         href="{{ url('https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700italic,700,900&amp;subset=latin,latin-ext') }}">
     <link rel="stylesheet" type="text/css"
