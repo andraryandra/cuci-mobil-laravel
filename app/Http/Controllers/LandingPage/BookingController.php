@@ -14,7 +14,7 @@ class BookingController extends Controller
     public function index()
     {
         $kategori_mobil = KategoriMobil::get();
-        $history_bookings = BookingCuci::with(['kategoriMobil','karyawan','user','produkMobil'])->where('status_pesan', 'PENDING')->paginate(1);
+        $history_bookings = BookingCuci::with(['kategoriMobil','karyawan','user','produkMobil'])->where('status_pesan', 'PENDING')->paginate(2);
         $bookings = BookingCuci::with(['kategoriMobil','produkMobil','user'])->get();
         $produk_mobil = ProdukMobil::with(['kategoriMobil'])->get();
         $users = User::get();

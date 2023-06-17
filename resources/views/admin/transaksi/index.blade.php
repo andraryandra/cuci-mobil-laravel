@@ -73,13 +73,13 @@
                                                             <span class="fa fa-star checked text-warning"></span>
                                                         @endfor
                                                     @else
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#ratingModal{{ $item->id }}"><i
-                                                                class="fa fa-star"></i> Beri
-                                                            Rating</button>
+                                                        <span class="badge bg-warning text-light p-2">Belum Diberi
+                                                            Rating</span>
                                                     @endif
+                                                    <br>
+                                                    <span>{{ $item->ulasan }}</span>
                                                 </td>
+
 
                                                 <td class="text-center">
                                                     @if ($item->status_pesan == 'PENDING')

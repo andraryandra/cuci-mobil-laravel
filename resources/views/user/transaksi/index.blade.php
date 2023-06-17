@@ -73,7 +73,11 @@
                                                                 class="fa fa-star "></i> Beri
                                                             Rating</button>
                                                     @endif
+                                                    <br>
+                                                    <span>{{ $item->ulasan }}</span>
                                                 </td>
+
+
                                                 <td class="text-center">
                                                     @if ($item->status_pesan == 'PENDING')
                                                         <span class="badge bg-warning text-light p-2">

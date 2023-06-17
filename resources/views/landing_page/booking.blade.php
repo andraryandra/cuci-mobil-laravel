@@ -8,11 +8,38 @@
     <!-- Section -->
     <div class="template-component-booking template-section template-main" id="template-booking">
 
+
+        @if (session('success'))
+            <div
+                style="background-color: #d4edda; color: #155724; border-color: #c3e6cb; padding: .75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: .25rem;">
+                <strong>{{ session('success') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif (session('error'))
+            {{-- <div
+                style="background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; padding: .75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: .25rem;">
+                <strong>{{ session('error') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div> --}}
+            <div class="alert alert-danger">
+                <strong>Error:</strong>
+                <ul>
+                    @foreach (session('error') as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <div class="alert alert-warning" role="alert">
+            Anda wajib datang 5 menit sebelum waktu pencucian dimulai. Jika datang setelah lewat dari jam pencucian,
+            maka pemesanan akan hangus dan Anda diharuskan untuk melakukan pemesanan ulang.
+        </div>
+
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Daftar Pelanggan Booking</h5>
                 <div class="list-group">
-                    @foreach ($history_bookings as $item)
+                    @forelse ($history_bookings as $item)
                         <div class="list-group-item">
                             <div class="d-flex w-100 justify-content-between">
                                 <h6 class="mb-1">Kategori Mobil - {{ $item->kategoriMobil->kategori_mobil }}</h6>
@@ -20,6 +47,7 @@
                             </div>
                             <p class="mb-1">Terimakasih Telah membooking Cucian Mobil dikami {{ $item->nama_pemesan }},
                                 berikut pesanan Cucian Booking Mobil Anda,</p>
+                            <p class="mb-1">Nama Pemesan: {{ $item->nama_pemesan }}, </p>
                             <p class="mb-1">Nama Produk Booking: {{ $item->produkMobil->nama_produk }}, </p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="text-muted">
@@ -32,7 +60,11 @@
                                         {{ $item->jam_pesan }}</b></small>
                             </div>
                         </div>
-                    @endforeach
+                    @empty
+                        <div class="list-group-item">
+                            <p class="mb-0">Belum ada pelanggan yang melakukan booking.</p>
+                        </div>
+                    @endforelse
                 </div>
                 <div class="text-center mt-3">
                     <div class="pagination">
@@ -43,30 +75,11 @@
         </div>
 
 
-
-
         <br>
         <!-- Booking form -->
         <form action="{{ route('booking-cucis-customer.store') }}" method="POST">
             @csrf
             <ul>
-                @if (session('success'))
-                    <div
-                        style="background-color: #d4edda; color: #155724; border-color: #c3e6cb; padding: .75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: .25rem;">
-                        <strong>{{ session('success') }}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @elseif (session('error'))
-                    <div
-                        style="background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; padding: .75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: .25rem;">
-                        <strong>{{ session('error') }}</strong>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
-
-
-
-
                 <!-- Vehcile list -->
                 <li>
                     <!-- Step -->
@@ -98,9 +111,10 @@
                                                     style="display: inline-block;  border-radius: 20%; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input kategori-mobil-radio" type="radio"
-                                                    name="kategori_mobil_id" id="kategori-mobil-{{ $item->id }}"
-                                                    required value="{{ $item->id }}" hidden>
+                                                <input class="form-check-input kategori-mobil-radio required-field"
+                                                    type="radio" name="kategori_mobil_id"
+                                                    id="kategori-mobil-{{ $item->id }}" required
+                                                    value="{{ $item->id }}" hidden>
                                                 <i class="bi bi-cart-check-fill" hidden style="font-size: 15px;"></i>
                                                 {{ $item->kategori_mobil }}
                                             </div>
@@ -151,7 +165,7 @@
                                     <div class="custom-radio-button">
                                         <label class="btn">
                                             <input type="radio" name="produk_id" value="{{ $produk->id }}" required
-                                                class="template-component-button-radio">
+                                                class="template-component-button-radio required-field">
                                             <span class="custom-button"><i class="bi bi-check2-circle"
                                                     style="font-size: 1.5rem;"></i> Booking Sekarang Juga!</span>
                                         </label>
@@ -178,20 +192,6 @@
                     <div class="template-component-booking-item-content">
 
                         <ul class="template-component-booking-summary template-clear-fix">
-
-                            <!-- Duration -->
-                            {{-- <li class="template-component-booking-summary-duration">
-                                <div class="template-icon-booking-meta-total-duration"></div>
-                                <h5>
-                                    <span>0</span>
-                                    <span>h</span>
-                                    &nbsp;
-                                    <span>0</span>
-                                    <span>min</span>
-                                </h5>
-                                <span>Duration</span>
-                            </li> --}}
-
                             <!-- Price -->
                             <li class="template-component-booking-summary-price">
                                 <div class="template-icon-booking-meta-total-price"></div>
@@ -207,19 +207,6 @@
 
                     <!-- Form Content -->
                     <div class="template-component-booking-item-content template-margin-top-reset">
-                        {{-- <ul class="template-layout-50x50 template-layout-margin-reset template-clear-fix" hidden>
-                            <li class="template-layout-column-left template-margin-bottom-reset">
-                                <div class="template-component-form-field">
-                                    <label for="booking-form-first-name">User ID *</label>
-                                    @if (Auth::check())
-                                        <input type="text" name="user_id" id="booking-form-first-name"
-                                            value="{{ Auth::user()->id }}" />
-                                    @else
-                                        <input type="text" name="user_id" id="booking-form-first-name" />
-                                    @endif
-                                </div>
-                            </li>
-                        </ul> --}}
                         <!-- Layout -->
                         <ul class="template-layout-50x50 template-layout-margin-reset template-clear-fix">
 
@@ -228,10 +215,11 @@
                                 <div class="template-component-form-field">
                                     <label for="booking-form-first-name">Nama Pemesan *</label>
                                     @if (Auth::check())
-                                        <input type="text" name="nama_pemesan" id="booking-form-first-name" required
-                                            value="{{ Auth::user()->name }}" />
+                                        <input type="text" name="nama_pemesan" id="booking-form-first-name"
+                                            class="required-field" required value="{{ Auth::user()->name }}" />
                                     @else
-                                        <input type="text" name="nama_pemesan" id="booking-form-first-name" required />
+                                        <input type="text" name="nama_pemesan" id="booking-form-first-name"
+                                            class="required-field" required />
                                     @endif
                                 </div>
                             </li>
@@ -242,10 +230,10 @@
                                     <label for="booking-form-second-name">No. Telephone *</label>
                                     @if (Auth::check())
                                         <input type="text" name="no_telp_pemesan" id="booking-form-second-name" required
-                                            value="{{ Auth::user()->phone }}" />
+                                            value="{{ Auth::user()->phone }}" class="required-field" />
                                     @else
                                         <input type="text" name="no_telp_pemesan" id="booking-form-second-name"
-                                            required />
+                                            class="required-field" required />
                                     @endif
                                 </div>
                             </li>
@@ -258,7 +246,8 @@
                             <li class="template-layout-column-left template-margin-bottom-reset">
                                 <div class="template-component-form-field">
                                     <label for="booking-form-email">Nama Mobil *</label>
-                                    <input type="text" name="nama_mobil" id="booking-form-email" required />
+                                    <input type="text" name="nama_mobil" id="booking-form-email"
+                                        class="required-field" required />
                                 </div>
                             </li>
 
@@ -266,7 +255,8 @@
                             <li class="template-layout-column-right template-margin-bottom-reset">
                                 <div class="template-component-form-field">
                                     <label for="booking-form-phone">No Plat Mobil *</label>
-                                    <input type="text" name="no_plat_mobil" id="booking-form-phone" required />
+                                    <input type="text" name="no_plat_mobil" id="booking-form-phone"
+                                        class="required-field" required />
                                 </div>
                             </li>
 
@@ -278,7 +268,8 @@
                             <li class="template-layout-column-left template-margin-bottom-reset">
                                 <div class="template-component-form-field">
                                     <label for="booking-form-vehicle-make">Tanggal Pesan</label>
-                                    <input type="date" name="tanggal_pesan" id="booking-form-vehicle-make" required />
+                                    <input type="date" name="tanggal_pesan" id="booking-form-vehicle-make"
+                                        class="required-field" required />
                                 </div>
                             </li>
 
@@ -286,7 +277,8 @@
                             <li class="template-layout-column-center template-margin-bottom-reset">
                                 <div class="template-component-form-field">
                                     <label for="booking-form-vehicle-model">Jam Pesan</label>
-                                    <input type="time" name="jam_pesan" id="booking-form-vehicle-model " required />
+                                    <input type="time" name="jam_pesan" id="booking-form-vehicle-model"
+                                        class="required-field" required />
                                 </div>
                             </li>
                         </ul>
@@ -295,8 +287,12 @@
                             <p class="template-padding-reset template-margin-bottom-2">Kami akan mengkonfirmasi janji Anda
                                 dengan Anda melalui telepon atau email dalam waktu 24 jam setelah menerima permintaan Anda.
                             </p>
-                            <input type="submit" value="Confirm Booking" class="template-component-button"
+                            <!-- Button trigger modal -->
+                            {{-- <input type="submit" value="Confirm Booking" class="template-component-button"
                                 name="booking-form-submit" id="booking-form-submit" />
+                            <input type="hidden" value="" name="booking-form-data" id="booking-form-data" /> --}}
+                            <input type="submit" value="Confirm Booking" class="template-component-button"
+                                name="booking-form-submit" id="booking-form-submit" onclick="validateForm(event)" />
                             <input type="hidden" value="" name="booking-form-data" id="booking-form-data" />
                         </div>
                     </div>
@@ -309,9 +305,9 @@
 
 
 @push('style')
-    <link rel="stylesheet"
-        href="{{ url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('bootstrap-icons/font/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap-4/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('sweetalert2/sweetalert2.min.css') }}">
 
     <style>
         .custom-radio-button .btn {
@@ -369,6 +365,58 @@
 
 
 @push('script')
+    {{-- <script src="{{ asset('bootstrap-4/js/bootstrap.bundle.min.js') }}"></script> --}}
+
+    {{-- <script src="{{ url('https://cdn.jsdelivr.net/npm/sweetalert2@11') }}"></script> --}}
+    <script src="{{ asset('sweetalert2/sweetalert2.all.min.js') }}"></script>
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); // Menghentikan pengiriman formulir secara default
+
+            // Validasi field yang diperlukan
+            var requiredFields = document.querySelectorAll(".required-field");
+            var isValid = true;
+
+            requiredFields.forEach(function(field) {
+                if (field.value.trim() === "") {
+                    isValid = false;
+                    field.classList.add("is-invalid");
+                } else {
+                    field.classList.remove("is-invalid");
+                }
+            });
+
+            if (isValid) {
+                showConfirmationAlert();
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "Mohon lengkapi semua field yang diperlukan!",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                });
+            }
+        }
+
+        function showConfirmationAlert() {
+            Swal.fire({
+                title: "Konfirmasi Booking",
+                // text: "Apakah Anda yakin ingin melakukan booking?",
+                text: " Anda wajib datang 5 menit sebelum waktu pencucian dimulai. Jika datang setelah lewat dari jam pencucian,maka pemesanan akan hangus dan Anda diharuskan untuk melakukan pemesanan ulang.",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Lakukan tindakan setelah konfirmasi
+                    document.getElementById("booking-form-data").value = "Data yang ingin disimpan";
+                    document.getElementById("booking-form-submit").form.submit();
+                }
+            });
+        }
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var kategoriMobilRadios = document.querySelectorAll('input[name="kategori_mobil_id"]');
@@ -452,36 +500,4 @@
             });
         });
     </script>
-
-
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var kategoriMobilRadios = document.querySelectorAll('input[name="kategori_mobil"]');
-            var produkList = document.querySelectorAll('.produk-item');
-
-            kategoriMobilRadios.forEach(function(radio) {
-                radio.addEventListener('change', function() {
-                    var selectedKategoriMobilId = this.value;
-
-                    produkList.forEach(function(produk) {
-                        var kategoriMobilId = produk.getAttribute('data-id-vehicle-rel');
-                        if (kategoriMobilId === selectedKategoriMobilId ||
-                            selectedKategoriMobilId === '') {
-                            produk.style.display = 'block';
-                        } else {
-                            produk.style.display = 'none';
-                        }
-                    });
-                });
-            });
-
-            // Memastikan produk terpilih saat halaman dimuat
-            var initialKategoriMobilRadio = document.querySelector('input[name="kategori_mobil"]:checked');
-            if (initialKategoriMobilRadio) {
-                // Memicu perubahan pada kategori mobil untuk menampilkan produk
-                initialKategoriMobilRadio.dispatchEvent(new Event('change'));
-            }
-        });
-    </script> --}}
 @endpush

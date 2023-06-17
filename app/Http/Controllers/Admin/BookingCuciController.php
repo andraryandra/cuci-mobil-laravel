@@ -44,12 +44,12 @@ class BookingCuciController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $this->validate(request(),
-        [
-            'user_id' => 'nullable',
-            'kategori_mobil_id' => 'nullable',
-            'produk_id' => 'nullable',
+{
+    try {
+        $this->validate(request(), [
+            'user_id' => 'required',
+            'kategori_mobil_id' => 'required',
+            'produk_id' => 'required',
             // 'karyawan_id' => 'nullable',
             'nama_pemesan' => 'required',
             'no_telp_pemesan' => 'required',
@@ -74,14 +74,21 @@ class BookingCuciController extends Controller
         $booking->jam_pesan = $request->jam_pesan;
         $booking->status_pesan = $request->status_pesan;
         $booking->status_bayar = $request->status_bayar;
-        $booking->save();
 
-        if($booking){
+        if ($booking->save()) {
             return back()->with(['success' => 'Data Berhasil Disimpan!']);
-        }else{
+        } else {
             return back()->with(['error' => 'Data Gagal Disimpan!']);
         }
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        return back()->withErrors($e->errors())->withInput();
+    } catch (\Exception $e) {
+        return back()->with(['error' => 'Data Gagal Disimpan!']);
     }
+}
+
+
+
 
 
     /**
