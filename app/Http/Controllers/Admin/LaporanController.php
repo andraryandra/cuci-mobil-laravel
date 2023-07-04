@@ -31,7 +31,7 @@ class LaporanController extends Controller
 
     public function exportBookingCuciMobilCSV()
 {
-    $filename = 'export.csv';
+    $filename = 'Laporan_all_transaksi.csv';
 
     $headers = [
         'Content-Type' => 'text/csv',
@@ -114,7 +114,7 @@ class LaporanController extends Controller
     $tanggalAwal = Carbon::parse($request->input('tanggal_awal'))->startOfDay();
     $tanggalAkhir = Carbon::parse($request->input('tanggal_akhir'))->endOfDay();
 
-    $filename = 'export.csv';
+    $filename = 'Laporan_transaksi_'.$tanggalAwal.'_'.$tanggalAkhir.'.csv';
 
     $headers = [
         'Content-Type' => 'text/csv',

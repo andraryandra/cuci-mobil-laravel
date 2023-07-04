@@ -35,7 +35,7 @@
             maka pemesanan akan hangus dan Anda diharuskan untuk melakukan pemesanan ulang.
         </div>
 
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Daftar Pelanggan Booking</h5>
                 <div class="list-group">
@@ -72,7 +72,54 @@
                     </div>
                 </div>
             </div>
+        </div> --}}
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Daftar Pelanggan Booking</h5>
+                <div class="list-group">
+                    @forelse ($history_bookings as $item)
+                        <div class="list-group-item">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <h6 class="mb-1" style="font-weight: bold;">Kategori Mobil -
+                                    {{ $item->kategoriMobil->kategori_mobil }}</h6>
+                                <p>Status Booking Cucian Mobil: <span class="badge badge-primary p-2 rounded-pill">
+                                        {{ $item->status_pesan }}
+                                    </span>
+                                </p>
+                            </div>
+                            <p class="card-text mb-2">Terimakasih Telah membooking Cucian Mobil dikami
+                                {{ $item->nama_pemesan }}, berikut pesanan Cucian Booking Mobil Anda.</p>
+                            <span class="card-text mb-2">Nama Pemesan: {{ $item->nama_pemesan }}</span><br>
+                            <span class="card-text mb-2">Nama Produk Booking: {{ $item->produkMobil->nama_produk }}</span>
+                            <div class="d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="text-muted mb-2 btn badge-success ">
+                                    <span class="mr-1 text-white">Rp.</span>
+                                    <span
+                                        class="font-weight-bold text-white">{{ number_format($item->produkMobil->harga_produk, 0, ',', '.') }}</span>
+                                </div>
+                                <p class="mb-2">Tanggal & Jam Booking Cucian Mobil:
+                                    <b>{{ date('d-m-Y', strtotime($item->tanggal_pesan)) }},
+                                        {{ $item->jam_pesan }}</b>
+                                </p>
+                            </div>
+
+                        </div>
+                    @empty
+                        <div class="list-group-item">
+                            <p class="card-text mb-0">Belum ada pelanggan yang melakukan booking.</p>
+                        </div>
+                    @endforelse
+                </div>
+                <div class="text-center mt-3">
+                    <div class="pagination">
+                        {{ $history_bookings->links() }}
+                    </div>
+                </div>
+            </div>
         </div>
+
+
 
 
         <br>
@@ -229,8 +276,8 @@
                                 <div class="template-component-form-field">
                                     <label for="booking-form-second-name">No. Telephone *</label>
                                     @if (Auth::check())
-                                        <input type="text" name="no_telp_pemesan" id="booking-form-second-name" required
-                                            value="{{ Auth::user()->phone }}" class="required-field" />
+                                        <input type="text" name="no_telp_pemesan" id="booking-form-second-name"
+                                            required value="{{ Auth::user()->phone }}" class="required-field" />
                                     @else
                                         <input type="text" name="no_telp_pemesan" id="booking-form-second-name"
                                             class="required-field" required />

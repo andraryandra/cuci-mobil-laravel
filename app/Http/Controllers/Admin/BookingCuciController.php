@@ -10,6 +10,7 @@ use App\Models\KategoriMobil;
 use App\Models\StatusKaryawan;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class BookingCuciController extends Controller
 {
@@ -47,7 +48,7 @@ class BookingCuciController extends Controller
 {
     try {
         $this->validate(request(), [
-            'user_id' => 'required',
+            'user_id' => 'nullable',
             'kategori_mobil_id' => 'required',
             'produk_id' => 'required',
             // 'karyawan_id' => 'nullable',
@@ -62,7 +63,7 @@ class BookingCuciController extends Controller
         ]);
 
         $booking = new BookingCuci();
-        $booking->user_id = $request->user_id;
+        $booking->user_id = Auth::check() ? Auth::id() : null;
         $booking->kategori_mobil_id = $request->kategori_mobil_id;
         $booking->produk_id = $request->produk_id;
         // $booking->karyawan_id = $request->karyawan_id;
@@ -74,6 +75,7 @@ class BookingCuciController extends Controller
         $booking->jam_pesan = $request->jam_pesan;
         $booking->status_pesan = $request->status_pesan;
         $booking->status_bayar = $request->status_bayar;
+
 
         if ($booking->save()) {
             return back()->with(['success' => 'Data Berhasil Disimpan!']);

@@ -92,7 +92,6 @@ class TransactionBookingController extends Controller
         }
 
         $user = $booking->user;
-        $namaUser = $user->name;
         $produk = $booking->produkMobil;
         $statusPesan = '';
 
@@ -106,9 +105,9 @@ class TransactionBookingController extends Controller
             $statusPesan = 'Status Pesan Tidak Valid';
         }
 
-        $bookingCuciMobil = "Cucian mobil Anda sudah selesai dicuci dengan cermat. Terima kasih, $namaUser!\n\n" .
+        $bookingCuciMobil = "Cucian mobil Anda sudah selesai dicuci dengan cermat. Terima kasih, " . $booking->nama_pemesan . "!\n\n" .
                             "*Detail Booking Cuci Mobil:*\n" .
-                            "Nama Pemesan: $namaUser\n" .
+                            "Nama Pemesan: " . $booking->nama_pemesan . "\n" .
                             "Nama Mobil: " . $booking->nama_mobil . "\n" .
                             "No Plat Mobil: " . $booking->no_plat_mobil . "\n" .
                             "Tanggal Pesan: " . date('d-m-Y', strtotime($booking->tanggal_pesan)) . "\n" .
@@ -120,12 +119,13 @@ class TransactionBookingController extends Controller
                             "*-------------------------------------------------------------*". "\n";
 
         $pesan = "$bookingCuciMobil\n" .
-                "Terima kasih atas kepercayaan Anda dalam menggunakan layanan kami. Kami mengundang Anda untuk datang kembali dan merasakan pengalaman yang luar biasa bersama kami. Kami akan dengan senang hati melayani Anda dengan layanan terbaik kami.";
+                 "Terima kasih atas kepercayaan Anda dalam menggunakan layanan kami. Kami mengundang Anda untuk datang kembali dan merasakan pengalaman yang luar biasa bersama kami. Kami akan dengan senang hati melayani Anda dengan layanan terbaik kami.";
 
-        $url = "https://api.whatsapp.com/send?phone=" . $noTelp . "&text=" . urlencode($pesan);
+        $url = "https://wa.me/send?phone=" . $noTelp . "&text=" . urlencode($pesan);
 
         return redirect($url);
     }
+
 
 
     public function ExportPDFTransaction($id)
@@ -133,7 +133,7 @@ class TransactionBookingController extends Controller
         $booking = BookingCuci::with('kategoriMobil', 'produkMobil')->findOrFail($id);
 
         // Generate nama file PDF
-        $fileName = 'Kwitansi_' . $booking->user->name . '_' . date('d-m-Y', strtotime($booking->created_at)) . '.pdf';
+        $fileName = 'Kwitansi_' . $booking->nama_pemesan . '_' . date('d-m-Y', strtotime($booking->created_at)) . '.pdf';
 
         // Buat instance Dompdf
         $dompdf = new Dompdf();
