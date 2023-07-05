@@ -152,7 +152,9 @@ Route::middleware(['auth', 'user-access:admin'])->group(function () {
 
     Route::get('export-booking-cuci-mobil', [LaporanController::class, 'index'])->name('booking-cuci-export.index');
     Route::get('export-booking-cuci-mobil-csv', [LaporanController::class, 'exportBookingCuciMobilCSV'])->name('booking-cuci.exportCSV');
+    Route::get('export-booking-cuci-mobil-pdf', [LaporanController::class, 'exportBookingCuciMobilPDF'])->name('booking-cuci.exportPDF');
     Route::post('export-booking-cuci-mobil-csv-custom', [LaporanController::class, 'exportBookingCuciMobilCustomCSV'])->name('booking-cuci.exportCustomCSV');
+    Route::post('/export-booking-cuci-mobil-pdf-custom', [LaporanController::class, 'exportBookingCuciMobilCustomPDF'])->name('booking-cuci.exportCustomPDF');
 
      // Route::post('booking-cucis/{booking_id}/rating/store', [RatingController::class, 'store'])->name('booking-cucis.rating.store');
     // Route::post('booking-cucis/{booking}/rating/store', [RatingController::class, 'store'])->name('booking-cucis.rating.store');

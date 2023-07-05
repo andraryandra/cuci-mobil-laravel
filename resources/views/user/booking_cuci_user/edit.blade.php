@@ -20,7 +20,7 @@
                             <label for="kategori_mobil_id_{{ $item->id }}" class="form-label">Kategori Mobil
                                 ID</label>
                             <select class="custom-select kategori-mobil" id="kategori_mobil_id_{{ $item->id }}"
-                                name="kategori_mobil_id" required disabled>
+                                name="kategori_mobil_id" required readonly>
                                 @foreach ($kategori_mobils as $kategori_mobil)
                                     <option value="{{ $kategori_mobil->id }}"
                                         {{ $item->kategori_mobil_id == $kategori_mobil->id ? 'selected' : '' }}>
@@ -33,7 +33,7 @@
                         <div class="mb-3">
                             <label for="produk_id_{{ $item->id }}" class="form-label">Produk ID</label>
                             <select class="custom-select" id="produk_id_{{ $item->id }}" name="produk_id" required
-                                disabled>
+                                readonly>
                                 <!-- Tambahkan atribut 'data-kategori-mobil-id' untuk setiap opsi produk -->
                                 @foreach ($produks as $produk)
                                     <option value="{{ $produk->id }}"

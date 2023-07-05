@@ -26,11 +26,14 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card">
+                    <div class="card-title container my-2">
+                        <h3>Laporan Transaksi CSV</h3>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="my-3">
-                                    <a href="{{ route('booking-cuci.exportCSV') }}" class="btn btn-primary">
+                                    <a href="{{ route('booking-cuci.exportCSV') }}" class="btn btn-success">
                                         <i class="fa fa-file-excel-o mr-1"></i> All Export Customs CSV
                                     </a>
                                 </div>
@@ -61,7 +64,61 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <button type="submit" class="btn btn-primary">Export</button>
+                                                    <button type="submit" class="btn btn-success">Export</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-title container my-2">
+                        <h3>Laporan Transaksi PDF</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="my-3">
+                                    <a href="{{ route('booking-cuci.exportPDF') }}" class="btn btn-danger">
+                                        <i class="fa fa-file-pdf-o mr-1"></i> All Export PDF
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <form action="{{ route('booking-cuci.exportCustomPDF') }}" method="POST">
+                                            @csrf
+
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="tanggal_awal">Tanggal Awal:</label>
+                                                        <input type="date" name="tanggal_awal" class="form-control"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="tanggal_akhir">Tanggal Akhir:</label>
+                                                        <input type="date" name="tanggal_akhir" class="form-control"
+                                                            required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-danger">Export PDF</button>
                                                 </div>
                                             </div>
                                         </form>

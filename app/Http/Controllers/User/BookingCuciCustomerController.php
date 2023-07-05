@@ -36,9 +36,9 @@ class BookingCuciCustomerController extends Controller
 
 
     public function store(Request $request)
-    {
-        $this->validate(request(),
-        [
+{
+    try {
+        $this->validate(request(), [
             'kategori_mobil_id' => 'nullable',
             'produk_id' => 'nullable',
             // 'karyawan_id' => 'nullable',
@@ -50,8 +50,7 @@ class BookingCuciCustomerController extends Controller
             'jam_pesan' => 'required',
             'status_pesan' => 'nullable',
             'status_bayar' => 'nullable',
-        ],
-        [
+        ], [
             'kategori_mobil_id.required' => 'Kategori Mobil Harus Diisi!',
             'produk_id.required' => 'Produk Harus Diisi!',
             // 'karyawan_id.required' => 'Karyawan Harus Diisi!',
@@ -61,9 +60,7 @@ class BookingCuciCustomerController extends Controller
             'no_plat_mobil.required' => 'No Plat Mobil Harus Diisi!',
             'tanggal_pesan.required' => 'Tanggal Pesan Harus Diisi!',
             'jam_pesan.required' => 'Jam Pesan Harus Diisi!',
-        ]
-    );
-
+        ]);
 
         $booking = new BookingCuci();
         $booking->user_id = Auth::check() ? Auth::id() : null;
@@ -79,21 +76,23 @@ class BookingCuciCustomerController extends Controller
         $booking->status_pesan = 'PENDING';
         $booking->status_bayar = 'UNPAID';
 
-        // dd($request->all());
-
         $booking->save();
 
-        if($booking){
+        if ($booking) {
             return back()->with(['success' => 'Berhasil Booking! Terimakasih sudah Membooking Cucian Mobil kami. Harap datang tepat waktu sesuai jadwal pesan Booking.']);
-        }else{
+        } else {
             return back()->with(['error' => 'Data Gagal Disimpan!']);
         }
+    } catch (\Exception $e) {
+        return back()->with(['error' => 'Terjadi kesalahan dalam memproses permintaan. Kesalahan ini terjadi biasanya terjadi karena anda belum memilih tipe kategori mobil / pesanan cucian mobil.']);
     }
+}
 
-    public function update(Request $request, $id)
-    {
+
+public function update(Request $request, $id)
+{
+    try {
         $this->validate(request(), [
-            'user_id' => 'nullable', // Remove 'required'
             'kategori_mobil_id' => 'nullable',
             'produk_id' => 'nullable',
             // 'karyawan_id' => 'nullable',
@@ -103,10 +102,9 @@ class BookingCuciCustomerController extends Controller
             'no_plat_mobil' => 'required',
             'tanggal_pesan' => 'required',
             'jam_pesan' => 'required',
-            // 'status_pesan' => 'nullable',
-            // 'status_bayar' => 'nullable',
-        ],
-        [
+            'status_pesan' => 'nullable',
+            'status_bayar' => 'nullable',
+        ], [
             'kategori_mobil_id.required' => 'Kategori Mobil Harus Diisi!',
             'produk_id.required' => 'Produk Harus Diisi!',
             // 'karyawan_id.required' => 'Karyawan Harus Diisi!',
@@ -118,10 +116,14 @@ class BookingCuciCustomerController extends Controller
             'jam_pesan.required' => 'Jam Pesan Harus Diisi!',
         ]);
 
-        $booking = BookingCuci::findOrFail($id);
+        $booking = BookingCuci::find($id);
+        if (!$booking) {
+            return back()->with(['error' => 'Booking not found!']);
+        }
+
         $booking->user_id = Auth::check() ? Auth::id() : null;
-        $booking->kategori_mobil_id = intval($request->kategori_mobil_id);
-        $booking->produk_id = intval($request->produk_id);
+        $booking->kategori_mobil_id = $request->kategori_mobil_id;
+        $booking->produk_id = $request->produk_id;
         // $booking->karyawan_id = $request->karyawan_id;
         $booking->nama_pemesan = $request->nama_pemesan;
         $booking->no_telp_pemesan = $request->no_telp_pemesan;
@@ -129,15 +131,19 @@ class BookingCuciCustomerController extends Controller
         $booking->no_plat_mobil = $request->no_plat_mobil;
         $booking->tanggal_pesan = $request->tanggal_pesan;
         $booking->jam_pesan = $request->jam_pesan;
-        // $booking->status_pesan = $request->status_pesan;
-        // $booking->status_bayar = $request->status_bayar;
-        // dd($booking);
+        // $booking->status_pesan = 'PENDING';
+        // $booking->status_bayar = 'UNPAID';
+
         $booking->save();
 
         if ($booking) {
-            return back()->with(['success' => 'Data Berhasil Disimpan!']);
+            return back()->with(['success' => 'Berhasil memperbarui data booking!']);
         } else {
-            return back()->with(['error' => 'Data Gagal Disimpan!']);
+            return back()->with(['error' => 'Gagal memperbarui data booking!']);
         }
+    } catch (\Exception $e) {
+        return back()->with(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
     }
+}
+
 }

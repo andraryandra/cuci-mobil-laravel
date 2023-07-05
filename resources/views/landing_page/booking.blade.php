@@ -15,12 +15,7 @@
                 <strong>{{ session('success') }}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        @elseif (session('error'))
-            {{-- <div
-                style="background-color: #f8d7da; color: #721c24; border-color: #f5c6cb; padding: .75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: .25rem;">
-                <strong>{{ session('error') }}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div> --}}
+        @elseif (is_array(session('error')))
             <div class="alert alert-danger">
                 <strong>Error:</strong>
                 <ul>
@@ -29,7 +24,15 @@
                     @endforeach
                 </ul>
             </div>
+        @elseif (session('error'))
+            <div class="alert alert-danger">
+                <strong>Error:</strong>
+                <ul>
+                    <li>{{ session('error') }}</li>
+                </ul>
+            </div>
         @endif
+
         <div class="alert alert-warning" role="alert">
             Anda wajib datang 5 menit sebelum waktu pencucian dimulai. Jika datang setelah lewat dari jam pencucian,
             maka pemesanan akan hangus dan Anda diharuskan untuk melakukan pemesanan ulang.

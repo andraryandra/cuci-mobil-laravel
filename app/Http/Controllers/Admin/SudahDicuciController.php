@@ -98,7 +98,6 @@ class SudahDicuciController extends Controller
         }
 
         $user = $booking->user;
-        $namaUser = $user->name;
         $produk = $booking->produkMobil;
         $statusPesan = '';
 
@@ -114,7 +113,7 @@ class SudahDicuciController extends Controller
 
         $bookingCuciMobil =
                         "*Detail Booking Cuci Mobil:*\n" .
-                        "Nama Pemesan: $namaUser\n" .
+                        "Nama Pemesan: $booking->nama_pemesan\n" .
                         "Nama Mobil: " . $booking->nama_mobil . "\n" .
                         "No Plat Mobil: " . $booking->no_plat_mobil . "\n" .
                         "Tanggal Pesan: " . date('d-m-Y', strtotime($booking->tanggal_pesan)) . "\n" .
@@ -133,7 +132,7 @@ class SudahDicuciController extends Controller
                      $bookingCuciMobil;
         }
 
-        $url = "https://api.whatsapp.com/send?phone=" . $noTelp . "&text=" . urlencode($pesan);
+        $url = "https://wa.me/send?phone=" . $noTelp . "&text=" . urlencode($pesan);
 
         return redirect($url);
     }
