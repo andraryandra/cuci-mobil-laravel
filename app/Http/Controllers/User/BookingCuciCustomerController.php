@@ -120,8 +120,9 @@ public function update(Request $request, $id)
         if (!$booking) {
             return back()->with(['error' => 'Booking not found!']);
         }
+        $booking->user_id = isset($request->user_id) ? intval($request->user_id) : $booking->user_id;
 
-        $booking->user_id = Auth::check() ? Auth::id() : null;
+        // $booking->user_id = Auth::check() ? Auth::id() : null;
         $booking->kategori_mobil_id = $request->kategori_mobil_id;
         $booking->produk_id = $request->produk_id;
         // $booking->karyawan_id = $request->karyawan_id;

@@ -41,7 +41,9 @@ class SedangDicuciController extends Controller
     ]);
 
     $booking = BookingCuci::findOrFail($id);
-    $booking->user_id = $request->user_id ? intval($request->user_id) : null; // Set to null if user_id is empty
+    $booking->user_id = isset($request->user_id) ? intval($request->user_id) : $booking->user_id;
+
+    // $booking->user_id = $request->user_id ? intval($request->user_id) : null; // Set to null if user_id is empty
     $booking->kategori_mobil_id = intval($request->kategori_mobil_id);
     $booking->produk_id = intval($request->produk_id);
     // $booking->karyawan_id = $request->karyawan_id;

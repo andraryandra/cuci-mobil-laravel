@@ -15,6 +15,19 @@
                         @csrf
                         @method('PUT')
 
+                        <div class="mb-3" hidden>
+                            <label for="user_id_{{ $item->id }}" class="form-label">User
+                                ID</label>
+                            <select class="custom-select" id="user_id_{{ $item->id }}" name="user_id">
+                                @foreach ($users as $user)
+                                    <option value="{{ $user->id }}"
+                                        {{ $item->user_id == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="mb-3">
                             <label for="kategori_mobil_id" class="form-label">Kategori Mobil ID</label>
                             <select class="custom-select kategori-mobil" id="kategori_mobil_id"
