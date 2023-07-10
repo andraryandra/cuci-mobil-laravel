@@ -8,9 +8,9 @@
 
         <!-- Header + subheader -->
         <div class="template-component-header-subheader">
-            <h2>Siapa Autospa</h2>
+            <h2>Apa itu far car wash</h2>
             <div></div>
-            <span>Cucian Mobil &amp; merinci layanan</span>
+            <span>Cucian Mobil &amp; Datail Layanan</span>
         </div>
 
         <!-- Layout 33x66% -->

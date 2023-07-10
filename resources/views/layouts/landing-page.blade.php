@@ -54,9 +54,9 @@
         template-header template-header-background template-header-background-2 @endif
     "
         style="
-    @if (Request::routeIs('landingPage*.booking')) background-image: url('landing-page/assets/media/image/header/header_06.png');
+    @if (Request::routeIs('landingPage*.booking')) background-image: url('landing-page/assets/media/image/header/header_01.jpg');
      @elseif (Request::routeIs('landingPage*.contact'))
-        background-image: url('landing-page/assets/media/image/header/header_06.png'); @endif">
+        background-image: url('landing-page/assets/media/image/header/header_02.jpg'); @endif">
 
 
 
